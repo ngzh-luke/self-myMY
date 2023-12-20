@@ -9,6 +9,16 @@ def toHome():
     return redirect(url_for("acc.myAcc"))
 
 
-@r.route("/login", methods=['GET'])
+@r.route("/login/", methods=['GET'])
 def toLogin():
     return redirect(url_for("auth.login"))
+
+
+@r.route("/signup/", methods=['GET'])
+def toSignup():
+    return redirect(url_for("auth.signup"))
+
+
+@r.route("/logout/", methods=['GET'])
+def toLogout():
+    return redirect(url_for("auth.logout"))

@@ -1,0 +1,112 @@
+{% extends 'root.html' %} {% block title %}ABOUT{% endblock %}
+
+<style>
+  /* Media Query for larger screens */
+  @media (min-width: 600px) {
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main {
+      width: 75%;
+      max-width: 600px;
+      margin: auto;
+    }
+    #tb {
+      align-self: center;
+      max-width: auto;
+
+      margin: 20px;
+      padding: 30%;
+      border-collapse: collapse;
+    }
+  }
+</style>
+{% block body %}
+<body>
+  <main align="center" class="mx-1 px-1">
+    <div id="about" class="my-2 mx-1" align="center">
+      <img
+        width="100"
+        height="100"
+        src="{{ url_for('static', filename='myMY-logo.svg') }}"
+        alt="myMY Icon"
+      />
+      <h1><code>myMY</code> by LukeCreated</h1>
+
+      <h2><code>myMY</code> Info</h2>
+
+      <div class="container col-5" id="tb">
+        <table
+          class="table table-dark table-hover table-striped-columns border border-3"
+          align="center"
+        >
+          <thead align="center">
+            <th>KEY</th>
+            <th>VALUE</th>
+          </thead>
+          <tbody align="center">
+            <tr class="table-info">
+              <th>myMY version:</th>
+              <td style="font-weight: bold" class="link-danger">{{version}}</td>
+            </tr>
+            <tr class="table-success">
+              <th>myMY repo</th>
+              <td>
+                <a
+                  style="font-weight: bold"
+                  class="link-danger"
+                  target="_blank"
+                  href="https://github.com/ngzh-luke/self-myMY"
+                  >Repo link
+                </a>
+              </td>
+            </tr>
+            <tr class="table-info">
+              <th>myMY license:</th>
+              <td>
+                <a
+                  style="font-weight: bold"
+                  class="link-danger"
+                  target="_blank"
+                  href="https://github.com/ngzh-luke/self-myMY/blob/main/LICENSE"
+                  >MIT</a
+                >
+              </td>
+            </tr>
+            <tr class="table-success">
+              <th>myMY bugs report:</th>
+              <td>
+                <a
+                  href="mailto:bugsreport@lukecreated.com"
+                  target="_blank"
+                  type="button"
+                  class="btn btn-danger"
+                  >bugsreport@lukecreated.com</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div><a href="{{url_for("redirector.toHome")}}" type="button" class="btn btn-primary">myMY Home</a></div>
+  </main>
+</body>
+<script>
+  function isMobile() {
+    return window.innerWidth < 600;
+  }
+  if (isMobile()) {
+    // JavaScript code to change the class name
+    document.addEventListener("DOMContentLoaded", function () {
+      var tb = document.getElementById("tb");
+
+      tb.classList.remove("col-5");
+    });
+  }
+</script>
+
+{% endblock %}

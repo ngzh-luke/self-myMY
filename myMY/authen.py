@@ -2,7 +2,7 @@
 from flask import render_template, Blueprint, request, redirect, url_for, session, abort, flash
 from flask_login import login_user, login_required, logout_user, current_user, login_fresh
 from flask_bcrypt import check_password_hash, generate_password_hash
-from .models import User
+from .models import User, SignupCode
 from myMY import db
 import time
 import json
@@ -76,6 +76,8 @@ def signup():
         name = request.form.get('inputUsername')
         password = request.form.get('inputPassword')
         password2 = request.form.get('inputPassword2')
+        signupcode = request.form.get('inputSignupCode')
+        code = SignupCode.query.filter_by(code=signupcode, isused=False).first() # get unused code
         user = User.query.filter_by(uname=name).first()
         if user != None:
             # if user is exists
@@ -85,11 +87,16 @@ def signup():
             # if passwords are not matched
             flash("Passwords are not matched!", category='warning')
             return redirect(url_for("redirector.toSignup"))
+        elif (code == None) or (code.code != signupcode):
+            # if submitted code is match with code from server
+            flash("Signup code is invalid! Please contact admin", category='warning')
+            return redirect(url_for("redirector.toSignup"))
         else:
             try:
                 # create new account
                 newAcc = User(uname=name, password=generate_password_hash(
                     password).decode('utf-8'), alias=name)
+                code.isused = True
                 db.session.add(newAcc)
                 db.session.commit()
 

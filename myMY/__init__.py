@@ -2,7 +2,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
-from flask import Flask, Blueprint, render_template, abort, flash, session, redirect, request
+from flask import Flask, Blueprint, render_template, abort, flash, session, redirect, request, url_for
 from decouple import config as en_var  # import the environment var
 from datetime import timedelta
 db = SQLAlchemy()
@@ -55,6 +55,7 @@ def createApp():
     except Exception as e:
         db.session.rollback()
         flash(f'{e}', category='error')
+        print(f"Error: {e}")
 
     from .models import User
 
@@ -98,8 +99,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.1, status='Initial Development',
-                         build=20231220, version_note='Development started')
+systemInfoObject = About(version=0.2, status='Initial Development',
+                         build=20231221, version_note='Authentication processes work')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -107,7 +108,7 @@ rootView = Blueprint('rootView', __name__)
 
 
 @rootView.route("/dev/root-template-view/")
-def root_view():
+def root_View():
     if not current_user.is_authenticated:
         abort(401)  # unauthorized
     elif current_user.isMe == True:
@@ -115,6 +116,10 @@ def root_view():
     else:
         abort(403)  # forbidden
 
+
+@rootView.route("/about/")
+def aboutView():
+    return render_template("about.html", user=current_user, version=systemVersion)
 
 # handle not found
 def notFound(e):

@@ -1,0 +1,108 @@
+{% extends 'root.html' %} {% block title %} myMY - Signup code MNG {% endblock
+%} {% block body %}
+<body>
+  <div id="manager" class="px-2 py-2 mx-3 my-3" align="center">
+    <h1
+      style="
+        font-size: xx-large;
+        color: navy;
+        font-weight: bold;
+        font-size: xx-large;
+      "
+    >
+      Signup code Manager
+    </h1>
+    <div class="col col-7">
+      <table
+        class="table table-warning table-hover table-striped-columns border border-3"
+      >
+        <thead>
+          <tr>
+            <th scope="col">Code ID</th>
+            <th scope="col">Code</th>
+            <th scope="col">Is used?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-success">
+            <th scope="row">_?_</th>
+            <td>
+              <button type="button" onclick="" class="btn btn-info">
+                Create
+              </button>
+            </td>
+            <td>
+              _?_: &ensp;
+              <button type="button" onclick="" class="btn btn-success">
+                Read
+              </button>
+            </td>
+            <td>
+              <button type="button" onclick="" class="btn btn-warning">
+                Update
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("psd").style.display = "none"; // reset view
+    document.getElementById("alias").style.display = "none"; // reset view
+    document.getElementById("dla").style.display = "none"; // reset view
+    var state = document.getElementById("psd");
+    var state2 = document.getElementById("alias");
+    var state3 = document.getElementById("dla");
+    state.style.display = "none";
+    state2.style.display = "none";
+    state3.style.display = "none";
+
+    function changePass() {
+      if (state.style.display === "none") {
+        state2.style.display = "none";
+        state3.style.display = "none";
+        state.style.display = "block";
+      } else {
+        state.style.display = "none";
+      }
+    }
+    function changeAlias() {
+      if (state2.style.display === "none") {
+        state.style.display = "none";
+        state3.style.display = "none";
+        state2.style.display = "block";
+      } else {
+        state2.style.display = "none";
+      }
+    }
+    function delAcc() {
+      if (state3.style.display === "none") {
+        state.style.display = "none";
+        state2.style.display = "none";
+        state3.style.display = "block";
+      } else {
+        state3.style.display = "none";
+      }
+    }
+  </script>
+  {% else %}
+  <div class="px-2 py-2 mx-3 my-3" align="center">
+    <h1
+      style="
+        font-size: xx-large;
+        color: navy;
+        font-weight: bold;
+        font-size: xx-large;
+      "
+    >
+      Hi! <br />Welcome back, <code>{{user.alias}}</code>!
+    </h1>
+    <br />
+    <a href="{{url_for('acc.accManager')}}"
+      ><button type="button" class="btn btn-light">Account Manager</button></a
+    >
+  </div>
+</body>
+{% endif %} {% endblock %}

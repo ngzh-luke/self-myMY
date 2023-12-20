@@ -1,56 +1,54 @@
 <!-- alert ui  -->
 <!-- Beautiful alert from SweetAlert2 -->
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <title>Alert</title> -->
-    <!-- import Sweetalert2 -->
+<html>
+  <body>
+    <!-- import Sweetalert2  -->
     <!-- <script src="https://assets.lukecreated.com/helpers/SWA2@11.10.1/sweetalert2@11.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
 
-  <!-- Begin alerts -->
-  {% with messages = get_flashed_messages(with_categories=true) %} {% if
-  messages %} {% for category, message in messages %}
+    <!-- Begin alerts -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %} {% for category, message in messages %}
 
-  <script>
-    let msg = "{{ message }}";
-    let cat = "{{category}}";
-    if ("{{category}}" == "danger") {
-      cat = "error";
-    } else if ("{{category}}" == "found") {
-      cat = "success";
-    } else if ("{{category}}" == "not found") {
-      cat = "warning";
-      msg = "Please try again! <br>" + msg;
-    } else if ("{{category}}" == "login") {
-      cat = "success";
-      msg = "Logged in Successfully! <br>" + msg;
-    } else if ("{{category}}" == "logout") {
-      msg = "Logout successfully! <br>" + msg;
-      cat = "success";
-    }
-    Swal.fire({
-      title:
-        "{{ category.title() }}" == "Login" ||
-        "{{ category.title() }}" == "Logout"
-          ? "Success!"
-          : "{{ category.title() }}!",
-      // success , error , warning ,info, found, not found
+    <script>
+      let msg = "{{ message }}";
+      let cat = "{{category}}";
+      if ("{{category}}" == "danger") {
+        cat = "error";
+      } else if ("{{category}}" == "found") {
+        cat = "success";
+      } else if ("{{category}}" == "not found") {
+        cat = "warning";
+        msg = "Please try again! <br>" + msg;
+      } else if ("{{category}}" == "login") {
+        cat = "success";
+        msg = "Logged in Successfully! <br>" + msg;
+      } else if ("{{category}}" == "logout") {
+        msg = "Logout successfully! <br>" + msg;
+        cat = "success";
+      }
+      Swal.fire({
+        title:
+          "{{ category.title() }}" == "Login" ||
+          "{{ category.title() }}" == "Logout"
+            ? "Success!"
+            : "{{ category.title() }}!",
+        // success , error , warning ,info, found, not found
 
-      html: msg,
-      // custom message flashed from flask
+        html: msg,
+        // custom message flashed from flask
 
-      icon: cat,
-      // success , error , warning ,info, found
+        icon: cat,
+        // success , error , warning ,info, found
 
-      focusConfirm: true,
-      confirmButtonText: "Dismiss",
-      confirmButtonAriaLabel: "Dismiss",
-    });
-  </script>
+        focusConfirm: true,
+        confirmButtonText: "Dismiss",
+        confirmButtonAriaLabel: "Dismiss",
+      });
+    </script>
 
-  {% endfor %} {% endif %} {% endwith %}
+    {% endfor %} {% endif %} {% endwith %}
+  </body>
 </html>

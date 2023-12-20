@@ -8,6 +8,7 @@ from . import db
 
 
 class User(db.Model, UserMixin, AnonymousUserMixin):
+    __tablename__ = "user"
     """ Database table: user
         each user account setting/properties defined here.
 
@@ -19,8 +20,8 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
         """
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     uname = db.Column(db.String(26), unique=True)  # username
-    fname = db.Column(db.String(56))  # firstname
-    alias = db.Column(db.String(20), nullable=False)
+    fname = db.Column(db.String(56), default="[NONE].firstname")  # firstname
+    alias = db.Column(db.String(20), default="[NONE].alias", nullable=False)
     password = db.Column(db.String())
     langPref = db.Column(db.String(2), default="EN")
 
@@ -45,3 +46,18 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
     # @property
     # def getLangPref(self):
     #     return self.langPref
+
+
+class SignupCode(db.Model):
+    __tablename__ = "signupCode"
+    """ Database table: signup_code
+        list of single use signup code
+
+        #Attribute:
+            code -> signup code (unique),\n
+            isused -> is used, \n
+
+        """
+    id = db.Column(db.Integer(), unique=True, primary_key=True)
+    code = db.Column(db.String(9), default=False, unique=True)
+    isused = db.Column(db.Boolean, default=False)
