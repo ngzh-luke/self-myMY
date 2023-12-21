@@ -16,7 +16,8 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
             uname -> username (unique),\n
             fname -> firstname, \n
             alias -> alias (not null),\n
-            password -> password,
+            password -> password, \n
+            transactions -> relationship to `Transaction` table
         """
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     uname = db.Column(db.String(26), unique=True)  # username
@@ -24,6 +25,7 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
     alias = db.Column(db.String(20), default="[NONE].alias", nullable=False)
     password = db.Column(db.String())
     langPref = db.Column(db.String(2), default="EN")
+    transactions = db.relationship("Transaction")
 
     def __str__(self):
         return self.fname
@@ -74,7 +76,11 @@ class Transaction(db.Model):
             via -> transaction method (cash, etc) \n
             party -> receiver or payer name (if user is payer than party is receiver) \n
             location -> name of a place that the transaction is taken \n
-            notes -> transaction notes
+            country -> country/region that the transaction is taken (ISO 3166-1 alpha-3 country code) \n
+            dtime -> date and time of the transaction is processed \n
+            notes -> transaction notes \n
+            user_id -> foreign key to user
+
             
         """
     id = db.Column(db.Integer(), unique=True, primary_key=True)
@@ -84,6 +90,9 @@ class Transaction(db.Model):
     party = db.Column(db.String(20), nullable=False)
     location = db.Column(db.String(56), nullable=False, default="unspecified")
     notes = db.Column(db.String(100), nullable=True)
+    dtime = db.Column(db.String(18))
+    country = db.Column(db.String(3)) # THA
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
     

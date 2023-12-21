@@ -1,0 +1,71 @@
+{% extends 'root.html' %} {% block title %}myMY - GET{% endblock %}
+
+<style>
+  /* Media Query for larger screens */
+  @media (min-width: 600px) {
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    main {
+      width: 75%;
+      max-width: 600px;
+      margin: auto;
+    }
+    #tb {
+      align-self: center;
+      max-width: auto;
+
+      margin: 20px;
+      padding: 30%;
+      border-collapse: collapse;
+    }
+  }
+</style>
+{% block body %}
+<body>
+  <main align="center" class="mx-1 px-1">
+    <div id="get" class="my-2 mx-1" align="center">
+      <h1><code>myMY</code> by LukeCreated</h1>
+
+      <h2>GET</h2>
+    </div>
+    <div>
+      <a
+        href="{{url_for('redirector.toHome')}}"
+        type="button"
+        class="btn btn-primary"
+        >myMY Home</a
+      >
+    </div>
+    <br />
+    <div class="container-fluid" id="tb">
+      {% if get %} {% for g in get %}
+      <div>{{g}}</div>
+      {% endfor %}{% else %}There's no transaction, yet!  <a
+      href="{{url_for('transaction.transactionHome')}}"
+      type="button"
+      class="btn btn-primary"
+      >Add now!</a
+    >{% endif %}
+    </div>
+    <br />
+    <div>
+      <a
+        href="{{url_for('redirector.toHome')}}"
+        type="button"
+        class="btn btn-primary"
+        >myMY Home</a
+      >
+    </div>
+  </main>
+  <br />
+  <div class="my-3"></div>
+  <br />
+  <div class="my-3"></div>
+  <hr />
+</body>
+
+{% endblock %}

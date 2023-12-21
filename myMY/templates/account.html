@@ -1,20 +1,20 @@
-{% extends 'root.html' %} {% block title %} Account {% endblock %} {% block body
-%} {% if title %}
-<div class="px-2 py-2 mx-3 my-3" align="center">
-  <div class="d-flex justify-content-center" id="container">
-    <div class="col-5" id="fm" align="center">
-      <div id="manager" class="py-2 mx-1 my-1" >
-        <h1
-          style="
-            font-size: xx-large;
-            color: navy;
-            font-weight: bold;
-            font-size: xx-large;
-          "
-        >
-          Account Manager
-        </h1>
-        <div class="col col-7 mx-1" id="tb">
+{% extends 'root.html' %} {% block title %} myMY - Account {% endblock %} {%
+block body %} {% if title %}
+<div class="container-fluid py-2 mx-1 my-3" align="center">
+  <h1
+    style="
+      font-size: xx-large;
+      color: navy;
+      font-weight: bold;
+      font-size: xx-large;
+    "
+  >
+    Account Manager
+  </h1>
+  <div class="d-flex justify-content-between" id="container">
+    <div class="container col-5" id="fm" align="center">
+      <div id="manager" class="py-2 mx-1 my-1">
+        <div class="container d-flex" id="tb">
           <table
             class="table table-warning table-hover table-striped-columns border border-3"
           >
@@ -23,7 +23,7 @@
                 <th scope="col">Username</th>
                 <th scope="col">Password</th>
                 <th scope="col">Alias</th>
-                <th scope="col">Action</th>
+                <th scope="col">Account</th>
               </tr>
             </thead>
             <tbody>
@@ -54,224 +54,212 @@
                     onclick="delAcc()"
                     class="btn btn-danger"
                   >
-                    Delete my account
+                    Delete
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div></div>
+      </div>
     </div>
+  </div>
 
-      <!-- password changer -->
-      <div id="psd" class="mx-1" align="center">
-        <div class="col border border-3 border-primary">
-          <div class="mx-2 my-1 px-4">
-            <div align="end">
-              <button
-                type="button"
-                class="btn btn-danger"
-                onclick="changePass()"
-              >
-                X
-              </button>
+  <!-- password changer -->
+  <div id="psd" class="mx-1" align="center">
+    <div class="col border border-3 border-primary">
+      <div class="mx-2 my-1 pt-3">
+        <div align="end">
+          <button type="button" class="btn btn-danger" onclick="changePass()">
+            X
+          </button>
 
-              <h2 align="center" style="color: aqua; font-weight: bolder">
-                CHANGE PASSWORD
-              </h2>
-            </div>
-
-            <form
-              class="form-control form-control-lg"
-              action="/account/my-account/account-manager/change-password"
-              method="POST"
-            >
-              <div class="py-2 my-1" align="center">
-                <label for="inputCurrentPassword" class="my-2"
-                  ><span style="font-weight: bold"
-                    >Current Password</span
-                  ></label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="inputCurrentPassword"
-                  name="inputCurrentPassword"
-                  placeholder="Current Password"
-                  required
-                />
-              </div>
-              <div class="my-1" align="center"></div>
-              <div class="py-1" align="center">
-                <label for="newPassword" class="my-2"
-                  ><span style="font-weight: bold">New Password </span>
-                </label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="newPassword"
-                  name="newPassword"
-                  placeholder="New Password"
-                  pattern="(?=.*[a-z,0-9,A-Z]).{8,}"
-                  title="Must contain at least 8 or more characters"
-                  required
-                />
-
-                <label for="newPassword2" class="my-2"
-                  ><span style="font-weight: bold">Confirm New Password </span>
-                </label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="newPassword2"
-                  name="newPassword2"
-                  placeholder="Confirm New Password"
-                  required
-                />
-              </div>
-              <div class="col gap-1 py-2" align="center">
-                <button
-                  type="submit"
-                  class="btn btn-lg btn-primary mb-3"
-                  align="center"
-                >
-                  Submit Change
-                </button>
-              </div>
-            </form>
-          </div>
+          <h2 align="center" style="color: aqua; font-weight: bolder">
+            CHANGE PASSWORD
+          </h2>
         </div>
+
+        <form
+          class="form-control form-control-lg"
+          action="/account/my-account/account-manager/change-password"
+          method="POST"
+        >
+          <div class="py-2 my-1" align="center">
+            <label for="inputCurrentPassword" class="my-2"
+              ><span style="font-weight: bold">Current Password</span></label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="inputCurrentPassword"
+              name="inputCurrentPassword"
+              placeholder="Current Password"
+              required
+            />
+          </div>
+          <div class="my-1" align="center"></div>
+          <div class="py-1" align="center">
+            <label for="newPassword" class="my-2"
+              ><span style="font-weight: bold">New Password </span>
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              id="newPassword"
+              name="newPassword"
+              placeholder="New Password"
+              pattern="(?=.*[a-z,0-9,A-Z]).{8,}"
+              title="Must contain at least 8 or more characters"
+              required
+            />
+
+            <label for="newPassword2" class="my-2"
+              ><span style="font-weight: bold">Confirm New Password </span>
+            </label>
+            <input
+              type="password"
+              class="form-control"
+              id="newPassword2"
+              name="newPassword2"
+              placeholder="Confirm New Password"
+              required
+            />
+          </div>
+          <div class="col gap-1 py-2" align="center">
+            <button
+              type="submit"
+              class="btn btn-lg btn-primary mb-3"
+              align="center"
+            >
+              Submit Change
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 
-      <!-- alias changer -->
-      <div id="alias" class="mx-1" align="center">
-        <div class="col border border-3 border-primary">
-          <div class="mx-2 my-1 px-4">
-            <div align="end">
-              <button
-                type="button"
-                class="btn btn-danger"
-                onclick="changeAlias()"
-              >
-                X
-              </button>
+  <!-- alias changer -->
+  <div id="alias" class="mx-1" align="center">
+    <div class="col border border-3 border-primary">
+      <div class="mx-2 my-1 pt-3">
+        <div align="end">
+          <button type="button" class="btn btn-danger" onclick="changeAlias()">
+            X
+          </button>
 
-              <h2 align="center" style="color: aqua; font-weight: bolder">
-                CHANGE ALIAS
-              </h2>
-            </div>
-
-            <form
-              class="form-control form-control-lg"
-              action="/account/my-account/account-manager/change-alias"
-              method="POST"
-            >
-              <div class="py-2 my-1" align="center">
-                <label for="inputCurrentAlias" class="my-2"
-                  ><span style="font-weight: bold">Current Alias</span></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="inputCurrentAlias"
-                  name="inputCurrentAlias"
-                  placeholder="Current Alias"
-                  required
-                />
-              </div>
-              <div class="my-1" align="center"></div>
-              <div class="py-1" align="center">
-                <label for="newAlias" class="my-2"
-                  ><span style="font-weight: bold">New Alias</span>
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="newAlias"
-                  name="newAlias"
-                  placeholder="New Alias"
-                  required
-                />
-
-                <label for="newAlias2" class="my-2"
-                  ><span style="font-weight: bold">Confirm New Alias </span>
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="newAlias2"
-                  name="newAlias2"
-                  placeholder="Confirm New Alias"
-                  required
-                />
-              </div>
-              <div class="col gap-1 py-2" align="center">
-                <button
-                  type="submit"
-                  class="btn btn-lg btn-primary mb-3"
-                  align="center"
-                >
-                  Submit Change
-                </button>
-              </div>
-            </form>
-          </div>
+          <h2 align="center" style="color: aqua; font-weight: bolder">
+            CHANGE ALIAS
+          </h2>
         </div>
+
+        <form
+          class="form-control form-control-lg"
+          action="/account/my-account/account-manager/change-alias"
+          method="POST"
+        >
+          <div class="py-2 my-1" align="center">
+            <label for="inputCurrentAlias" class="my-2"
+              ><span style="font-weight: bold">Current Alias</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="inputCurrentAlias"
+              name="inputCurrentAlias"
+              placeholder="Current Alias"
+              required
+            />
+          </div>
+          <div class="my-1" align="center"></div>
+          <div class="py-1" align="center">
+            <label for="newAlias" class="my-2"
+              ><span style="font-weight: bold">New Alias</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="newAlias"
+              name="newAlias"
+              placeholder="New Alias"
+              required
+            />
+
+            <label for="newAlias2" class="my-2"
+              ><span style="font-weight: bold">Confirm New Alias </span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="newAlias2"
+              name="newAlias2"
+              placeholder="Confirm New Alias"
+              required
+            />
+          </div>
+          <div class="col gap-1 py-2" align="center">
+            <button
+              type="submit"
+              class="btn btn-lg btn-primary mb-3"
+              align="center"
+            >
+              Submit Change
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 
-      <!-- account deletion confirmation -->
-      <div id="dla" class="mx-1" align="center">
-        <div class="col border border-3 border-primary">
-          <div class="mx-2 my-1 px-4">
-            <div align="end">
-              <button type="button" class="btn btn-danger" onclick="delAcc()">
-                X
-              </button>
+  <!-- account deletion confirmation -->
+  <div id="dla" class="mx-1" align="center">
+    <div class="col border border-3 border-primary">
+      <div class="mx-2 my-1 pt-3">
+        <div align="end">
+          <button type="button" class="btn btn-danger" onclick="delAcc()">
+            X
+          </button>
 
-              <h2 align="center" style="color: aqua; font-weight: bolder">
-                ACCOUNT DELETION
-              </h2>
-            </div>
-
-            <form
-              class="form-control form-control-lg"
-              action="/account/my-account/account-manager/delete-account"
-              method="POST"
-            >
-              <p style="color: red">
-                By doing this, I understand that this action could not be undone
-                and wish to proceed and accept the outcome!
-              </p>
-              <div class="pb-2 my-1" align="center">
-                <label for="inputCurrentPassword" class="my-2"
-                  ><span style="font-weight: bold"
-                    >Current Password</span
-                  ></label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="inputCurrentPassword"
-                  name="inputCurrentPassword"
-                  placeholder="Current Password"
-                  required
-                />
-              </div>
-
-              <div class="col gap-1 py-2" align="center">
-                <button
-                  type="submit"
-                  class="btn btn-lg btn-danger mb-3"
-                  align="center"
-                >
-                  Delete
-                </button>
-              </div>
-            </form>
-          </div>
+          <h2 align="center" style="color: aqua; font-weight: bolder">
+            ACCOUNT DELETION
+          </h2>
         </div>
-      
+
+        <form
+          class="form-control form-control-lg"
+          action="/account/my-account/account-manager/delete-account"
+          method="POST"
+        >
+          <p style="color: red">
+            By doing this, I understand that this action could not be undone and
+            wish to proceed and accept the outcome!
+          </p>
+          <div class="pb-2 my-1" align="center">
+            <label for="inputCurrentPassword" class="my-2"
+              ><span style="font-weight: bold">Current Password</span></label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="inputCurrentPassword"
+              name="inputCurrentPassword"
+              placeholder="Current Password"
+              required
+            />
+          </div>
+
+          <div class="col gap-1 py-2" align="center">
+            <button
+              type="submit"
+              class="btn btn-lg btn-danger mb-3"
+              align="center"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 <script>
@@ -284,14 +272,21 @@
   state.style.display = "none";
   state2.style.display = "none";
   state3.style.display = "none";
+  state.style.visibility = "hidden";
+  state2.style.visibility = "hidden";
+  state3.style.visibility = "hidden";
 
   function changePass() {
     if (state.style.display === "none") {
       state2.style.display = "none";
       state3.style.display = "none";
       state.style.display = "block";
+      state.style.visibility = "visible";
+      state2.style.visibility = "hidden";
+      state3.style.visibility = "hidden";
     } else {
       state.style.display = "none";
+      state.style.visibility = "hidden";
     }
   }
   function changeAlias() {
@@ -299,7 +294,12 @@
       state.style.display = "none";
       state3.style.display = "none";
       state2.style.display = "block";
+      state.style.visibility = "hidden";
+      state2.style.visibility = "visible";
+      state3.style.visibility = "hidden";
     } else {
+      state2.style.visibility = "hidden";
+
       state2.style.display = "none";
     }
   }
@@ -308,8 +308,12 @@
       state.style.display = "none";
       state2.style.display = "none";
       state3.style.display = "block";
+      state.style.visibility = "hidden";
+      state2.style.visibility = "hidden";
+      state3.style.visibility = "visible";
     } else {
       state3.style.display = "none";
+      state3.style.visibility = "hidden";
     }
   }
   function isMobile() {
@@ -319,15 +323,15 @@
     // JavaScript code to change the class name
     document.addEventListener("DOMContentLoaded", function () {
       var fm = document.getElementById("fm");
-      var tb = document.getElementById("tb");
+      //   var tb = document.getElementById("tb");
       fm.classList.remove("col-5");
-    //   tb.classList.add("col-3");
-      tb.classList.remove("col col-7");
+      //   tb.classList.add("col-3");
+      //   tb.classList.remove("col col-7");
     });
   }
 </script>
 {% else %}
-<div class="px-2 py-2 mx-3 my-3" align="center">
+<div class="px-2 py-2 mx-3 my-1" align="center">
   <h1
     style="
       font-size: xx-large;
@@ -340,10 +344,13 @@
   </h1>
   <br />
   <a href="{{url_for('acc.accManager')}}"
-    ><button type="button" class="btn btn-light">Account Manager</button></a
-  ><br /><br>
-  <a href="{{url_for('auth.logout')}}" 
+    ><button type="button" class="btn btn-warning">Account Manager</button></a
+  ><br /><br />
+  <a href="{{url_for('auth.logout')}}"
     ><button type="button" class="btn btn-dark">Logout</button></a
+  >
+  <a href="/about/"
+    ><button type="button" class="btn btn-info">About</button></a
   >
 </div>
 {% endif %} {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'root.html' %} {% block title %}myMY - Transaction{% endblock %}
+{% extends 'root.html' %} {% block title %}myMY - Edit Transaction{% endblock %}
 
 <style>
   /* Media Query for larger screens */
@@ -41,17 +41,29 @@
       >
     </div>
     <br />
-    <div class="container-fluid">
-      <form action="" method="POST">
+    <div class="container-fluid mb-4">
+      <form action="" method="GET">
+        <div class="input-group mb-2">
+          <span class="input-group-text">Transaction ID:</span>
+          <input
+            type="text"
+            aria-label="party"
+            class="form-control"
+            name="tid"
+            placeholder="Enter Transaction ID.."
+          /><button class="btn btn-info">Search</button>
+        </div>
+        
+      </form>
+    </div>
+    <hr class="my-1">
+    <div class="container-fluid mt-4">
+      <form>
         <div class="input-group mb-3">
-          <select class="form-select" id="type" name="type">
+          <select class="form-select" id="type" name="type" disabled>
             <option selected>Choose...</option>
-            <option value="out">Outcome</option>
-            <option value="in">Income</option>
-            <option value="ex">Exchange</option>
-            <option value="owe">Owe</option>
-            <option value="withdrawal">Withdrawal</option></select
-          ><label class="input-group-text" for="type">Type</label>
+            <label class="input-group-text" for="type">Type</label>
+          </select>
         </div>
 
         <div class="input-group mb-3">
@@ -62,6 +74,8 @@
             class="form-control"
             name="party"
             placeholder="party"
+            value="_?_"
+            disabled
           />
           <input
             type="text"
@@ -71,29 +85,17 @@
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
             title="Must be a float value"
+            value="_?_"
+            disabled
           />
         </div>
 
         <div class="input-group mb-3">
           <select class="form-select" id="currency" name="currency">
-            <option value="THB" selected>THB</option>
-            <option value="RMB">RMB</option>
-            <option value="TWD">TWD</option>
-            <option value="USD">USD</option>
-            <option value="other">Other</option>
+            <option value="THB" selected disabled>_?_</option>
           </select>
           <select class="form-select" id="via" name="via">
-            <option value="cash" selected>Cash</option>
-            <option value="mb:scb">MB: SCB</option>
-            <option value="mb:k+">MB: K+</option>
-            <option value="mb:icbc_th">MB: ICBC TH</option>
-            <option value="mb:alipay">MB: Alipay</option>
-            <option value="atm:scb">ATM: SCB</option>
-            <option value="atm:k+">ATM: K+</option>
-            <option value="atm:icbc_th">ATM: ICBC TH</option>
-            <option value="atm:icnc_ch">ATM: ICBC CH</option>
-            <option value="atm:[other]">ATM: [OTHER]</option>
-            <option value="other">Other</option>
+            <option value="cash" selected disabled>_?_</option>
           </select>
           <label class="input-group-text" for="inputGroupSelect02"
             >Currency&Via</label
@@ -108,22 +110,22 @@
             class="form-control"
             name="location"
             placeholder="place"
+            value="_?_"
+            disabled
           />
           <select class="form-select" id="country" name="country">
-            <option value="THA" selected>Thailand</option>
-            <option value="CHN">People's Republic of China (PRC)</option>
-            <option value="TWN">Taiwan</option>
-            <option value="USA">United States of America (USA)</option>
-            <option value="___">Other</option>
+            <option value="THA" selected disabled>_?_</option>
           </select>
         </div>
 
         <div class="input-group mb-3">
           <input
-            type="datetime-local"
+            type="text"
             id="dtime"
             name="dtime"
             class="form-control"
+            value="_?_"
+            disabled
           /><span class="input-group-text">Date&Time</span>
         </div>
 
@@ -136,10 +138,12 @@
             name="notes"
             placeholder="notes (&lt;=100chars)"
             id="notes"
+            value="_?_"
+            disabled
           />
         </div>
 
-        <button type="submit" class="btn btn-lg btn-success">SAVE</button>
+        <button type="submit" class="btn btn-lg btn-danger">DELETE</button>
       </form>
     </div>
     <br />
@@ -152,8 +156,6 @@
       >
     </div>
   </main>
-  <br />
-  <div class="my-3"></div>
   <br />
   <div class="my-3"></div>
   <hr />

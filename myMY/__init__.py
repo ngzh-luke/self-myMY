@@ -35,12 +35,12 @@ def createApp():
     f_bcrypt.init_app(app)
     db.init_app(app)
 
-    # from .views import views
+    from .transaction import t
     from .authen import iden
     from .redirector import r
     from .account import acc
     app.register_blueprint(rootView, url_prefix='/')
-    # app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(t, url_prefix='/transaction')
     app.register_blueprint(iden, url_prefix='/iden-operation')
     app.register_blueprint(r, url_prefix='/')
     app.register_blueprint(acc, url_prefix='/account')
@@ -99,8 +99,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.22, status='Initial Development',
-                         build=20231221, version_note='Account manager is completed')
+systemInfoObject = About(version=0.3, status='Initial Development',
+                         build=20231222, version_note='Implementing transaction system')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

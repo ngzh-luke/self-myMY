@@ -1,4 +1,4 @@
-{% extends 'root.html' %} {% block title %}ABOUT{% endblock %}
+{% extends 'root.html' %} {% block title %}myMY - ABOUT{% endblock %}
 
 <style>
   /* Media Query for larger screens */
@@ -7,8 +7,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 8px;
+      word-wrap: break-word;
     }
-
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      word-wrap: break-word;
+    }
+    th,
+    td,
+    a {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+      word-wrap: break-word;
+    }
     main {
       width: 75%;
       max-width: 600px;
@@ -25,9 +39,9 @@
   }
 </style>
 {% block body %}
-<body>
-  <main align="center" class="mx-1 px-1">
-    <div id="about" class="my-2 mx-1" align="center">
+
+  <main align="center" class="mx-1 px-1" class="container-fluid">
+    <div id="about" class="container mx-1" align="center">
       <img
         width="100"
         height="100"
@@ -38,10 +52,9 @@
 
       <h2><code>myMY</code> Info</h2>
 
-      <div class="container col-5" id="tb">
+      <div class="d-flex justify-content-center col-5" id="tb">
         <table
           class="table table-dark table-hover table-striped-columns border border-3"
-          align="center"
         >
           <thead align="center">
             <th>KEY</th>
@@ -78,23 +91,26 @@
             </tr>
             <tr class="table-success">
               <th>myMY bugs report:</th>
-              <td>
-                <a
-                  href="mailto:bugsreport@lukecreated.com"
-                  target="_blank"
-                  type="button"
-                  class="btn btn-danger"
-                  >bugsreport@lukecreated.com</a
-                >
+              <td
+                  class="link-danger"
+                  >bugsreport@lukecreated.com
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+      <div>
+        <a
+          href="{{url_for('redirector.toHome')}}"
+          type="button"
+          class="btn btn-primary"
+          >myMY Home</a
+        >
+      </div>
     </div>
-    <div><a href="{{url_for("redirector.toHome")}}" type="button" class="btn btn-primary">myMY Home</a></div>
+    
   </main>
-</body>
+
 <script>
   function isMobile() {
     return window.innerWidth < 600;
