@@ -61,3 +61,29 @@ class SignupCode(db.Model):
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     code = db.Column(db.String(9), default=False, unique=True)
     isused = db.Column(db.Boolean, default=False)
+
+class Transaction(db.Model):
+    __tablename__ = "transaction"
+    """ Database table: transaction
+        list of single use signup code
+
+        #Attribute:
+            type -> spend, exchange, receive, owe\n
+            amount -> transaction amount \n
+            currency -> THB, etc. \n
+            via -> transaction method (cash, etc) \n
+            party -> receiver or payer name (if user is payer than party is receiver) \n
+            location -> name of a place that the transaction is taken \n
+            notes -> transaction notes
+            
+        """
+    id = db.Column(db.Integer(), unique=True, primary_key=True)
+    amount = db.Column(db.Float(), nullable=False)
+    currency = db.Column(db.String(3), nullable=False, default="THB")
+    via = db.Column(db.String(10), nullable=False, default="cash")
+    party = db.Column(db.String(20), nullable=False)
+    location = db.Column(db.String(56), nullable=False, default="unspecified")
+    notes = db.Column(db.String(100), nullable=True)
+
+
+    

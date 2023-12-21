@@ -30,4 +30,21 @@
   {% block body %}
   <body></body>
   {% endblock %}
+  <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid d-flex justify-content-evenly">
+      <ul class="navbar-nav list-group list-group-horizontal">
+        <li class="nav-item px-1">
+          <a class="nav-link"  href="#">Get</a>
+        </li>
+        <li class="nav-item px-1" align="center">
+          <a class="nav-link active" aria-current="page" href="#"><img type="image/svg+xml" width="auto" height="35"
+            src="{{ url_for('static', filename='myMY-logo.svg') }}" alt="myMY-logo"></a>
+        </li>
+        <li class="nav-item px-1" align="end">
+          <a class="nav-link" href="{{url_for('acc.myAcc')}}">Account</a>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>
 </html>

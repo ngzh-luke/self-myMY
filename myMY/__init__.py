@@ -99,8 +99,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.2, status='Initial Development',
-                         build=20231221, version_note='Authentication processes work')
+systemInfoObject = About(version=0.22, status='Initial Development',
+                         build=20231221, version_note='Account manager is completed')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

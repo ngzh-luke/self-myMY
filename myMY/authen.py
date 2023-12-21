@@ -15,7 +15,7 @@ iden = Blueprint('auth', __name__)
 @iden.route('/logout/')  # 127.0.0.1:5500/iden-operation/logout
 @login_required
 # log user out
-def logOut():
+def logout():
     session.clear()
     logout_user()
     flash('Please login again!',
