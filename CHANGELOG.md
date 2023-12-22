@@ -15,3 +15,4 @@ Created on Dec 20, 2023
 - Initial Development: Implementing transaction system on Decemeber 22, 2023 -> **0.3**
 - Beta Release: Main functionalities such account management and transaction system can function on Decemeber 22, 2023 -> **0.4**
 - Beta Release: Added more option on Decemeber 22, 2023 -> **0.41**
+- Beta Release: Added more option on Decemeber 22, 2023 -> **0.411**
