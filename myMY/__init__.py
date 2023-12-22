@@ -8,7 +8,7 @@ from datetime import timedelta
 db = SQLAlchemy()
 DB_NAME = en_var(
     'DATABASE_URL', "sqlite:///myMY_db.sqlite")
-TIMEOUT = timedelta(hours=1)
+TIMEOUT = timedelta(hours=3)
 try:
     PORT = en_var("port")
 except:
@@ -99,8 +99,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.4, status='Beta Release',
-                         build=20231222, version_note='Main functionalities such account management and transaction system can function')
+systemInfoObject = About(version=0.41, status='Beta Release',
+                         build=20231222, version_note='added more option')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

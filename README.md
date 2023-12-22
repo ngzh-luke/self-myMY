@@ -14,6 +14,6 @@ Personal Project: `myMY` is an app to keep track of spending and incoming.
 
 Current Status: **Beta Release**
 
-Current Version: **0.4**
+Current Version: **0.41**
 
 Updated: **Decemeber 22, 2023**
