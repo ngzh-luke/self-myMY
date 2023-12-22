@@ -6,14 +6,14 @@ Personal Project: `myMY` is an app to keep track of spending and incoming.
 
 - Developer: **Kittipich "Luke" Aiumbhornsin**
 
-- Development Status: **Initial Development**
+- Development Status: **Beta Release**
 
 - License information: **LICENSE** [go to file](LICENSE)
 
 - Development history: **CHANGELOG.md** [go to file](CHANGELOG.md)
 
-Current Status: **Initial Development**
+Current Status: **Beta Release**
 
-Current Version: **0.3**
+Current Version: **0.4**
 
 Updated: **Decemeber 22, 2023**

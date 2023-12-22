@@ -102,9 +102,9 @@ def signup():
 
                 flash("Your account has been created!", category='success')
                 return redirect(url_for("redirector.toLogin"))
-            except:
+            except Exception as e:
                 flash(
-                    "Encounter error(s), couldn't create account, please try again", category='danger')
+                    f"Encounter error(s), couldn't create account, please try again<br>ERR: {e}", category='danger')
                 return redirect(url_for("redirector.toSignup"))
 
     return render_template("signup.html", user=current_user)

@@ -38,11 +38,23 @@
         type="button"
         class="btn btn-primary"
         >myMY Home</a
+      >&ensp;
+      <a
+        href="{{url_for('transaction.transactionHome')}}"
+        type="button"
+        class="btn btn-success"
+        >Add new now!</a
+      >&ensp;
+      <a
+        href="{{url_for('transaction.transactionGet')}}"
+        type="button"
+        class="btn btn-info"
+        >Get</a
       >
     </div>
     <br />
     <div class="container-fluid mb-4">
-      <form action="" method="GET">
+      <form action="{{url_for('transaction.transactionSeDel')}}" method="GET">
         <div class="input-group mb-2">
           <span class="input-group-text">Transaction ID:</span>
           <input
@@ -50,14 +62,16 @@
             aria-label="party"
             class="form-control"
             name="tid"
+            pattern="^[1-9]\d*$"
+            title="Must be valid ID"
             placeholder="Enter Transaction ID.."
-          /><button class="btn btn-info">Search</button>
+          /><button class="btn btn-danger" type="submit">Search&Delete</button>
         </div>
-        
+        <p style="color: red;">You can't undo the action!</p>
       </form>
     </div>
     <hr class="my-1">
-    <div class="container-fluid mt-4">
+    <div class="container-fluid mt-4" style="display: none;">
       <form>
         <div class="input-group mb-3">
           <select class="form-select" id="type" name="type" disabled>
@@ -73,6 +87,7 @@
             aria-label="party"
             class="form-control"
             name="party"
+            id="party"
             placeholder="party"
             value="_?_"
             disabled
@@ -82,6 +97,7 @@
             aria-label="amount"
             class="form-control"
             name="amount"
+            id="amount"
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
             title="Must be a float value"
@@ -97,8 +113,8 @@
           <select class="form-select" id="via" name="via">
             <option value="cash" selected disabled>_?_</option>
           </select>
-          <label class="input-group-text" for="inputGroupSelect02"
-            >Currency&Via</label
+          <span class="input-group-text" 
+            >Currency&Via</span
           >
         </div>
 
@@ -107,6 +123,7 @@
           <input
             type="text"
             aria-label="place"
+            id="place"
             class="form-control"
             name="location"
             placeholder="place"

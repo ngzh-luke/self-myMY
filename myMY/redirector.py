@@ -13,12 +13,22 @@ def toHome():
 def toLogin():
     return redirect(url_for("auth.login"))
 
-
 @r.route("/signup/", methods=['GET'])
 def toSignup():
     return redirect(url_for("auth.signup"))
 
-
 @r.route("/logout/", methods=['GET'])
 def toLogout():
     return redirect(url_for("auth.logout"))
+
+@r.route("/transaction/home/", methods=['GET'])
+def toTransactionHome():
+    return redirect(url_for("transaction.transactionHome"))
+
+@r.route("/transaction/lookup/", methods=['GET'])
+def toTransactionLookup():
+    return redirect(url_for("transaction.transactionGet"))
+
+@r.route("/transaction/del/", methods=['GET'])
+def toTransactionDel():
+    return redirect(url_for("transaction.transactionEdit"))

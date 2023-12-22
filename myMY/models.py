@@ -8,7 +8,6 @@ from . import db
 
 
 class User(db.Model, UserMixin, AnonymousUserMixin):
-    __tablename__ = "user"
     """ Database table: user
         each user account setting/properties defined here.
 
@@ -19,6 +18,7 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
             password -> password, \n
             transactions -> relationship to `Transaction` table
         """
+    __tablename__ = "user"
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     uname = db.Column(db.String(26), unique=True)  # username
     fname = db.Column(db.String(56), default="[NONE].firstname")  # firstname
@@ -51,7 +51,6 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
 
 
 class SignupCode(db.Model):
-    __tablename__ = "signupCode"
     """ Database table: signup_code
         list of single use signup code
 
@@ -60,29 +59,29 @@ class SignupCode(db.Model):
             isused -> is used, \n
 
         """
+    __tablename__ = "signupCode"
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     code = db.Column(db.String(9), default=False, unique=True)
     isused = db.Column(db.Boolean, default=False)
 
 class Transaction(db.Model):
-    __tablename__ = "transaction"
     """ Database table: transaction
         list of single use signup code
 
         #Attribute:
-            type -> spend, exchange, receive, owe\n
-            amount -> transaction amount \n
-            currency -> THB, etc. \n
-            via -> transaction method (cash, etc) \n
-            party -> receiver or payer name (if user is payer than party is receiver) \n
-            location -> name of a place that the transaction is taken \n
-            country -> country/region that the transaction is taken (ISO 3166-1 alpha-3 country code) \n
-            dtime -> date and time of the transaction is processed \n
-            notes -> transaction notes \n
+            typee -> spend, exchange, receive, owe, \n
+            amount -> transaction amount, \n
+            currency -> THB, etc., \n
+            via -> transaction method (cash, etc), \n
+            party -> receiver or payer name (if user is payer than party is receiver), \n
+            location -> name of a place that the transaction is taken, \n
+            country -> country/region that the transaction is taken (ISO 3166-1 alpha-3 country code), \n
+            dtime -> date and time of the transaction is processed, \n
+            notes -> transaction notes, \n
             user_id -> foreign key to user
 
-            
         """
+    __tablename__ = "transaction"
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     amount = db.Column(db.Float(), nullable=False)
     currency = db.Column(db.String(3), nullable=False, default="THB")
@@ -93,6 +92,7 @@ class Transaction(db.Model):
     dtime = db.Column(db.String(18))
     country = db.Column(db.String(3)) # THA
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    typee = db.Column(db.String(20), nullable=False)
 
 
     

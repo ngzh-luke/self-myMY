@@ -34,21 +34,27 @@
     </div>
     <div>
       <a
-        href="{{url_for('redirector.toHome')}}"
+        href="{{url_for('redirector.toTransactionLookup')}}"
         type="button"
-        class="btn btn-primary"
-        >myMY Home</a
+        class="btn btn-info"
+        >Lookup transaction</a
+      >&ensp;
+      <a
+        href="{{url_for('redirector.toTransactionDel')}}"
+        type="button"
+        class="btn btn-warning"
+        >Edit</a
       >
     </div>
     <br />
     <div class="container-fluid">
-      <form action="" method="POST">
+      <form action="{{url_for('transaction.transactionNew')}}" method="POST">
         <div class="input-group mb-3">
-          <select class="form-select" id="type" name="type">
-            <option selected>Choose...</option>
-            <option value="out">Outcome</option>
-            <option value="in">Income</option>
-            <option value="ex">Exchange</option>
+          <select class="form-select" id="typee" name="typee" required>
+            <option selected value="None">Choose...</option>
+            <option value="outcome">Outcome</option>
+            <option value="income">Income</option>
+            <option value="exchange">Exchange</option>
             <option value="owe">Owe</option>
             <option value="withdrawal">Withdrawal</option></select
           ><label class="input-group-text" for="type">Type</label>
@@ -62,15 +68,19 @@
             class="form-control"
             name="party"
             placeholder="party"
+            id="party"
+            required
           />
           <input
             type="text"
+            id="amount"
             aria-label="amount"
             class="form-control"
             name="amount"
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
             title="Must be a float value"
+            required
           />
         </div>
 
@@ -95,8 +105,8 @@
             <option value="atm:[other]">ATM: [OTHER]</option>
             <option value="other">Other</option>
           </select>
-          <label class="input-group-text" for="inputGroupSelect02"
-            >Currency&Via</label
+          <span class="input-group-text"
+            >Currency&Via</span
           >
         </div>
 
@@ -106,8 +116,10 @@
             type="text"
             aria-label="place"
             class="form-control"
-            name="location"
-            placeholder="place"
+            name="place"
+            placeholder="place (&lt;=56chars)"
+            id="place"
+            required
           />
           <select class="form-select" id="country" name="country">
             <option value="THA" selected>Thailand</option>

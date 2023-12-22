@@ -99,8 +99,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.3, status='Initial Development',
-                         build=20231222, version_note='Implementing transaction system')
+systemInfoObject = About(version=0.4, status='Beta Release',
+                         build=20231222, version_note='Main functionalities such account management and transaction system can function')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -119,7 +119,7 @@ def root_View():
 
 @rootView.route("/about/")
 def aboutView():
-    return render_template("about.html", user=current_user, version=systemVersion)
+    return render_template("about.html", user=current_user, version=systemVersion,versionNotes=systemInfoObject.version_note,build=systemInfoObject.build )
 
 # handle not found
 def notFound(e):

@@ -25,13 +25,13 @@
   }
 </style>
 {% block body %}
-<body>
-  <main align="center" class="mx-1 px-1">
-    <div id="get" class="my-2 mx-1" align="center">
-      <h1><code>myMY</code> by LukeCreated</h1>
 
-      <h2>GET</h2>
-    </div>
+<main align="center" class="mx-1 px-1">
+  <div id="get" class="my-2 mx-1" align="center">
+    <h1><code>myMY</code> by LukeCreated</h1>
+
+    <h2>GET</h2>
+
     <div>
       <a
         href="{{url_for('redirector.toHome')}}"
@@ -39,33 +39,66 @@
         class="btn btn-primary"
         >myMY Home</a
       >
+      &ensp;
+      <a
+        href="{{url_for('transaction.transactionHome')}}"
+        type="button"
+        class="btn btn-success"
+        >Add new now!</a
+      >
     </div>
     <br />
-    <div class="container-fluid" id="tb">
+    <div class="container-fluid justify-content-center" id="t" align="center">
       {% if get %} {% for g in get %}
-      <div>{{g}}</div>
-      {% endfor %}{% else %}There's no transaction, yet!  <a
-      href="{{url_for('transaction.transactionHome')}}"
+      <ul style="list-style-type: none">
+        <span style="font-weight: bold">{{g}}</span>
+        <li><u>Type:</u> {{g.typee}}</li>
+        <li><u>Via:</u> {{g.via}}</li>
+        <li><u>Amount:</u> {{g.amount}}{{g.currency}}</li>
+        <li><u>Party:</u> {{g.party}}</li>
+        <li><u>When:</u> {{g.dtime}}</li>
+        <li><u>Where:</u> {{g.location}}, {{g.country}}</li>
+        <li><u>Notes:</u> {{g.notes}}</li>
+      </ul>
+      <hr />
+      {% endfor %}{% else %}
+      <hr />
+      There's no transaction, yet!
+      <a
+        href="{{url_for('transaction.transactionHome')}}"
+        type="button"
+        class="btn btn-success"
+        >Add now!</a
+      >
+      <hr />
+      {% endif %} {% if total %} {% for t in total %}
+      <span style="font-weight: bold">Calculation</span>
+      <ul style="list-style-type: armenian">
+        <li>
+          Received total: <span style="color: green">~{{t.received}}</span>THB
+        </li>
+        <li>Spent total: <span style="color: red">~{{t.spent}}</span>THB</li>
+        <li>
+          Transaction flow: <span style="color: blue">~{{t.flow}}</span>THB
+        </li>
+      </ul>
+      {% endfor %} {% endif %}
+    </div>
+  </div>
+  <br />
+  <div>
+    <a
+      href="{{url_for('redirector.toHome')}}"
       type="button"
       class="btn btn-primary"
-      >Add now!</a
-    >{% endif %}
-    </div>
-    <br />
-    <div>
-      <a
-        href="{{url_for('redirector.toHome')}}"
-        type="button"
-        class="btn btn-primary"
-        >myMY Home</a
-      >
-    </div>
-  </main>
-  <br />
-  <div class="my-3"></div>
-  <br />
-  <div class="my-3"></div>
-  <hr />
-</body>
+      >myMY Home</a
+    >
+  </div>
+</main>
+<br />
+<div class="my-3"></div>
+<br />
+<div class="my-3"></div>
+<hr />
 
 {% endblock %}
