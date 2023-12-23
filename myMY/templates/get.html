@@ -26,7 +26,8 @@
 </style>
 {% block body %}
 
-<main align="center" class="mx-1 px-1">
+<main
+  align="center" class="mx-1 px-1">
   <div id="get" class="my-2 mx-1" align="center">
     <h1><code>myMY</code> by LukeCreated</h1>
 
@@ -45,9 +46,9 @@
         type="button"
         class="btn btn-success"
         >Add new now!</a
-      >
+      ><div align="end" class="mb-2"><a href="#bottom" type="button" class="btn btn-dark" >v</a></div>
     </div>
-    <br />
+
     <div class="container-fluid justify-content-center" id="t" align="center">
       {% if get %} {% for g in get %}
       <ul style="list-style-type: none">
@@ -85,13 +86,22 @@
       {% endfor %} {% endif %}
     </div>
   </div>
+  <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
+    <a href="#" type="button" class="btn btn-dark">^</a>
+  </div>
   <br />
-  <div>
+  <div align="center">
     <a
       href="{{url_for('redirector.toHome')}}"
       type="button"
       class="btn btn-primary"
       >myMY Home</a
+    >&ensp;
+    <a
+      href="{{url_for('transaction.transactionHome')}}"
+      type="button"
+      class="btn btn-success"
+      >Add new now!</a
     >
   </div>
 </main>

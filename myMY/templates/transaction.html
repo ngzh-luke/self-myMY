@@ -32,6 +32,14 @@
 
       <h2>Transaction</h2>
     </div>
+    <div class="my-1">
+      <a
+        href="{{url_for('redirector.toHome')}}"
+        type="button"
+        class="btn btn-primary"
+        >myMY Home</a
+      >
+    </div>
     <div>
       <a
         href="{{url_for('redirector.toTransactionLookup')}}"
@@ -44,13 +52,19 @@
         type="button"
         class="btn btn-warning"
         >Edit</a
-      >
+      ><div align="end" class="mb-2"><a href="#bottom" type="button" class="btn btn-dark" >v</a></div>
     </div>
-    <br />
+
+
     <div class="container-fluid">
       <form action="{{url_for('transaction.transactionNew')}}" method="POST">
         <div class="input-group mb-3">
-          <select class="form-select" id="typee" name="typee" required>
+          <select
+            class="form-select border border-2 border-dark"
+            id="typee"
+            name="typee"
+            required
+          >
             <option selected value="None">Choose...</option>
             <option value="outcome">Outcome</option>
             <option value="income">Income</option>
@@ -59,15 +73,15 @@
             <option value="transfer">Transfer</option>
             <option value="deposit">Deposit</option>
             <option value="withdrawal">Withdrawal</option></select
-          ><label class="input-group-text" for="type">Type</label>
+          ><label class="input-group-text btn btn-dark" for="type">Type</label>
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Party&Amount</span>
+          <span class="input-group-text btn btn-warning">Party&Amount</span>
           <input
             type="text"
             aria-label="party"
-            class="form-control"
+            class="form-control border border-2 border-warning"
             name="party"
             placeholder="party"
             id="party"
@@ -77,7 +91,7 @@
             type="text"
             id="amount"
             aria-label="amount"
-            class="form-control"
+            class="form-control border border-2 border-warning"
             name="amount"
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
@@ -87,14 +101,22 @@
         </div>
 
         <div class="input-group mb-3">
-          <select class="form-select" id="currency" name="currency">
+          <select
+            class="form-select border border-2 border-info"
+            id="currency"
+            name="currency"
+          >
             <option value="THB" selected>THB</option>
             <option value="RMB">RMB</option>
             <option value="TWD">TWD</option>
             <option value="USD">USD</option>
             <option value="other">Other</option>
           </select>
-          <select class="form-select" id="via" name="via">
+          <select
+            class="form-select border border-2 border-info"
+            id="via"
+            name="via"
+          >
             <option value="cash" selected>Cash</option>
             <option value="mb:scb">MB: SCB</option>
             <option value="mb:k+">MB: K+</option>
@@ -107,23 +129,25 @@
             <option value="atm:[other]">ATM: [OTHER]</option>
             <option value="other">Other</option>
           </select>
-          <span class="input-group-text"
-            >Currency&Via</span
-          >
+          <span class="input-group-text btn btn-info">Currency&Via</span>
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Place&Region</span>
+          <span class="input-group-text btn btn-primary">Place&Region</span>
           <input
             type="text"
             aria-label="place"
-            class="form-control"
+            class="form-control border border-2 border-primary"
             name="place"
             placeholder="place (&lt;=56chars)"
             id="place"
             required
           />
-          <select class="form-select" id="country" name="country">
+          <select
+            class="form-select border border-2 border-primary"
+            id="country"
+            name="country"
+          >
             <option value="THA" selected>Thailand</option>
             <option value="CHN">People's Republic of China (PRC)</option>
             <option value="TWN">Taiwan</option>
@@ -137,8 +161,8 @@
             type="datetime-local"
             id="dtime"
             name="dtime"
-            class="form-control"
-          /><span class="input-group-text">Date&Time</span>
+            class="form-control border border-2 border-success"
+          /><span class="input-group-text btn btn-success">Date&Time</span>
         </div>
 
         <div class="input-group mb-3">
@@ -156,6 +180,10 @@
         <button type="submit" class="btn btn-lg btn-success">SAVE</button>
       </form>
     </div>
+    <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
+      <a href="#" type="button" class="btn btn-dark">^</a>
+    </div>
+
     <br />
     <div class="mt-1">
       <a
