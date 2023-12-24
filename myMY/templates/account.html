@@ -343,13 +343,20 @@ block body %} {% if title %}
     Hi! <br />Welcome back, <code>{{user.alias}}</code>!
   </h1>
   <br />
-  
-      <a
-        href="{{url_for('transaction.transactionHome')}}"
-        type="button"
-        class="btn btn-lg btn-success"
-        >Add new now!</a
-      > <br> <br>
+
+  <a
+    href="{{url_for('transaction.transactionHome')}}"
+    type="button"
+    class="btn btn-lg btn-success"
+    >Add new now!</a
+  >
+  <br />
+  <br /><a
+    href="{{url_for('redirector.toTransactionLookup')}}"
+    type="button"
+    class="btn btn-info"
+    >Lookup transaction</a
+  ><br /><br />
   <a href="{{url_for('acc.accManager')}}"
     ><button type="button" class="btn btn-warning">Account Manager</button></a
   ><br /><br />
@@ -359,5 +366,13 @@ block body %} {% if title %}
   <a href="/about/"
     ><button type="button" class="btn btn-info">About</button></a
   >
+  <div class="mt-2">
+    <a
+      href="{{url_for('redirector.toHome')}}"
+      type="button"
+      class="btn btn-primary"
+      >myMY Home</a
+    >
+  </div>
 </div>
 {% endif %} {% endblock %}

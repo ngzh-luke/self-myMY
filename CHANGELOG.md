@@ -14,6 +14,8 @@ Created on Dec 20, 2023
 - Initial Development: Account manager is completed on December 21, 2023 -> **0.22**
 - Initial Development: Implementing transaction system on December 22, 2023 -> **0.3**
 - Beta Release: Main functionalities such account management and transaction system can function on December 22, 2023 -> **0.4**
-- Beta Release: Added more option on December 22, 2023 -> **0.41**
-- Beta Release: Added more option on December 22, 2023 -> **0.411**
+- Beta Release: Added more transaction options on December 22, 2023 -> **0.41**
+- Beta Release: Added more transaction options on December 22, 2023 -> **0.411**
 - Beta Release: Added colors wrap on the add transaction from + to top and bottom buttons added on December 24, 2023 -> **0.45**
+- Beta Release: Added more transaction options and minor improvements on December 25, 2023 -> **0.46**
+

@@ -26,8 +26,7 @@
 </style>
 {% block body %}
 
-<main
-  align="center" class="mx-1 px-1">
+<main align="center" class="mx-1 px-1">
   <div id="get" class="my-2 mx-1" align="center">
     <h1><code>myMY</code> by LukeCreated</h1>
 
@@ -46,11 +45,15 @@
         type="button"
         class="btn btn-success"
         >Add new now!</a
-      ><div align="end" class="mb-2"><a href="#bottom" type="button" class="btn btn-dark" >v</a></div>
+      >
+      <div align="end" class="fixed-top top-50 mt-1 mb-1 mx-1">
+        <a href="#bottom" type="button" class="btn btn-danger">v</a>
+      </div>
     </div>
 
     <div class="container-fluid justify-content-center" id="t" align="center">
       {% if get %} {% for g in get %}
+      <hr />
       <ul style="list-style-type: none">
         <span style="font-weight: bold">{{g}}</span>
         <li><u>Type:</u> {{g.typee}}</li>
@@ -109,6 +112,5 @@
 <div class="my-3"></div>
 <br />
 <div class="my-3"></div>
-<hr />
 
 {% endblock %}

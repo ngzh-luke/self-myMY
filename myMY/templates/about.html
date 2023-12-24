@@ -40,82 +40,105 @@
 </style>
 {% block body %}
 
-  <main align="center" class="mx-1 px-1" class="container-fluid">
-    <div id="about" class="container mx-1" align="center">
-      <img
-        width="100"
-        height="100"
-        src="{{ url_for('static', filename='myMY-logo.svg') }}"
-        alt="myMY Icon"
-      />
-      <h1><code>myMY</code> by LukeCreated</h1>
+<main align="center" class="mx-1 px-1" class="container-fluid">
+  <div id="about" class="container mx-1" align="center">
+    <img
+      width="100"
+      height="100"
+      src="{{ url_for('static', filename='myMY-logo.svg') }}"
+      alt="myMY Icon"
+    />
+    <h1><code>myMY</code> by LukeCreated</h1>
 
-      <h2><code>myMY</code> Info</h2>
+    <h2><code>myMY</code> Info</h2>
 
-      <div class="d-flex justify-content-center col-5" id="tb">
-        <table
-          class="table table-dark table-hover table-striped-columns border border-3"
-        >
-          <thead align="center">
-            <th>KEY</th>
-            <th>VALUE</th>
-          </thead>
-          <tbody align="center">
-            <tr class="table-info">
-              <th>Version,Build</th>
-              <td style="font-weight: bold" class="link-danger">{{version}},{{build}}</td>
-            </tr>
-            <tr class="table-success">
-              <th>Version notes:</th>
-              <td>
-                {{versionNotes}}
-              </td>
-            </tr>
-            <tr class="table-info">
-              <th>myMY repo</th>
-              <td>
-                <a
-                  style="font-weight: bold"
-                  class="link-danger"
-                  target="_blank"
-                  href="https://github.com/ngzh-luke/self-myMY"
-                  >Repo link
-                </a>
-              </td>
-            </tr>
-            <tr class="table-success">
-              <th>myMY license:</th>
-              <td>
-                <a
-                  style="font-weight: bold"
-                  class="link-danger"
-                  target="_blank"
-                  href="https://github.com/ngzh-luke/self-myMY/blob/main/LICENSE"
-                  >MIT</a
-                >
-              </td>
-            </tr>
-            <tr class="table-info">
-              <th>myMY bugs report:</th>
-              <td
-                  class="link-danger"
-                  >bugsreport@lukecreated.com
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
+    <div class="d-flex justify-content-center col-5" id="tb">
+      <table
+        class="table table-dark table-hover table-striped-columns border border-3"
+      >
+        <thead align="center">
+          <th>KEY</th>
+          <th>VALUE</th>
+        </thead>
+        <tbody align="center">
+          <tr class="table-success">
+            <th>Version status</th>
+            <td style="font-weight: bold" class="link-danger">{{status}}</td>
+          </tr>
+          <tr class="table-info">
+            <th>Version,Build</th>
+            <td style="font-weight: bold" class="link-danger">
+              {{version}},{{build}}
+            </td>
+          </tr>
+          <tr class="table-success">
+            <th>Version notes:</th>
+            <td>{{versionNotes}}</td>
+          </tr>
+          <tr class="table-info">
+            <th>myMY repo</th>
+            <td>
+              <a
+                style="font-weight: bold"
+                class="link-danger"
+                target="_blank"
+                href="https://github.com/ngzh-luke/self-myMY"
+                >Repo link
+              </a>
+            </td>
+          </tr>
+          <tr class="table-success">
+            <th>myMY license:</th>
+            <td>
+              <a
+                style="font-weight: bold"
+                class="link-danger"
+                target="_blank"
+                href="https://github.com/ngzh-luke/self-myMY/blob/main/LICENSE"
+                >MIT</a
+              >
+            </td>
+          </tr>
+          <tr class="table-info">
+            <th>myMY bugs report:</th>
+            <td class="link-danger">bugsreport@lukecreated.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <a
+        href="{{url_for('redirector.toHome')}}"
+        type="button"
+        class="btn btn-primary"
+        >myMY Home</a
+      ><br />
+      <br />
+      <div align="center">
         <a
-          href="{{url_for('redirector.toHome')}}"
+          href="{{url_for('transaction.transactionHome')}}"
           type="button"
-          class="btn btn-primary"
-          >myMY Home</a
+          class="btn btn-success"
+          >Add new now!</a
+        >
+        <a
+          href="{{url_for('redirector.toTransactionDel')}}"
+          type="button"
+          class="btn btn-warning"
+          >Edit</a
+        >&ensp;<a
+          href="{{url_for('redirector.toTransactionLookup')}}"
+          type="button"
+          class="btn btn-info"
+          >Lookup transaction</a
         >
       </div>
     </div>
-    
-  </main>
+  </div>
+  <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
+    <a href="#" type="button" class="btn btn-dark">^</a>
+  </div>
+</main>
 
 <script>
   function isMobile() {

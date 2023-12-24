@@ -52,9 +52,11 @@
         type="button"
         class="btn btn-warning"
         >Edit</a
-      ><div align="end" class="mb-2"><a href="#bottom" type="button" class="btn btn-dark" >v</a></div>
+      >
+      <div align="end" class="mb-2 mt-1">
+        <a href="#bottom" type="button" class="btn btn-danger">v</a>
+      </div>
     </div>
-
 
     <div class="container-fluid">
       <form action="{{url_for('transaction.transactionNew')}}" method="POST">
@@ -122,6 +124,10 @@
             <option value="mb:k+">MB: K+</option>
             <option value="mb:icbc_th">MB: ICBC TH</option>
             <option value="mb:alipay">MB: Alipay</option>
+            <option value="mb:wechatpay">MB: WeChat Pay</option>
+            <option value="mb:truemoney">MB: TrueMoney</option>
+            <option value="crd:true_master">CRD: True Master card</option>
+            <option value="crd:scb_planet">CRD: SCB Planet</option>
             <option value="atm:scb">ATM: SCB</option>
             <option value="atm:k+">ATM: K+</option>
             <option value="atm:icbc_th">ATM: ICBC TH</option>
@@ -129,7 +135,7 @@
             <option value="atm:[other]">ATM: [OTHER]</option>
             <option value="other">Other</option>
           </select>
-          <span class="input-group-text btn btn-info">Currency&Via</span>
+          <span class="input-group-text btn btn-info">Unit&Via</span>
         </div>
 
         <div class="input-group mb-3">
@@ -191,14 +197,18 @@
         type="button"
         class="btn btn-primary"
         >myMY Home</a
-      >
+      > &ensp;<a
+      href="{{url_for('redirector.toTransactionLookup')}}"
+      type="button"
+      class="btn btn-info"
+      >Lookup transaction</a
+    >
     </div>
   </main>
   <br />
   <div class="my-3"></div>
   <br />
   <div class="my-3"></div>
-  <hr />
 </body>
 <script>
   function print() {
