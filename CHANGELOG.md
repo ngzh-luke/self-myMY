@@ -18,4 +18,5 @@ Created on Dec 20, 2023
 - Beta Release: Added more transaction options on December 22, 2023 -> **0.411**
 - Beta Release: Added colors wrap on the add transaction from + to top and bottom buttons added on December 24, 2023 -> **0.45**
 - Beta Release: Added more transaction options and minor improvements on December 25, 2023 -> **0.46**
-- Beta Release: Transaction deletion system improvement and  on December 25, 2023 -> **0.48**
+- Beta Release: Transaction deletion and system improvement on December 25, 2023 -> **0.48**
+- Beta Release: Transaction DB model adjustment + deletion UI adjustment on December 26, 2023 -> **0.49**
