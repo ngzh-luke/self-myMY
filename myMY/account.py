@@ -1,6 +1,6 @@
 """ account """
 from flask import Blueprint, render_template, url_for, flash, request, redirect
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, fresh_login_required
 from flask_bcrypt import generate_password_hash, check_password_hash
 from .models import User
 from myMY import db
@@ -17,7 +17,7 @@ def myAcc():
 
 # localhost:5500/account/my-account/account-manager
 @acc.route("my-account/account-manager")
-@login_required
+@fresh_login_required
 # account manager
 def accManager():
     return render_template("account.html", user=current_user, title='Account Manager')
