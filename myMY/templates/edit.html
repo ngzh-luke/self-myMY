@@ -56,18 +56,37 @@
     <div class="container-fluid mb-4">
       <form action="{{url_for('transaction.transactionSeDel')}}" method="GET">
         <div class="input-group mb-2">
-          <span class="input-group-text">Transaction ID:</span>
-          <input
-            type="text"
-            aria-label="party"
-            class="form-control"
-            name="tid"
-            pattern="^[1-9]\d*$"
-            title="Must be valid ID"
-            placeholder="Enter Transaction ID.."
-          /><button class="btn btn-danger" type="submit">Search&Delete</button>
+          <div class="input-group mb-2">
+            <span class="input-group-text">Transaction ID:</span>
+            <input
+              type="text"
+              aria-label="party"
+              class="form-control"
+              name="tid"
+              pattern="^[1-9]\d*$"
+              title="Must be valid ID"
+              placeholder="Enter Transaction ID.."
+              required
+            /><button class="btn btn-dark" type="submit">Search&Delete</button>
+          </div>
+          <br />
+          <div class="container" align="center">
+            <div class="row col-4">
+              <div class="input-group-text my-1" style="background-color: yellow;">
+                <input
+                  class="form-control form-check-input mt-1"
+                  type="checkbox"
+                  name="delCon"
+                  aria-label="Checkbox for following text input"
+                /><span for="delCon" class="input-group-text btn btn-danger"
+                  >I acknowledged the action can't be undone and wish to
+                  proceed!</span
+                >
+              </div>
+            </div>
+          </div>
         </div>
-        <p style="color: red">You can't undo the action!</p>
+        <p style="color: red"><u>You can't undo the action!</u></p>
       </form>
     </div>
     <hr class="my-1" />

@@ -3,9 +3,10 @@ from flask import Blueprint, redirect, url_for, render_template, flash, request
 from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
+from .customErrorClass import confirmationError
+# from builtins import ty
 
 t = Blueprint("transaction", __name__)
-
 
 @t.route("/home/", methods=['GET'])
 @login_required
@@ -64,11 +65,26 @@ def transactionSeDel():
     
     try:
         tid = int(request.args.get("tid"))
-        result = Transaction.query.filter_by(id=tid).first()
-        db.session.delete(result)
-        db.session.commit()
-        flash('Transaction deleted!', category = 'success')
+        delCon = request.args.get("delCon")
+        if (delCon == None) or (delCon == "None"):
+            raise confirmationError()
+        else:
+            result = Transaction.query.filter_by(id=tid).first()
+            if (result == None) or (result == "None"):
+                raise AttributeError(obj={'msg':"Transaction does not exist"})
+            db.session.delete(result)
+            db.session.commit()
+            flash('Transaction deleted!', category = 'success')
+    except ValueError as ve:
+        flash(message=str(f"No transation ID given. [{ve}]"), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
+    except confirmationError:
+        flash(message=str("Unable to delete transaction! due to no user confirmation!"), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
+    except AttributeError as ae:
+        flash(message=str(f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
     except Exception as e:
-        flash(message=f"Unable to delete transaction<br>ERR:{e}", category='error')
-        return redirect(url_for("redirector.toTransactionHome"))
+        flash(message="Unable to delete transaction! <br> ERR:{}".format(e), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
     return redirect(url_for("redirector.toTransactionHome"))

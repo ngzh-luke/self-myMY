@@ -67,8 +67,7 @@
             name="typee"
             required
           >
-            <option selected value="None">Choose...</option>
-            <option value="outcome">Outcome</option>
+            <option value="outcome" selected>Outcome</option>
             <option value="income">Income</option>
             <option value="exchange">Exchange</option>
             <option value="owe">Owe</option>
@@ -97,7 +96,7 @@
             name="amount"
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
-            title="Must be a float value"
+            title="Must be a float value (1.0)"
             required
           />
         </div>
@@ -108,10 +107,10 @@
             id="currency"
             name="currency"
           >
-            <option value="THB" selected>THB</option>
-            <option value="RMB">RMB</option>
-            <option value="TWD">TWD</option>
-            <option value="USD">USD</option>
+            <option value="THB" selected>฿:THB (บาท)</option>
+            <option value="RMB">¥:RMB (หยวน)</option>
+            <option value="TWD">$:TWD (เหรียญ)</option>
+            <option value="USD">$:USD (เหรียญ)</option>
             <option value="other">Other</option>
           </select>
           <select
@@ -121,7 +120,7 @@
           >
             <option value="cash" selected>Cash</option>
             <option value="mb:scb">MB: SCB</option>
-            <option value="mb:k+">MB: K+</option>
+            <option value="mb:k+">MB: KBank</option>
             <option value="mb:icbc_th">MB: ICBC TH</option>
             <option value="mb:alipay">MB: Alipay</option>
             <option value="mb:wechatpay">MB: WeChat Pay</option>
@@ -129,7 +128,7 @@
             <option value="crd:true_master">CRD: True Master card</option>
             <option value="crd:scb_planet">CRD: SCB Planet</option>
             <option value="atm:scb">ATM: SCB</option>
-            <option value="atm:k+">ATM: K+</option>
+            <option value="atm:k+">ATM: KBank</option>
             <option value="atm:icbc_th">ATM: ICBC TH</option>
             <option value="atm:icnc_ch">ATM: ICBC CH</option>
             <option value="atm:[other]">ATM: [OTHER]</option>
@@ -154,10 +153,10 @@
             id="country"
             name="country"
           >
-            <option value="THA" selected>Thailand</option>
-            <option value="CHN">People's Republic of China (PRC)</option>
-            <option value="TWN">Taiwan</option>
-            <option value="USA">United States of America (USA)</option>
+            <option value="THA" selected>THA: Thailand</option>
+            <option value="CHN">CHN: People's Republic of China (PRC)</option>
+            <option value="TWN">TWN: Taiwan</option>
+            <option value="USA">USA: United States of America (USA)</option>
             <option value="___">Other</option>
           </select>
         </div>
@@ -180,6 +179,7 @@
             name="notes"
             placeholder="notes (&lt;=100chars)"
             id="notes"
+            required
           />
         </div>
 
@@ -197,12 +197,13 @@
         type="button"
         class="btn btn-primary"
         >myMY Home</a
-      > &ensp;<a
-      href="{{url_for('redirector.toTransactionLookup')}}"
-      type="button"
-      class="btn btn-info"
-      >Lookup transaction</a
-    >
+      >
+      &ensp;<a
+        href="{{url_for('redirector.toTransactionLookup')}}"
+        type="button"
+        class="btn btn-info"
+        >Lookup transaction</a
+      >
     </div>
   </main>
   <br />
