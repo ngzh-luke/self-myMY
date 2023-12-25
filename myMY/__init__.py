@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
 from flask import Flask, Blueprint, render_template, abort, flash, session, redirect, request, url_for
+from flask_migrate import Migrate
 from decouple import config as en_var  # import the environment var
 from datetime import timedelta
 db = SQLAlchemy()
+migrate = Migrate()
 DB_NAME = en_var(
     'DATABASE_URL', "sqlite:///myMY_db.sqlite")
 TIMEOUT = timedelta(hours=3)
@@ -34,6 +36,7 @@ def createApp():
 
     f_bcrypt.init_app(app)
     db.init_app(app)
+    migrate.init_app(app, db)
 
     from .transaction import t
     from .authen import iden
@@ -99,8 +102,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.49, status='Beta Release',
-                         build=20231226, version_note='Transaction DB model adjustment + deletion UI adjustment')
+systemInfoObject = About(version=0.491, status='Beta Release',
+                         build=20231226, version_note='Transaction DB model adjustment + add migration')
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

@@ -76,7 +76,7 @@ def transactionSeDel():
             db.session.commit()
             flash('Transaction deleted!', category = 'success')
     except ValueError as ve:
-        flash(message=str(f"No transation ID given. [{ve}]"), category='error')
+        flash(message=str(f"Invalid transation ID given. [{ve}]"), category='error')
         return redirect(url_for("redirector.toTransactionDel"))
     except confirmationError:
         flash(message=str("Unable to delete transaction! due to no user confirmation!"), category='error')

@@ -85,14 +85,14 @@ class Transaction(db.Model):
     id = db.Column(db.Integer(), unique=True, primary_key=True)
     amount = db.Column(db.Float(), nullable=False)
     currency = db.Column(db.String(3), nullable=False, default="THB")
-    via = db.Column(db.String(30), nullable=False, default="cash")
-    party = db.Column(db.String(30), nullable=False)
-    location = db.Column(db.String(56), nullable=False, default="unspecified")
-    notes = db.Column(db.String(100), nullable=True)
-    dtime = db.Column(db.String(18))
+    via = db.Column(db.String(), nullable=False, default="cash")
+    party = db.Column(db.String(), nullable=False)
+    location = db.Column(db.String(), nullable=False, default="unspecified")
+    notes = db.Column(db.String(), nullable=True)
+    dtime = db.Column(db.String(20))
     country = db.Column(db.String(5)) # THA
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    typee = db.Column(db.String(20), nullable=False)
+    typee = db.Column(db.String(30), nullable=False)
 
 
     
