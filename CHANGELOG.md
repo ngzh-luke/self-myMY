@@ -22,3 +22,4 @@ Created on Dec 20, 2023
 - Beta Release: Transaction DB model adjustment + deletion UI adjustment on December 26, 2023 -> **0.49**
 - Beta Release: Transaction DB model adjustment + add migration on December 26, 2023 -> **0.491**
 - Beta Release: Changed transaction values on December 26, 2023 -> **0.492**
+- Beta Release: Data export draft on December 27, 2023 -> **0.493**

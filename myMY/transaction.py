@@ -1,9 +1,10 @@
 """ transaction """
-from flask import Blueprint, redirect, url_for, render_template, flash, request
+from flask import Blueprint, redirect, url_for, render_template, flash, request, Response
 from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
 from .customErrorClass import confirmationError
+from .idGen import gen1
 # from builtins import ty
 
 t = Blueprint("transaction", __name__)
@@ -88,3 +89,36 @@ def transactionSeDel():
         flash(message="Unable to delete transaction! <br> ERR:{}".format(e), category='error')
         return redirect(url_for("redirector.toTransactionDel"))
     return redirect(url_for("redirector.toTransactionHome"))
+
+
+@t.route("/export/", methods=['GET'])
+@login_required
+def exportAsPdf():
+    try:
+        data = Transaction.query.filter_by(user_id=current_user.id).all()
+    except Exception as e:
+        flash(e)
+    csv_data = str()
+    for i in range(len(data)):
+        pairs = list(data[i].__dict__.items()) # convert the list of key value pairs into a list
+        keys = list(data[i].__dict__.keys()) # convert the list of keys into a list
+        values = list(data[i].__dict__.values()) # convert the list of value into a list
+        for ii in range(len(keys)):
+            # csv_data += '\n'.join(keys[ii], values[ii])
+            pair = pairs[i+1] if i == 0 else i
+            key = keys[i+1] if i == 0 else i
+            value = values[i+1]if i == 0 else i
+            # flash(f"{pair}->{key} : {value}")
+            csv_data +=  str(key) + ":" + str(value)
+            flash(csv_data)
+    # fn= gen1()
+    # flash(csv_data)
+
+    # response = Response(
+    #     csv_data,
+    #     content_type='text/csv',
+    #     headers={'Content-Disposition': 'attachment; filename={}.csv'.format(fn)}
+    # )
+
+    
+    return render_template('root.html', user=current_user)
