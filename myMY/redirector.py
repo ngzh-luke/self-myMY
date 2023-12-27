@@ -31,4 +31,4 @@ def toTransactionLookup():
 
 @r.route("/transaction/del/", methods=['GET'])
 def toTransactionDel():
-    return redirect(url_for("transaction.transactionEdit"))
+    return redirect(url_for("transaction.transactionDelLanding"))

@@ -1,4 +1,5 @@
-{% extends 'root.html' %} {% block title %}myMY - Edit Transaction{% endblock %}
+{% extends 'root.html' %} {% block title %}myMY - Delete Transaction{% endblock
+%}
 
 <style>
   /* Media Query for larger screens */
@@ -54,7 +55,10 @@
     </div>
     <br />
     <div class="container-fluid mb-4">
-      <form action="{{url_for('transaction.transactionSeDel')}}" method="GET">
+      <form
+        action="{{url_for('transaction.fetchTransactionByUserID')}}"
+        method="GET"
+      >
         <div class="container" align="center">
           <div class="form-floating mb-2">
             <input
@@ -64,35 +68,50 @@
               name="tid"
               pattern="^[1-9]\d*$"
               title="Must be valid ID"
-              placeholder="Enter Transaction ID.."
+              placeholder="Enter Transaction ID..."
               required
-            /><label for="tid">Transaction ID:</label>
+            /><label for="tid">Please Enter Transaction ID:</label>
           </div>
         </div>
+
+        <button class="btn btn-dark" type="submit">Search</button>
+      </form>
+    </div>
+    <hr class="my-1" />
+    {% if transaction %}
+    <div class="container-fluid mt-4" id="frm">
+      <form action="{{url_for('transaction.transactionDel')}}" method="GET">
         <p style="color: red"><u>You can't undo the action!</u></p>
         <div class="container" align="center">
-          <div class="row col-7">
-            <div class="input-group my-1 py-2 border border-2" style="background-color: yellow">
+          <div class="row col-7" id="delConFrom">
+            <div
+              class="input-group my-1 py-2 border border-2"
+              style="background-color: yellow"
+            >
               <input
                 class="form-control form-check-input mt-1"
                 type="checkbox"
                 name="delCon"
+                id="delCon"
               /><span for="delCon" class="input-group btn btn-danger"
                 >I acknowledged the action can't be undone and wish to
                 proceed!</span
               >
             </div>
           </div>
+
+          <div class="form-floating mb-1">
+            <select class="form-select" name="tid" id="tid">
+              <option selected value="{{transaction.id}}">
+                {{transaction.id}}
+              </option>
+              <label class="input-group-text" for="tid">Transaction ID:</label>
+            </select>
+          </div>
         </div>
-        <button class="btn btn-dark" type="submit">Search&Delete</button>
-      </form>
-    </div>
-    <hr class="my-1" />
-    <div class="container-fluid mt-4" style="display: none">
-      <form>
         <div class="input-group mb-3">
           <select class="form-select" id="type" name="type" disabled>
-            <option selected>Choose...</option>
+            <option selected>{{transaction.typee}}</option>
             <label class="input-group-text" for="type">Type</label>
           </select>
         </div>
@@ -106,7 +125,7 @@
             name="party"
             id="party"
             placeholder="party"
-            value="_?_"
+            value="{{transaction.party}}"
             disabled
           />
           <input
@@ -118,17 +137,17 @@
             pattern="^\d+(\.\d+)?$"
             placeholder="amount"
             title="Must be a float value"
-            value="_?_"
+            value="{{transaction.amount}}"
             disabled
           />
         </div>
 
         <div class="input-group mb-3">
           <select class="form-select" id="currency" name="currency">
-            <option value="THB" selected disabled>_?_</option>
+            <option selected disabled>{{transaction.currency}}</option>
           </select>
           <select class="form-select" id="via" name="via">
-            <option value="cash" selected disabled>_?_</option>
+            <option selected disabled>{{transaction.via}}</option>
           </select>
           <span class="input-group-text">Currency&Via</span>
         </div>
@@ -142,11 +161,11 @@
             class="form-control"
             name="location"
             placeholder="place"
-            value="_?_"
+            value="{{transaction.location}}"
             disabled
           />
           <select class="form-select" id="country" name="country">
-            <option value="THA" selected disabled>_?_</option>
+            <option selected disabled>{{transaction.country}}</option>
           </select>
         </div>
 
@@ -156,7 +175,7 @@
             id="dtime"
             name="dtime"
             class="form-control"
-            value="_?_"
+            value="{{transaction.dtime}}"
             disabled
           /><span class="input-group-text">Date&Time</span>
         </div>
@@ -170,7 +189,7 @@
             name="notes"
             placeholder="notes (&lt;=100chars)"
             id="notes"
-            value="_?_"
+            value="{{transaction.notes}}"
             disabled
           />
         </div>
@@ -178,6 +197,11 @@
         <button type="submit" class="btn btn-lg btn-danger">DELETE</button>
       </form>
     </div>
+    {% else %}
+    <div class="container-fluid my-2">
+      <h3 style="color: red"><u>Transaction details appears here!</u></h3>
+    </div>
+    {% endif %}
     <br />
     <div class="mt-1">
       <a

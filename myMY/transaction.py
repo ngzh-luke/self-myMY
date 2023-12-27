@@ -1,10 +1,11 @@
 """ transaction """
-from flask import Blueprint, redirect, url_for, render_template, flash, request, Response
+from flask import Blueprint, redirect, url_for, render_template, flash, request, Response, jsonify
 from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
 from .customErrorClass import confirmationError
 from .idGen import gen1
+import requests as rq
 # from builtins import ty
 
 t = Blueprint("transaction", __name__)
@@ -21,10 +22,10 @@ def transactionGet():
 
     return render_template("get.html", user=current_user, get=g, total=None)
 
-@t.route("/edit/", methods=['GET'])
+@t.route("/edit/delete-landing", methods=['GET'])
 @login_required
-def transactionEdit():
-    return render_template("edit.html", user=current_user)
+def transactionDelLanding():
+    return render_template("delete.html", user=current_user)
 
 @t.route("/new/", methods=['POST'])
 @login_required
@@ -60,17 +61,18 @@ def transactionEditConfirm():
     return redirect(url_for("transaction.transactionHome"))
 
 
-@t.route("/search/delete", methods=['GET'])
+@t.route("/edit/delete", methods=['GET'])
 @login_required
-def transactionSeDel():
-    
+def transactionDel():
     try:
-        tid = int(request.args.get("tid"))
+        tid = str(request.args.get("tid"))
+        tid = int(tid)
         delCon = request.args.get("delCon")
+        userID = current_user.id
         if (delCon == None) or (delCon == "None"):
             raise confirmationError()
         else:
-            result = Transaction.query.filter_by(id=tid).first()
+            result = Transaction.query.filter_by(id=tid,user_id=userID).first()
             if (result == None) or (result == "None"):
                 raise AttributeError(obj={'msg':"Transaction does not exist"})
             db.session.delete(result)
@@ -122,3 +124,23 @@ def exportAsPdf():
 
     
     return render_template('root.html', user=current_user)
+
+@t.route('/fetch/by-tid', methods=['GET'])
+def fetchTransactionByUserID():
+    try:
+        userID = current_user.id
+        tid = request.args.get("tid")
+        transac = Transaction.query.filter_by(id=tid,user_id=userID).first()
+        if (transac == None) or (transac == "None"):
+            raise AttributeError(obj={'msg':"Transaction does not exist"})
+    except ValueError as ve:
+        flash(message=str(f"Invalid transation ID given. [{ve}]"), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
+    except AttributeError as ae:
+        flash(message=str(f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
+    except Exception as e:
+        flash(message="Unable to fetch transaction! <br> ERR:{}".format(e), category='error')
+        return redirect(url_for("redirector.toTransactionDel"))
+    # return jsonify({'id': transac.id, 'transaction': transac} if transac else {})
+    return render_template('delete.html', user=current_user, transaction=transac)
