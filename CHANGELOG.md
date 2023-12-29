@@ -24,3 +24,4 @@ Created on Dec 20, 2023
 - Beta Release: Changed transaction values on December 26, 2023 -> **0.492**
 - Beta Release: Data export draft on December 27, 2023 -> **0.493**
 - Beta Release: Deletion system enhancement on December 28, 2023 -> **0.5**
+- Beta Release: Donate transaction options available on December 30, 2023 -> **0.51**
