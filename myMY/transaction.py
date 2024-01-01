@@ -4,7 +4,9 @@ from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
 from .customErrorClass import confirmationError
+from time import localtime, strftime
 from .idGen import gen1
+from .totalCal import totalCal
 import requests as rq
 # from builtins import ty
 
@@ -19,8 +21,10 @@ def transactionHome():
 @login_required
 def transactionGet():
     g = Transaction.query.filter_by(user_id=current_user.id).all()
+    t = strftime("%Y-%m-%d at %H:%M:%S", localtime())
+    totalAmount = totalCal()
 
-    return render_template("get.html", user=current_user, get=g, total=None)
+    return render_template("get.html", user=current_user, get=g, total=None, time=t)
 
 @t.route("/edit/delete-landing", methods=['GET'])
 @login_required
@@ -126,7 +130,8 @@ def exportAsPdf():
     return render_template('root.html', user=current_user)
 
 @t.route('/fetch/by-tid', methods=['GET'])
-def fetchTransactionByUserID():
+@login_required
+def fetchTransactionByID():
     try:
         userID = current_user.id
         tid = request.args.get("tid")

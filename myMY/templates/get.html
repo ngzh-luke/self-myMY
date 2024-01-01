@@ -52,7 +52,12 @@
     </div>
 
     <div class="container-fluid justify-content-center" id="t" align="center">
-      {% if get %} {% for g in get %}
+      {% if get %} 
+      {% if time %}
+      <br>
+      <p style="color: chocolate;">&lt; updated on <u><i>{{time}}</i></u> ></p>
+      
+      {% for g in get %}
       <hr />
       <ul style="list-style-type: none">
         <span style="font-weight: bold">{{g}}</span>
@@ -65,7 +70,9 @@
         <li><u>Notes:</u> {{g.notes}}</li>
       </ul>
       <hr />
-      {% endfor %}{% else %}
+      {% endfor %}<br>
+      <p style="color: chocolate;">&lt; updated on <u><i>{{time}}</i></u> ></p>
+      {% endif %}{% else %}
       <hr />
       There's no transaction, yet!
       <a
