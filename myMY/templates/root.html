@@ -141,5 +141,32 @@
     <br />
     {% block body %}{% endblock %}
     <hr id="bottom" />
+    <script>
+      // Use JavaScript to get the client's local time
+      const clientTime = new Date().toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false, // Use 24-hour format
+    });
+    const [unformated_date, time] = clientTime.split(', ');
+    now = new Date()
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const day = String(now.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`
+
+      // Send the client's local time to the server as a query parameter
+      fetch(`/get-local-time?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          // Display the server's response (server time) in the console
+          console.log("Server Time:", data.server_time);
+        })
+        .catch((error) => console.error("Error:", error));
+    </script>
   </body>
 </html>

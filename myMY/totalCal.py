@@ -193,18 +193,21 @@ class totalCal():
         return True
 
     def getFlow(self):
+        """ Return `float()` value of current instance's flow """
         return self.flow
     
     def getOutcome(self):
+        """ Return `float()` value of current instance's outcome """
         return self.spent
     
     def getIncome(self):
+        """ Return `float()` value of current instance's income """
         return self.received
 
 
 
 
-t = totalCal()
+# t = totalCal()
 # t.updateCurrencyRate()
 # t.updateCurrencyRate(rate=0.20, currency='RMB')
 # t.updateCurrencyRate(rate=2)
@@ -217,10 +220,10 @@ t = totalCal()
 # t.addOutcome(outcome=4)
 # t.addOutcome(outcome=4, currency="RMB")
 # print(t.spent)
-print("list",t.getCurrencyList())
-print("rate", t.getCurrencyRate())
-print(t.getCurrencyListAndRate())
-print(t.getCurrencyListAndRate(all=False, currency="RMB"))
-print(t.addIncome(1000, currency='s'))
-print(t.addOutcome(100, currency='s'))
-print(t.getIncome(), t.getOutcome(), t.getFlow())
+# print("list",t.getCurrencyList())
+# print("rate", t.getCurrencyRate())
+# print(t.getCurrencyListAndRate())
+# print(t.getCurrencyListAndRate(all=False, currency="RMB"))
+# print(t.addIncome(1000, currency='s'))
+# print(t.addOutcome(100, currency='s'))
+# print(t.getIncome(), t.getOutcome(), t.getFlow())

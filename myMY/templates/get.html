@@ -55,7 +55,7 @@
       {% if get %} 
       {% if time %}
       <br>
-      <p style="color: chocolate;">&lt; Updated on <u><i>{{time}}</i></u> ></p>
+      <p style="color: chocolate;">&lt; updated: <u><i>{{time}}</i></u> ></p>
       
       {% for g in get %}
       <hr />
@@ -71,7 +71,7 @@
       </ul>
       <hr />
       {% endfor %}<br>
-      <p style="color: chocolate;">&lt; Updated on <u><i>{{time}}</i></u> ></p>
+      <p style="color: chocolate;">&lt; updated: <u><i>{{time}}</i></u> ></p>
       {% endif %}{% else %}
       <hr />
       There's no transaction, yet!
@@ -119,5 +119,9 @@
 <div class="my-3"></div>
 <br />
 <div class="my-3"></div>
+
+{% if data %}
+{{data}}
+{%endif%}
 
 {% endblock %}

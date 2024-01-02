@@ -1,5 +1,5 @@
 """ transaction """
-from flask import Blueprint, redirect, url_for, render_template, flash, request, Response, jsonify
+from flask import Blueprint, redirect, url_for, render_template, flash, request, Response, jsonify, session
 from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
@@ -21,14 +21,19 @@ def transactionHome():
 @login_required
 def transactionGet():
     g = Transaction.query.filter_by(user_id=current_user.id).all()
-    t = strftime("%Y-%m-%d at %H:%M:%S", localtime())
+    if session['LCT']:
+        t = session['LCT']
+    else:
+        t = strftime("%Y-%m-%d @%H:%M:%S", localtime())
     totalAmount = totalCal()
+    itemsAmount = g.__len__() # amount of the queried transactions
 
     return render_template("get.html", user=current_user, get=g, total=None, time=t)
 
 @t.route("/edit/delete-landing", methods=['GET'])
 @login_required
 def transactionDelLanding():
+    session['last'] = request.endpoint
     return render_template("delete.html", user=current_user)
 
 @t.route("/new/", methods=['POST'])
@@ -148,4 +153,11 @@ def fetchTransactionByID():
         flash(message="Unable to fetch transaction! <br> ERR:{}".format(e), category='error')
         return redirect(url_for("redirector.toTransactionDel"))
     # return jsonify({'id': transac.id, 'transaction': transac} if transac else {})
-    return render_template('delete.html', user=current_user, transaction=transac)
+    if session['last']:
+        if session['last'] == "transaction.transactionDelLanding":
+        
+            return render_template('delete.html', user=current_user, transaction=transac)
+    else:
+        # flash(request.endpoint)
+        # return render_template('delete.html', user=current_user, transaction=transac)
+        return 'hhh'

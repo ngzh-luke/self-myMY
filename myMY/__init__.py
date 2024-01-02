@@ -2,10 +2,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager, current_user
-from flask import Flask, Blueprint, render_template, abort, flash, session, redirect, request, url_for
+from flask import Flask, Blueprint, render_template, abort, flash, session, redirect, request, url_for, jsonify
 from flask_migrate import Migrate
 from decouple import config as en_var  # import the environment var
-from datetime import timedelta
+from datetime import timedelta, datetime
 db = SQLAlchemy()
 migrate = Migrate()
 DB_NAME = en_var(
@@ -102,8 +102,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.522, status='Beta Release',
-                         build=20240102, version_note="Added data fetch time")
+systemInfoObject = About(version=0.53, status='Beta Release',
+                         build=20240102, version_note="Fetch time bugs fixed and other bugs fixed")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -123,6 +123,18 @@ def root_View():
 @rootView.route("/about/")
 def aboutView():
     return render_template("about.html", user=current_user, version=systemVersion,versionNotes=systemInfoObject.version_note,build=systemInfoObject.build,status=systemInfoObject.status )
+
+
+@rootView.route('/get-local-time', methods=['GET'])
+def getLCT():
+    time = request.args.get('time')
+    date = request.args.get('date')
+    session['LCT'] = str(date) + " at "+str(time)
+    server_time = datetime.now()
+    session['SVT'] = server_time
+
+    return jsonify({'server_time': server_time.isoformat()})
+
 
 # handle not found
 def notFound(e):
