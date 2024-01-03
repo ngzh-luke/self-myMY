@@ -28,3 +28,4 @@ Created on Dec 20, 2023
 - Beta Release: Fixed donate transaction type showing on 'via' on December 30, 2023 -> **0.52**
 - Beta Release: Added data fetch time on January 2, 2024 -> **0.522**
 - Beta Release: Fetch time bugs fixed and other bugs fixed on January 2, 2024 -> **0.53**
+- Beta Release: 'Refund' transaction option available + added fetch time timezone on January 3, 2024 -> **0.531**

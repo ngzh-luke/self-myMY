@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
 from .customErrorClass import confirmationError
-from time import localtime, strftime
+from datetime import datetime, timezone, timedelta
 from .idGen import gen1
 from .totalCal import totalCal
 import requests as rq
@@ -20,11 +20,19 @@ def transactionHome():
 @t.route("/get/", methods=['GET'])
 @login_required
 def transactionGet():
+    # Specify the UTC offset for Bangkok (UTC+7)
+    bkk_timezone_offset = timedelta(hours=7)
+    # Create a timezone object for Bangkok
+    bkk_timezone = timezone(bkk_timezone_offset)
+    # Get the current time in Bangkok timezone
+    bkk_time = datetime.now(bkk_timezone)
+    # Format the time string
+    t = bkk_time.strftime("%Y-%m-%d @%H:%M:%S [GMT+7]")
     g = Transaction.query.filter_by(user_id=current_user.id).all()
-    if session['LCT']:
+    try:
         t = session['LCT']
-    else:
-        t = strftime("%Y-%m-%d @%H:%M:%S", localtime())
+    except:
+        pass
     totalAmount = totalCal()
     itemsAmount = g.__len__() # amount of the queried transactions
 

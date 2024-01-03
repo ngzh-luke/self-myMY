@@ -102,8 +102,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.53, status='Beta Release',
-                         build=20240102, version_note="Fetch time bugs fixed and other bugs fixed")
+systemInfoObject = About(version=0.531, status='Beta Release',
+                         build=20240103, version_note="'Refund' transaction option available + added fetch time timezone")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -129,7 +129,8 @@ def aboutView():
 def getLCT():
     time = request.args.get('time')
     date = request.args.get('date')
-    session['LCT'] = str(date) + " at "+str(time)
+    tz = request.args.get("tz")
+    session['LCT'] = str(date) + " at "+ str(time) + str(" {"+tz+"}")
     server_time = datetime.now()
     session['SVT'] = server_time
 
