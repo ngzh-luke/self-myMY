@@ -29,3 +29,4 @@ Created on Dec 20, 2023
 - Beta Release: Added data fetch time on January 2, 2024 -> **0.522**
 - Beta Release: Fetch time bugs fixed and other bugs fixed on January 2, 2024 -> **0.53**
 - Beta Release: 'Refund' transaction option available + added fetch time timezone on January 3, 2024 -> **0.531**
+- Beta Release: 'Invest' transaction option available on January 6, 2024 -> **0.532**
