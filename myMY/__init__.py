@@ -102,8 +102,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.532, status='Beta Release',
-                         build=20240106, version_note="'Invest' transaction option available")
+systemInfoObject = About(version=0.534, status='Beta Release',
+                         build=20240110, version_note="New CRD transaction options available")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
