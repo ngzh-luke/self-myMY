@@ -35,7 +35,7 @@ class User(db.Model, UserMixin, AnonymousUserMixin):
         if not current_user.is_authenticated:
             # return current_app.login_manager.unauthorized()
             return False
-        elif current_user.is_authenticated and (current_user.fname == 'KITTIPICH'):
+        elif current_user.is_authenticated and (current_user.uname == 'luke'):
             return True
         return False
 

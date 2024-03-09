@@ -10,7 +10,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 DB_NAME = en_var(
     'DATABASE_URL', "sqlite:///myMY_db.sqlite")
-TIMEOUT = timedelta(hours=3)
+TIMEOUT = timedelta(hours=3) # set session timeout here
 try:
     PORT = en_var("port")
 except:
@@ -42,8 +42,10 @@ def createApp():
     from .authen import iden
     from .redirector import r
     from .account import acc
+    from .exporter import tx
     app.register_blueprint(rootView, url_prefix='/')
     app.register_blueprint(t, url_prefix='/transaction')
+    app.register_blueprint(tx, url_prefix='/transactions/export')
     app.register_blueprint(iden, url_prefix='/iden-operation')
     app.register_blueprint(r, url_prefix='/')
     app.register_blueprint(acc, url_prefix='/account')
@@ -73,6 +75,7 @@ def createApp():
     login_manager.refresh_view = 'auth.login'
     login_manager.login_message_category = 'info'
     login_manager.needs_refresh_message_category = "info"
+    login_manager.login_message = 'Please login before perform the operation!'
     login_manager.needs_refresh_message = "You have to login again to confirm your identity!"
     login_manager.init_app(app)
 
@@ -102,8 +105,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.534, status='Beta Release',
-                         build=20240110, version_note="New CRD transaction options available")
+systemInfoObject = About(version=0.6, status='Beta Release',
+                         build=20240309, version_note="Dependencies upgraded + export as 'csv' available + updated logo + add money calculation, and other improvements")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

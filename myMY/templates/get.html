@@ -82,18 +82,19 @@
         >Add now!</a
       >
       <hr />
-      {% endif %} {% if total %} {% for t in total %}
+      {% endif %} {% if total %} 
       <span style="font-weight: bold">Calculation</span>
-      <ul style="list-style-type: armenian">
+      <ul style="list-style-type: none">
         <li>
-          Received total: <span style="color: green">~{{t.received}}</span>THB
+          <u>Received total:</u> <span style="color: green">~{{total.getIncome(3)}}</span>THB
         </li>
-        <li>Spent total: <span style="color: red">~{{t.spent}}</span>THB</li>
+        <li><u>Spent total:</u> <span style="color: red">~{{total.getOutcome(3)}}</span>THB</li>
         <li>
-          Transaction flow: <span style="color: blue">~{{t.flow}}</span>THB
+          <u>Transaction flow:</u> <span style="color: blue">~{{total.getFlow(3)}}</span>THB
         </li>
+        <li><u>Conversion rates (per 1THB):</u> {{total.getCurrencyListAndRate()}} </li>
       </ul>
-      {% endfor %} {% endif %}
+      {% endif %}
     </div>
   </div>
   <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">

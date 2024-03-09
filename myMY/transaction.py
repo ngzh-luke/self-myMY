@@ -5,7 +5,7 @@ from .models import Transaction
 from myMY import db
 from .customErrorClass import confirmationError
 from datetime import datetime, timezone, timedelta
-from .idGen import gen1
+# from .idGen import gen1
 from .totalCal import totalCal
 import requests as rq
 # from builtins import ty
@@ -17,7 +17,7 @@ t = Blueprint("transaction", __name__)
 def transactionHome():
     return render_template("transaction.html", user=current_user)
 
-@t.route("/get/", methods=['GET'])
+@t.route("/get", methods=['GET'])
 @login_required
 def transactionGet():
     # Specify the UTC offset for Bangkok (UTC+7)
@@ -28,15 +28,29 @@ def transactionGet():
     bkk_time = datetime.now(bkk_timezone)
     # Format the time string
     t = bkk_time.strftime("%Y-%m-%d @%H:%M:%S [GMT+7]")
-    g = Transaction.query.filter_by(user_id=current_user.id).all()
     try:
         t = session['LCT']
     except:
         pass
-    totalAmount = totalCal()
-    itemsAmount = g.__len__() # amount of the queried transactions
+    ft = request.args.get('filter')
+    if ft == 'income':
+        pass
 
-    return render_template("get.html", user=current_user, get=g, total=None, time=t)
+    try:
+        records = Transaction.query.filter_by(user_id=current_user.id).all()
+
+    except Exception as e:
+        flash(message=f'Unable to retrieve transaction records: {e}', category='error')
+    
+    totalAmount = totalCal()
+    itemsAmount = records.__len__() # amount of the queried transactions
+    OUTCOME = ['outcome', 'donate', 'invest'] # list of out flow transactions
+    for i in range(itemsAmount): # perform calculation
+        totalAmount.addIncome(income=records[i].amount if records[i].typee == 'income' else 0.0, currency=records[i].currency)
+        if (records[i].typee in OUTCOME):
+            totalAmount.addOutcome(outcome=records[i].amount, currency=records[i].currency)
+    
+    return render_template("get.html", user=current_user, get=records, total=totalAmount, time=t)
 
 @t.route("/edit/delete-landing", methods=['GET'])
 @login_required
@@ -80,7 +94,7 @@ def transactionEditConfirm():
 
 @t.route("/edit/delete", methods=['GET'])
 @login_required
-def transactionDel():
+def transactionDel(): # delete transaction
     try:
         tid = str(request.args.get("tid"))
         tid = int(tid)
@@ -109,42 +123,9 @@ def transactionDel():
         return redirect(url_for("redirector.toTransactionDel"))
     return redirect(url_for("redirector.toTransactionHome"))
 
-
-@t.route("/export/", methods=['GET'])
-@login_required
-def exportAsPdf():
-    try:
-        data = Transaction.query.filter_by(user_id=current_user.id).all()
-    except Exception as e:
-        flash(e)
-    csv_data = str()
-    for i in range(len(data)):
-        pairs = list(data[i].__dict__.items()) # convert the list of key value pairs into a list
-        keys = list(data[i].__dict__.keys()) # convert the list of keys into a list
-        values = list(data[i].__dict__.values()) # convert the list of value into a list
-        for ii in range(len(keys)):
-            # csv_data += '\n'.join(keys[ii], values[ii])
-            pair = pairs[i+1] if i == 0 else i
-            key = keys[i+1] if i == 0 else i
-            value = values[i+1]if i == 0 else i
-            # flash(f"{pair}->{key} : {value}")
-            csv_data +=  str(key) + ":" + str(value)
-            flash(csv_data)
-    # fn= gen1()
-    # flash(csv_data)
-
-    # response = Response(
-    #     csv_data,
-    #     content_type='text/csv',
-    #     headers={'Content-Disposition': 'attachment; filename={}.csv'.format(fn)}
-    # )
-
-    
-    return render_template('root.html', user=current_user)
-
 @t.route('/fetch/by-tid', methods=['GET'])
 @login_required
-def fetchTransactionByID():
+def fetchTransactionByID(): # deletion search
     try:
         userID = current_user.id
         tid = request.args.get("tid")

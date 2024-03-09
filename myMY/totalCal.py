@@ -5,18 +5,18 @@ class totalCal():
     """ 
     - default currency is `THB`
 
-    #Attribute:
+    ## Attributes:
 
-        recived -> float(), \n
-        spent -> float(), \n
-        flow -> float(), \n
-        currencyRate -> dict(), \n
-        currencyList -> list() 
+        `recived` -> float(), \n
+        `spent` -> float(), \n
+        `flow` -> float(), \n
+        `currencyRate` -> dict(), \n
+        `currencyList` -> list() 
          """
     received = float()
     spent = float()
     flow = float()
-    currencyRate = {"USD":0.03,"RMB":0.20,"THB":1}  # compare to 1THB
+    currencyRate = {"USD":0.03,"RMB":0.20,"THB":1.0,"TWD":0.90}  # compare to 1THB
     currencyList = ['THB', 'RMB', 'USD', 'TWD'] # 
 
     def __init__(self, received=0.0, spent=0.0, flow=0.0) -> None:
@@ -27,7 +27,7 @@ class totalCal():
     def updateCurrencyRate(self, rate=1.0, currency='THB') -> bool | Exception:
         """ Add/Update exchange rate compared to THB (1THB=X[currency])
 
-          'return' `True` if operation succeed """
+          `return` `True` if operation succeed """
         try:
             for item in self.currencyList:
                 if item == currency:
@@ -42,7 +42,8 @@ class totalCal():
             - `add` the given currency
             - `delete` the given currency
 
-          'return' `True` if operation succeed """
+         # Returns
+          `return` `True` if operation succeed """
         if delete == True:
             try:
                 for item in self.currencyList:
@@ -83,7 +84,8 @@ class totalCal():
 
          default rate is `THB`
 
-          'return' `float()` or `None` if found, `Exception` if error """
+         # Returns
+          `return` `float()` or `None` if found, `Exception` if error """
         try:
             if self.isCurrencyAvailable(currency=currency):
                 return self.currencyRate[currency]
@@ -95,7 +97,8 @@ class totalCal():
     def getCurrencyList(self):
         """ Return current instance currency list 
         
-        'return' `list()` if succeed, else `None`
+        # Returns
+        `return` `list()` if succeed, else `None`
         """
         try:
             return self.currencyList
@@ -104,10 +107,12 @@ class totalCal():
 
     def getCurrencyListAndRate(self, all=True, currency="THB"):
         """ Return a dictionary of all currency and its rate or only a pair of currency and its rate
-        - 'all': bool = `True` -> assign `False` if want only given currency and its rate (must specify value for 'currency')
-        - 'currency': `str()` -> assign to any currency (e.g. THB) to only get a pair of currency and its rate
+        ## Arguments
+        - `all`: `bool` = `True` -> assign `False` if want only given currency and its rate (must specify value for 'currency')
+        - `currency`: `str()` -> assign to any currency (e.g. THB) to only get a pair of currency and its rate
         
-          'return' `dict()` if succeed, `None` if failed """
+        # Returns
+          `return` `dict()` if succeed, `None` if failed """
         if all == True:
             currency = None
             try:
@@ -127,7 +132,8 @@ class totalCal():
     def convertToTHB(self, currency="RMB", amount=0.0) -> float|Exception:
         """ Return the given currency money amount that approximately equals to THB 
         
-        'return' `float` if convert successfully, `Exception` if error
+        # Returns
+        `return` `float` if convert successfully, `Exception` if error
         """
         try:
             foreign = self.getCurrencyRate(currency=currency)
@@ -140,15 +146,21 @@ class totalCal():
             return e
         
     def getSumAmount(self, currency='RMB', **kwargs:float) -> dict | None | Exception:
-        """ Return the sumarized amount of the given value(s) of the same currency to THB and initial currency amount
+        """ Returns the sumarized amount of the given value(s) of the same currency to THB and initial currency amount
             
-            Example returned dict: `{'initial_currency': 'RMB', 'initial_currency_sum': 5.0, 'sum': 25.0}`
-            `Return dict explaination:`
+        ## Arguments
+        - `currency`: `str()` = `RMB` -> initial currency
+        - `**kwargs`: `float`
+
+        ## Returned dict: 
+        E.x. `{'initial_currency': 'RMB', 'initial_currency_sum': 5.0, 'sum': 25.0}`
+        ### Return dict explaination:
             - `'initial_currency'` = Initial currency of receiving params
             - `'initial_currency_sum'` = Summarization of receiving params in initial currency 
             - `'sum'` = summarization of receiving params in `THB`
         
-          'return' `dict` or `None` if operation succeed, `Exception` if failed """
+        # Returns    
+          `return` `dict` or `None` if operation succeed, `Exception` if failed """
         try :
             summ = 0.0
             iniCurSum = 0.0
@@ -161,9 +173,11 @@ class totalCal():
             return Exception
         
     def addOutcome(self, outcome:float, currency="THB"):
-        """ Return `True` if succeed, `False` otherwise.
+        """ Returns `True` if succeed, `False` otherwise.
         
-        add outcome transaction with default currency is `THB`  """
+        add outcome transaction with default currency is `THB`  
+        
+        Attempt to convert to `THB` if it is not."""
         if currency == "THB":
             try:
                 self.spent += outcome
@@ -177,9 +191,11 @@ class totalCal():
         return True
             
     def addIncome(self, income:float, currency="THB"):
-        """ Return `True` if succeed, `False` otherwise.
+        """ Returns `True` if succeed, `False` otherwise.
         
-        add income transaction with default currency is `THB` """
+        add income transaction with default currency is `THB` 
+        
+        Attempt to convert to `THB` if it is not."""
         if currency == "THB":
             try:
                 self.received += income
@@ -191,17 +207,42 @@ class totalCal():
             except:
                 return False
         return True
+    
+    def calFlow(self):
+        self.flow = self.received - self.spent
 
-    def getFlow(self):
-        """ Return `float()` value of current instance's flow """
+    def getFlow(self, ndigits: int | None = None) -> float:
+        """
+        # Argument
+        - `ndigits`: `int()` or `None` -> number up to which the given number is rounded
+        # Returns
+        `return` `float` value of current instance's flow with a `ndigits` decimal places if `ndigits` is specified, otherwise, its raw value
+        """
+        self.calFlow()
+        if (type(ndigits) == int):
+            return round(number=self.flow, ndigits=ndigits)
         return self.flow
     
-    def getOutcome(self):
-        """ Return `float()` value of current instance's outcome """
+    def getOutcome(self, ndigits: int | None = None) -> float:
+        """ 
+        # Argument
+        - `ndigits`: `int()` or `None` -> number up to which the given number is rounded
+        # Returns
+        `return` `float` value of current instance's outcome with a `ndigits` decimal places if `ndigits` is specified, otherwise, its raw value
+        """
+        if (type(ndigits) == int):
+            return round(number=self.spent, ndigits=ndigits)
         return self.spent
     
-    def getIncome(self):
-        """ Return `float()` value of current instance's income """
+    def getIncome(self, ndigits: int | None = None) -> float:
+        """
+        # Argument
+        - `ndigits`: `int()` or `None` -> number up to which the given number is rounded
+        # Returns
+        `return` `float` value of current instance's income with a `ndigits` decimal places if `ndigits` is specified, otherwise, its raw value
+        """
+        if (type(ndigits) == int):
+            return round(number=self.received, ndigits=ndigits)
         return self.received
 
 

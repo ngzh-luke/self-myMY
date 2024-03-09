@@ -7,8 +7,8 @@
     <!-- myMY by LukeCreated icon -->
     <link
       rel="icon"
-      type="image/svg+xml"
-      href="{{ url_for('static', filename='myMY-logo.svg') }}"
+      type="image/png"
+      href="{{ url_for('static', filename='myMY-logo-v2.png') }}"
     />
     <!-- Page title -->
     <title>{% block title %}[ROOT]{% endblock %}</title>
@@ -33,6 +33,8 @@
     {% include 'alert.html' %}
   </head>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
     html,
     body {
       font-family: "Krub", sans-serif;
@@ -58,10 +60,10 @@
           id="band"
           href="{{url_for('transaction.transactionHome')}}"
           ><img
-            type="image/svg+xml"
+            type="image/png"
             width="auto"
             height="35"
-            src="{{ url_for('static', filename='myMY-logo.svg') }}"
+            src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
             alt="myMY-logo"
         /></a>
         <button
@@ -142,38 +144,48 @@
     {% block body %}{% endblock %}
     <hr id="bottom" />
     <script>
-    // Use JavaScript to get the client's local time
-    const clientTime = new Date();
+      // Use JavaScript to get the client's local time
+      const clientTime = new Date();
 
-    // Create a DateTimeFormat object to get the timezone offset
-    const timezoneOffset = new Intl.DateTimeFormat('en-US', {timeZoneName: 'short'}).formatToParts(clientTime)
-        .find(part => part.type === 'timeZoneName').value;
+      // Create a DateTimeFormat object to get the timezone offset
+      const timezoneOffset = new Intl.DateTimeFormat("en-US", {
+        timeZoneName: "short",
+      })
+        .formatToParts(clientTime)
+        .find((part) => part.type === "timeZoneName").value;
 
-    // Convert the timezone offset to "GMT+X" format
-    const offsetInMinutes = clientTime.getTimezoneOffset();
-    const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
-    const offsetMinutes = Math.abs(offsetInMinutes) % 60;
-    const gmtString = offsetInMinutes >= 0 ? `GMT-${offsetHours}:${offsetMinutes}` : `GMT+${offsetHours}:${offsetMinutes}`;
+      // Convert the timezone offset to "GMT+X" format
+      const offsetInMinutes = clientTime.getTimezoneOffset();
+      const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
+      const offsetMinutes = Math.abs(offsetInMinutes) % 60;
+      const gmtString =
+        offsetInMinutes >= 0
+          ? `GMT-${offsetHours}:${offsetMinutes}`
+          : `GMT+${offsetHours}:${offsetMinutes}`;
 
-    // Format the client time and store it in the 'formattedTime' variable
-    const formattedTime = clientTime.toLocaleString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
+      // Format the client time and store it in the 'formattedTime' variable
+      const formattedTime = clientTime.toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
         hour12: false, // Use 24-hour format
-    });
+      });
 
-    // Split the formatted time into date and time parts
-    const [date, time] = formattedTime.split(', ');
+      // Split the formatted time into date and time parts
+      const [date, time] = formattedTime.split(", ");
 
-    var [m, d, y] = date.split("/")
-    const formattedDate = `${y}-${m}-${d}`
+      var [m, d, y] = date.split("/");
+      const formattedDate = `${y}-${m}-${d}`;
 
       // Send the client's local time to the server as a query parameter
-      fetch(`/get-local-time?date=${encodeURIComponent(formattedDate)}&time=${encodeURIComponent(time)}&tz=${encodeURIComponent(gmtString)}`)
+      fetch(
+        `/get-local-time?date=${encodeURIComponent(
+          formattedDate
+        )}&time=${encodeURIComponent(time)}&tz=${encodeURIComponent(gmtString)}`
+      )
         .then((response) => response.json())
         .then((data) => {
           // Display the server's response (server time) in the console

@@ -7,4 +7,4 @@ fk = Faker()
 
 def gen1():
     """ gen uuid1 """
-    return uuid1()
+    return str(uuid1())

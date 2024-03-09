@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}myMY - Export transactions{% endblock %}</title>
+    <!-- inherent root file -->
+    {% extends 'root.html' %}
+  </head>
+  {% block body %}
+  <body>
+    <br />
+    <div style="top: 50%" align="center">
+      <h1>Export Transactions</h1>
+      <div>
+        <a
+          href="{{url_for('redirector.toHome')}}"
+          type="button"
+          class="btn btn-primary"
+          >myMY Home</a
+        >
+        &ensp;
+        <a
+          href="{{url_for('transaction.transactionHome')}}"
+          type="button"
+          class="btn btn-success"
+          >Add new now!</a
+        >
+      </div>
+      <br />Please select the filter below to export transaction records as
+      <code>csv</code> extension (<span style="font-weight: bolder"
+        ><u>.csv</u></span
+      >)
+      <div id="all" class="px-1 py-1">
+      <ul style="list-style-type: none">
+        <li>
+          <a href="/transactions/export/csv?filter=all"
+            ><button class="btn btn-lg btn-primary">All records</button></a
+          >
+        </li>
+      </ul></div>
+      <div id="by-type">
+        <ul style="list-style-position: inside; list-style-type: square">
+          <h3>By transaction type</h3>
+          <li class="pt-2 pb-1">
+            <a href="/transactions/export/csv?filter=income"
+              ><button class="btn btn-success">Income</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=outcome"
+              ><button class="btn btn-danger">Outcome</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=donate"
+              ><button class="btn btn-info">Donate</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=invest"
+              ><button class="btn btn-warning">Invest</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=transfer"
+              ><button class="btn btn-primary">Transfer</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=deposit"
+              ><button class="btn btn-success">Deposit</button></a
+            >
+          </li>
+          <li class="py-1">
+            <a href="/transactions/export/csv?filter=withdrawal"
+              ><button class="btn btn-danger">Withdrawal</button></a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+  {% endblock %}
+</html>

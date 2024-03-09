@@ -31,3 +31,4 @@ Created on Dec 20, 2023
 - Beta Release: 'Refund' transaction type option available + added fetch time timezone on January 3, 2024 -> **0.531**
 - Beta Release: 'Invest' transaction type option available on January 6, 2024 -> **0.532**
 - Beta Release: New CRD transaction options available on January 10, 2024 -> **0.534**
+- Beta Release: Dependencies upgraded + export as 'csv' available + updated logo + add money calculation, and other improvements on March 9, 2024 -> **0.6**
