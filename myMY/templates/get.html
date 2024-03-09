@@ -9,11 +9,6 @@
       align-items: center;
     }
 
-    main {
-      width: 75%;
-      max-width: 600px;
-      margin: auto;
-    }
     #tb {
       align-self: center;
       max-width: auto;
@@ -26,8 +21,14 @@
 </style>
 {% block body %}
 
-<main align="center" class="mx-1 px-1">
+<div align="center" class="mx-1 px-1">
   <div id="get" class="my-2 mx-1" align="center">
+    <img
+      width="100"
+      height="100"
+      src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+      alt="myMY Icon"
+    />
     <h1><code>myMY</code> by LukeCreated</h1>
 
     <h2>GET</h2>
@@ -46,32 +47,46 @@
         class="btn btn-success"
         >Add new now!</a
       >
-      <div align="end" class="fixed-top top-50 mt-1 mb-1 mx-1">
-        <a href="#bottom" type="button" class="btn btn-danger">v</a>
-      </div>
     </div>
-
+    <div align="end" class="sticky-top mx-1 py-2">
+      <a href="#bottom" type="button" class="btn btn-danger">v</a>
+    </div>
     <div class="container-fluid justify-content-center" id="t" align="center">
-      {% if get %} 
-      {% if time %}
-      <br>
-      <p style="color: chocolate;">&lt; updated: <u><i>{{time}}</i></u> ></p>
-      
-      {% for g in get %}
+      {% if get %} {% if time %}
+      <br />
+      <p style="color: chocolate">
+        &lt; as of: <u><i>{{time}}</i></u> >
+      </p>
+      {% if filter %}
+      <h5 class="sticky-top">
+        <span style="background-color: antiquewhite; border-radius: 25%"
+          >&ensp;<u>Filter:</u> s&ensp;</span
+        >
+      </h5>
+      {% endif %} {% for g in get %}
       <hr />
-      <ul style="list-style-type: none">
+      <section>
         <span style="font-weight: bold">{{g}}</span>
-        <li><u>Type:</u> {{g.typee}}</li>
-        <li><u>Via:</u> {{g.via}}</li>
-        <li><u>Amount:</u> {{g.amount}}{{g.currency}}</li>
-        <li><u>Party:</u> {{g.party}}</li>
-        <li><u>When:</u> {{g.dtime}}</li>
-        <li><u>Where:</u> {{g.location}}, {{g.country}}</li>
-        <li><u>Notes:</u> {{g.notes}}</li>
-      </ul>
+        <br />
+        <u>Type:</u> {{g.typee}}
+        <br />
+        <u>Via:</u> {{g.via}}
+        <br />
+        <u>Amount:</u> {{g.amount}}{{g.currency}}
+        <br />
+        <u>Party:</u> {{g.party}}
+        <br />
+        <u>When:</u> {{g.dtime}}
+        <br />
+        <u>Where:</u> {{g.location}}, {{g.country}}
+        <br />
+        <u>Notes:</u> {{g.notes}}
+      </section>
       <hr />
-      {% endfor %}<br>
-      <p style="color: chocolate;">&lt; updated: <u><i>{{time}}</i></u> ></p>
+      {% endfor %}<br />
+      <p style="color: chocolate">
+        &lt; as of: <u><i>{{time}}</i></u> >
+      </p>
       {% endif %}{% else %}
       <hr />
       There's no transaction, yet!
@@ -82,17 +97,24 @@
         >Add now!</a
       >
       <hr />
-      {% endif %} {% if total %} 
+      {% endif %} {% if total %}
       <span style="font-weight: bold">Calculation</span>
       <ul style="list-style-type: none">
         <li>
-          <u>Received total:</u> <span style="color: green">~{{total.getIncome(3)}}</span>THB
+          <u>Received total:</u>
+          <span style="color: green">~{{total.getIncome(3)}}</span>THB
         </li>
-        <li><u>Spent total:</u> <span style="color: red">~{{total.getOutcome(3)}}</span>THB</li>
         <li>
-          <u>Transaction flow:</u> <span style="color: blue">~{{total.getFlow(3)}}</span>THB
+          <u>Spent total:</u>
+          <span style="color: red">~{{total.getOutcome(3)}}</span>THB
         </li>
-        <li><u>Conversion rates (per 1THB):</u> {{total.getCurrencyListAndRate()}} </li>
+        <li>
+          <u>Transaction flow:</u>
+          <span style="color: blue">~{{total.getFlow(3)}}</span>THB
+        </li>
+        <li>
+          <u>Conversion rates (per 1THB):</u> {{total.getCurrencyListAndRate()}}
+        </li>
       </ul>
       {% endif %}
     </div>
@@ -115,14 +137,8 @@
       >Add new now!</a
     >
   </div>
-</main>
+</div>
 <br />
 <div class="my-3"></div>
-<br />
-<div class="my-3"></div>
-
-{% if data %}
-{{data}}
-{%endif%}
 
 {% endblock %}

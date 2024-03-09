@@ -1,6 +1,12 @@
 {% extends 'root.html' %} {% block title %} myMY - Account {% endblock %} {%
 block body %} {% if title %}
-<div class="container-fluid py-2 mx-1 my-3" align="center">
+<div class="container-fluid py-1 mb-2 mt-1" align="center">
+  <img
+    width="100"
+    height="100"
+    src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+    alt="myMY Icon"
+  />
   <h1
     style="
       font-size: xx-large;
@@ -11,56 +17,54 @@ block body %} {% if title %}
   >
     Account Manager
   </h1>
-  <div class="d-flex justify-content-between" id="container">
-    <div class="container col-5" id="fm" align="center">
-      <div id="manager" class="py-2 mx-1 my-1">
-        <div class="container d-flex" id="tb">
-          <table
-            class="table table-warning table-hover table-striped-columns border border-3"
-          >
-            <thead>
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Password</th>
-                <th scope="col">Alias</th>
-                <th scope="col">Account</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="table-success">
-                <th scope="row">{{user.uname}}</th>
-                <td>
-                  <button
-                    type="button"
-                    onclick="changePass()"
-                    class="btn btn-info"
-                  >
-                    Change
-                  </button>
-                </td>
-                <td>
-                  {{user.alias}}: &ensp;
-                  <button
-                    type="button"
-                    onclick="changeAlias()"
-                    class="btn btn-dark"
-                  >
-                    Change
-                  </button>
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    onclick="delAcc()"
-                    class="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <div align="end" class="sticky-top mx-1 py-3">
+    <a href="#bottom" type="button" class="btn btn-danger">v</a>
+  </div>
+
+  <div class="container py-1" id="fm" align="center">
+    <div id="manager" class="py-2 my-1">
+      <div class="container d-flex" id="tb">
+        <table
+          class="table table-warning table-hover table-striped-columns border border-3"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Username</th>
+              <th scope="col">Password</th>
+              <th scope="col">Alias</th>
+              <th scope="col">Account</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-success">
+              <th scope="row">{{user.uname}}</th>
+              <td>
+                <button
+                  type="button"
+                  onclick="changePass()"
+                  class="btn btn-info"
+                >
+                  Change
+                </button>
+              </td>
+              <td>
+                {{user.alias}}:&ensp;
+                <button
+                  type="button"
+                  onclick="changeAlias()"
+                  class="btn btn-dark"
+                >
+                  Change
+                </button>
+              </td>
+              <td>
+                <button type="button" onclick="delAcc()" class="btn btn-danger">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -261,7 +265,11 @@ block body %} {% if title %}
       </div>
     </div>
   </div>
+  <div class="sticky-bottom mx-1 pb-3 mb-1 pt-1" align="end">
+    <a href="#" type="button" class="btn btn-dark">^</a>
+  </div>
 </div>
+
 <script>
   document.getElementById("psd").style.display = "none"; // reset view
   document.getElementById("alias").style.display = "none"; // reset view
@@ -332,6 +340,12 @@ block body %} {% if title %}
 </script>
 {% else %}
 <div class="px-2 py-2 mx-3 my-1" align="center">
+  <img
+    width="100"
+    height="100"
+    src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+    alt="myMY Icon"
+  />
   <h1
     style="
       font-size: xx-large;
@@ -356,19 +370,20 @@ block body %} {% if title %}
     type="button"
     class="btn btn-info"
     >Lookup</a
-  > &ensp;<a
-  href="{{url_for('redirector.toTransactionDel')}}"
-  type="button"
-  class="btn btn-danger"
-  >Edit</a
-><br /><br />
-<a
-  href="{{url_for('redirector.toTransactionExport')}}"
-  type="button"
-  class="btn btn-secondary"
-  >Export records</a
->
-<br><br>
+  >
+  &ensp;<a
+    href="{{url_for('redirector.toTransactionDel')}}"
+    type="button"
+    class="btn btn-danger"
+    >Edit</a
+  ><br /><br />
+  <a
+    href="{{url_for('redirector.toTransactionExport')}}"
+    type="button"
+    class="btn btn-secondary"
+    >Export records</a
+  >
+  <br /><br />
   <a href="{{url_for('acc.accManager')}}"
     ><button type="button" class="btn btn-warning">Account Manager</button></a
   ><br /><br />

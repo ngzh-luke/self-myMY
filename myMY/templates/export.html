@@ -9,8 +9,13 @@
   </head>
   {% block body %}
   <body>
-    <br />
     <div style="top: 50%" align="center">
+      <img
+        width="100"
+        height="100"
+        src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+        alt="myMY Icon"
+      />
       <h1>Export Transactions</h1>
       <div>
         <a
@@ -32,53 +37,55 @@
         ><u>.csv</u></span
       >)
       <div id="all" class="px-1 py-1">
-      <ul style="list-style-type: none">
-        <li>
-          <a href="/transactions/export/csv?filter=all"
-            ><button class="btn btn-lg btn-primary">All records</button></a
-          >
-        </li>
-      </ul></div>
-      <div id="by-type">
-        <ul style="list-style-position: inside; list-style-type: square">
-          <h3>By transaction type</h3>
-          <li class="pt-2 pb-1">
-            <a href="/transactions/export/csv?filter=income"
-              ><button class="btn btn-success">Income</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=outcome"
-              ><button class="btn btn-danger">Outcome</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=donate"
-              ><button class="btn btn-info">Donate</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=invest"
-              ><button class="btn btn-warning">Invest</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=transfer"
-              ><button class="btn btn-primary">Transfer</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=deposit"
-              ><button class="btn btn-success">Deposit</button></a
-            >
-          </li>
-          <li class="py-1">
-            <a href="/transactions/export/csv?filter=withdrawal"
-              ><button class="btn btn-danger">Withdrawal</button></a
+        <ul style="list-style-type: none">
+          <li>
+            <a href="/transactions/export/csv?filter=all"
+              ><button class="btn btn-lg btn-primary">All records</button></a
             >
           </li>
         </ul>
       </div>
+    </div>
+    <div id="by-type">
+    <h3 class="mx-3">By transaction type</h3>
+      <ul style="list-style-position: inside; list-style-type: square" align="center">
+        
+        <li class="pt-2 pb-1">
+          <a href="/transactions/export/csv?filter=income"
+            ><button class="btn btn-success">Income</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=outcome"
+            ><button class="btn btn-danger">Outcome</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=donate"
+            ><button class="btn btn-info">Donate</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=invest"
+            ><button class="btn btn-warning">Invest</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=transfer"
+            ><button class="btn btn-primary">Transfer</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=deposit"
+            ><button class="btn btn-success">Deposit</button></a
+          >
+        </li>
+        <li class="py-1">
+          <a href="/transactions/export/csv?filter=withdrawal"
+            ><button class="btn btn-danger">Withdrawal</button></a
+          >
+        </li>
+      </ul>
     </div>
   </body>
   {% endblock %}

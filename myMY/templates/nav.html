@@ -1,58 +1,22 @@
-<!-- This is a root template html which it will be inherited to other pages -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Luke" />
-    <meta
-      name="description"
-      content="myMY by LukeCreated is a personal accounting and transactions tracking application"
-    />
-    <!-- myMY by LukeCreated icon -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="{{ url_for('static', filename='myMY-logo-v2.png') }}"
-    />
-    <!-- Page title -->
-    <title>{% block title %}[ROOT]{% endblock %}</title>
-    <!-- includes Bootstrap 5.3.2 -->
-    <!-- <link
-      href="https://assets.lukecreated.com/helpers/bootstrap@5.3.2/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://assets.lukecreated.com/helpers/bootstrap@5.3.2/bootstrap.bundle.min.js"></script> -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <!-- includes Sweetalert2 -->
-    {% include 'alert.html' %}
+    <title>{% block title %} test nav{% endblock %}</title>
+    <!-- inherent root file -->
+    {% extends 'root.html' %}
   </head>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
-
-    html,
-    body {
-      font-family: "Krub", sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .navbar {
-      margin-top: auto;
-    }
-  </style>
-
+  {% block body %}
   <body>
+    <br />
+    <div style="top: 50%" align="center">
+      <h1>test nav</h1>
+      <br />nav status:
+      <span style="font-weight: 700" id="status"></span>
+      <br />
+    </div>
+
     <!-- bottom nav toggle btn -->
     <div class="fixed-bottom mx-3" id="nav-btn">
       <button
@@ -157,6 +121,9 @@
     document.getElementById("bottomNav").style.display = "none"; // reset nav btn view
     var navState = document.getElementById("bottomNav");
     var btnState = document.getElementById("nav-btn");
+    navState.style.display == "block"
+      ? (document.getElementById("status").innerHTML = "show")
+      : (document.getElementById("status").innerHTML = "hide");
 
     function toggleNav() {
       if (
@@ -173,62 +140,11 @@
         btnState.style.display = "block";
         btnState.style.visibility = "visible";
       }
-      
+      navState.style.display == "block"
+        ? (document.getElementById("status").innerHTML = "block")
+        : (document.getElementById("status").innerHTML = "none");
+      // navState.style.visibility == 'visible' ? document.getElementById('status').innerHTML = 'visible' : document.getElementById('status').innerHTML = 'hidden';
     }
   </script>
-    
-    <br />
-    {% block body %}{% endblock %}
-    <hr id="bottom" />
-    <script>
-      // Use JavaScript to get the client's local time
-      const clientTime = new Date();
-
-      // Create a DateTimeFormat object to get the timezone offset
-      const timezoneOffset = new Intl.DateTimeFormat("en-US", {
-        timeZoneName: "short",
-      })
-        .formatToParts(clientTime)
-        .find((part) => part.type === "timeZoneName").value;
-
-      // Convert the timezone offset to "GMT+X" format
-      const offsetInMinutes = clientTime.getTimezoneOffset();
-      const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
-      const offsetMinutes = Math.abs(offsetInMinutes) % 60;
-      const gmtString =
-        offsetInMinutes >= 0
-          ? `GMT-${offsetHours}:${offsetMinutes}`
-          : `GMT+${offsetHours}:${offsetMinutes}`;
-
-      // Format the client time and store it in the 'formattedTime' variable
-      const formattedTime = clientTime.toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false, // Use 24-hour format
-      });
-
-      // Split the formatted time into date and time parts
-      const [date, time] = formattedTime.split(", ");
-
-      var [m, d, y] = date.split("/");
-      const formattedDate = `${y}-${m}-${d}`;
-
-      // Send the client's local time to the server as a query parameter
-      fetch(
-        `/get-local-time?date=${encodeURIComponent(
-          formattedDate
-        )}&time=${encodeURIComponent(time)}&tz=${encodeURIComponent(gmtString)}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // Display the server's response (server time) in the console
-          console.log("Server Time:", data.server_time);
-        })
-        .catch((error) => console.error("Error:", error));
-    </script>
-  </body>
+  {% endblock %}
 </html>

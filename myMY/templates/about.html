@@ -23,11 +23,6 @@
       padding: 8px;
       word-wrap: break-word;
     }
-    main {
-      width: 75%;
-      max-width: 600px;
-      margin: auto;
-    }
     #tb {
       align-self: center;
       max-width: auto;
@@ -40,7 +35,7 @@
 </style>
 {% block body %}
 
-<main align="center" class="mx-1 px-1" class="container-fluid">
+<div align="center" class="mx-1 px-1" class="container-fluid">
   <div id="about" class="container mx-1" align="center">
     <img
       width="100"
@@ -114,7 +109,7 @@
         >myMY Home</a
       ><br />
       <br />
-      <div align="center">
+      <!-- <div align="center">
         <a
           href="{{url_for('transaction.transactionHome')}}"
           type="button"
@@ -134,13 +129,13 @@
           class="btn btn-info"
           >Lookup transaction</a
         ></div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
     <a href="#" type="button" class="btn btn-dark">^</a>
   </div>
-</main>
+</div>
 
 <script>
   function isMobile() {

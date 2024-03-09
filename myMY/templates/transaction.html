@@ -27,35 +27,38 @@
 {% block body %}
 <body>
   <main align="center" class="mx-1 px-1">
+    <img
+      width="100"
+      height="100"
+      src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+      alt="myMY Icon"
+    />
     <div id="get" class="my-2 mx-1" align="center">
       <h1><code>myMY</code> by LukeCreated</h1>
 
       <h2>Transaction</h2>
     </div>
-    <div class="my-1">
-      <a
-        href="{{url_for('redirector.toHome')}}"
-        type="button"
-        class="btn btn-primary"
-        >myMY Home</a
-      >
-    </div>
-    <div>
+
+    <div class="my-2">
       <a
         href="{{url_for('redirector.toTransactionLookup')}}"
         type="button"
         class="btn btn-info"
-        >Lookup transaction</a
-      >&ensp;
-      <a
+        >Lookup</a
+      >
+      <!-- &ensp; -->
+      
+    </div>
+    <div>
+      <!-- <a
         href="{{url_for('redirector.toTransactionDel')}}"
         type="button"
         class="btn btn-warning"
         >Edit</a
-      >
-      <div align="end" class="mb-2 mt-1 mx-1">
+      > -->
+      <!-- <div align="end" class="mb-2 mt-1 mx-1">
         <a href="#bottom" type="button" class="btn btn-danger">v</a>
-      </div>
+      </div> -->
     </div>
 
     <div class="container-fluid">
@@ -76,8 +79,7 @@
             <option value="withdrawal">Withdrawal</option>
             <option value="donate">Donate</option>
             <option value="invest">Invest</option>
-            <option value="refund">Refund</option>
-            </select
+            <option value="refund">Refund</option></select
           ><label class="input-group-text btn btn-dark" for="type">Type</label>
         </div>
 
@@ -192,30 +194,10 @@
         <button type="submit" class="btn btn-lg btn-success">SAVE</button>
       </form>
     </div>
-    <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
+    <!-- <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
       <a href="#" type="button" class="btn btn-dark">^</a>
-    </div>
-
-    <br />
-    <div class="mt-1">
-      <a
-        href="{{url_for('redirector.toHome')}}"
-        type="button"
-        class="btn btn-primary"
-        >myMY Home</a
-      >
-      &ensp;<a
-        href="{{url_for('redirector.toTransactionLookup')}}"
-        type="button"
-        class="btn btn-info"
-        >Lookup transaction</a
-      >
-    </div>
+    </div> -->
   </main>
-  <br />
-  <div class="my-3"></div>
-  <br />
-  <div class="my-3"></div>
 </body>
 <script>
   function print() {

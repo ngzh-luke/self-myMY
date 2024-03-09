@@ -44,9 +44,10 @@ def transactionGet():
     
     totalAmount = totalCal()
     itemsAmount = records.__len__() # amount of the queried transactions
+    INCOME = ['income' , 'refund'] # list of in flow transations
     OUTCOME = ['outcome', 'donate', 'invest'] # list of out flow transactions
     for i in range(itemsAmount): # perform calculation
-        totalAmount.addIncome(income=records[i].amount if records[i].typee == 'income' else 0.0, currency=records[i].currency)
+        totalAmount.addIncome(income=records[i].amount if records[i].typee in INCOME else 0.0, currency=records[i].currency)
         if (records[i].typee in OUTCOME):
             totalAmount.addOutcome(outcome=records[i].amount, currency=records[i].currency)
     
