@@ -34,3 +34,4 @@ Created on Dec 20, 2023
 - Beta Release: Dependencies upgraded + export as 'csv' available + updated logo + add money calculation, and other improvements on March 9, 2024 -> **0.6**
 - Beta Release: Redesigned navigation bar and overall improvements on March 10, 2024 -> **0.62**
 - Beta Release: Attempt to fix overflow navbar on March 10, 2024 -> **0.622**
+- Beta Release: Navbar improvements on March 10, 2024 -> **0.624**
