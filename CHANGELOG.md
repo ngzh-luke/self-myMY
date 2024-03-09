@@ -35,3 +35,4 @@ Created on Dec 20, 2023
 - Beta Release: Redesigned navigation bar and overall improvements on March 10, 2024 -> **0.62**
 - Beta Release: Attempt to fix overflow navbar on March 10, 2024 -> **0.622**
 - Beta Release: Navbar improvements on March 10, 2024 -> **0.624**
+- Beta Release: Navbar bugs fixed on March 10, 2024 -> **0.625**
