@@ -13,7 +13,7 @@
     <link
       rel="icon"
       type="image/png"
-      href="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+      href="{{ url_for('static', filename='myMY-logo-v2-reduced.jpg') }}"
     />
     <!-- Page title -->
     <title>{% block title %}[ROOT]{% endblock %}</title>
@@ -49,9 +49,9 @@
     }
   </style>
 
-  <body>
+  <body onload="getLcTime()">
     <!-- bottom nav toggle btn -->
-    <div class="fixed-bottom mx-3" id="nav-btn">
+    <div class="fixed-bottom mx-2" id="nav-btn">
       <button
         type="button"
         class="btn btn-lg btn-info my-3"
@@ -71,6 +71,7 @@
           />
         </svg>
       </button>
+      <span class="btn btn-outline btn-light"><span id="t"></span></span>
     </div>
 
     <!-- bottom nav expanded menus -->
@@ -89,8 +90,8 @@
         z-index: 15;
       "
     >
-        <h2 align="center" class="mt-1" style="color: goldenrod;"><u>MENUS</u></h2>
-        <aside>
+      <h2 align="center" class="mt-1" style="color: goldenrod"><u>MENUS</u></h2>
+      <aside>
         <div align="end" id="close-menus-btn">
           <button
             type="button"
@@ -111,92 +112,105 @@
             </svg>
           </button>
         </div>
-    </aside>
-    {% else %}
-    <div
-      class="fixed-bottom my-2"
-      id="bottomNav"
-      style="
-        background-color: blueviolet;
-        height: 35%;
-        width: auto;
-        border-radius: 15%;
-        opacity: 0.9;
-        margin-left: 1.2rem;
-        margin-right: 1.2rem;
-        z-index: 15;
-      "
-    >
-        <h2 align="center" class="mt-1" style="color: goldenrod;"><u>MENUS</u></h2>
+      </aside>
+      {% else %}
+      <div
+        class="fixed-bottom my-2"
+        id="bottomNav"
+        style="
+          background-color: blueviolet;
+          height: 35%;
+          width: auto;
+          border-radius: 15%;
+          opacity: 0.9;
+          margin-left: 1.2rem;
+          margin-right: 1.2rem;
+          z-index: 15;
+        "
+      >
+        <h2 align="center" class="mt-1" style="color: goldenrod">
+          <u>MENUS</u>
+        </h2>
         <aside>
-        <div align="end" id="close-menus-btn">
-          <button
-            type="button"
-            onclick="toggleNav()"
-            class="btn btn-outline-dark mx-4"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-diamond-fill"
-              viewBox="0 0 16 16"
+          <div align="end" id="close-menus-btn">
+            <button
+              type="button"
+              onclick="toggleNav()"
+              class="btn btn-outline-dark mx-4"
             >
-              <path
-                d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098z"
-              />
-            </svg>
-          </button>
-        </div>
-    </aside>
-    {%endif%}
-        
-      <ul class="navbar-nav" id="menus" style="font-size: large; color: azure;">
-        {% if user.is_authenticated %}
-        <li class="nav-item px-1" align="center">
-            <a class="nav-link" href="{{url_for('acc.myAcc')}}"
-              >Home</a
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-x-diamond-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098z"
+                />
+              </svg>
+            </button>
+          </div>
+        </aside>
+        {%endif%}
+
+        <ul
+          class="navbar-nav"
+          id="menus"
+          style="font-size: large; color: azure"
+        >
+          {% if user.is_authenticated %}
+          <li class="nav-item px-1" align="center">
+            <a class="nav-link" href="{{url_for('acc.myAcc')}}">Home</a>
+          </li>
+          <li class="nav-item px-1" align="center">
+            <a
+              class="nav-link"
+              href="{{url_for('transaction.transactionHome')}}"
+              >New Transaction</a
             >
           </li>
-        <li class="nav-item px-1" align="center">
-          <a class="nav-link" href="{{url_for('transaction.transactionHome')}}"
-            >New Transaction</a
-          >
-        </li>
-        <li class="nav-item px-1" align="center">
-          <a class="nav-link" href="{{url_for('transaction.transactionGet')}}"
-            >Lookup Transactions</a
-          >
-        </li>
-        <li class="nav-item px-1" align="center">
-          <a
-            class="nav-link"
-            href="{{url_for('transaction.transactionDelLanding')}}"
-            >Edit Transaction</a
-          >
-        </li>
-        <li class="nav-item px-1" align="center">
-          <a class="nav-link" href="{{url_for('acc.accManager')}}">My Account</a>
-        </li>
-        {%endif%}
-        <li class="nav-item" align="center">
-          <a class="nav-link" href="/about">About</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item" align="center">
+          <li class="nav-item px-1" align="center">
+            <a class="nav-link" href="{{url_for('transaction.transactionGet')}}"
+              >Lookup Transactions</a
+            >
+          </li>
+          <li class="nav-item px-1" align="center">
+            <a
+              class="nav-link"
+              href="{{url_for('transaction.transactionDelLanding')}}"
+              >Edit Transaction</a
+            >
+          </li>
+          <li class="nav-item px-1" align="center">
+            <a class="nav-link" href="{{url_for('acc.accManager')}}"
+              >My Account</a
+            >
+          </li>
+          {%endif%}
+          <li class="nav-item" align="center">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item" align="center">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
-        {%endif%}
-        {% if not user.is_authenticated %}
-        <li class="nav-item" align="center">
+          {%endif%} {% if not user.is_authenticated %}
+          <li class="nav-item" align="center">
             <a class="nav-link" href="/login">Login</a>
           </li>
-        {%endif%}    
-      </ul>
+          {%endif%}
+        </ul>
+      </div>
     </div>
+
+    <br />
+    {% block body %}{% endblock %}
+    <hr id="bottom" />
   </body>
   <script>
+    // nav view operation
     document.getElementById("nav-btn").style.display = "block"; // reset nav view
     document.getElementById("bottomNav").style.display = "none"; // reset nav btn view
     var navState = document.getElementById("bottomNav");
@@ -217,62 +231,63 @@
         btnState.style.display = "block";
         btnState.style.visibility = "visible";
       }
-      
     }
   </script>
-    
-    <br />
-    {% block body %}{% endblock %}
-    <hr id="bottom" />
-    <script>
-      // Use JavaScript to get the client's local time
-      const clientTime = new Date();
+  <script>
+    // Use JavaScript to get the client's local time
+    const clientTime = new Date();
 
-      // Create a DateTimeFormat object to get the timezone offset
-      const timezoneOffset = new Intl.DateTimeFormat("en-US", {
-        timeZoneName: "short",
+    // Create a DateTimeFormat object to get the timezone offset
+    const timezoneOffset = new Intl.DateTimeFormat("en-US", {
+      timeZoneName: "short",
+    })
+      .formatToParts(clientTime)
+      .find((part) => part.type === "timeZoneName").value;
+
+    // Convert the timezone offset to "GMT+X" format
+    const offsetInMinutes = clientTime.getTimezoneOffset();
+    const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
+    const offsetMinutes = Math.abs(offsetInMinutes) % 60;
+    const gmtString =
+      offsetInMinutes >= 0
+        ? `GMT-${offsetHours}:${offsetMinutes}`
+        : `GMT+${offsetHours}:${offsetMinutes}`;
+
+    // Format the client time and store it in the 'formattedTime' variable
+    const formattedTime = clientTime.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false, // Use 24-hour format
+    });
+
+    // Split the formatted time into date and time parts
+    const [date, time] = formattedTime.split(", ");
+
+    var [m, d, y] = date.split("/");
+    const formattedDate = `${y}-${m}-${d}`;
+
+    // Send the client's local time to the server as a query parameter
+    fetch(
+      `/get-local-time?date=${encodeURIComponent(
+        formattedDate
+      )}&time=${encodeURIComponent(time)}&tz=${encodeURIComponent(gmtString)}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        // Display the server's response (server time) in the console
+        console.log("Server Time:", data.server_time);
+        console.log("Client Time: {{session['LCT']}}");
       })
-        .formatToParts(clientTime)
-        .find((part) => part.type === "timeZoneName").value;
-
-      // Convert the timezone offset to "GMT+X" format
-      const offsetInMinutes = clientTime.getTimezoneOffset();
-      const offsetHours = Math.floor(Math.abs(offsetInMinutes) / 60);
-      const offsetMinutes = Math.abs(offsetInMinutes) % 60;
-      const gmtString =
-        offsetInMinutes >= 0
-          ? `GMT-${offsetHours}:${offsetMinutes}`
-          : `GMT+${offsetHours}:${offsetMinutes}`;
-
-      // Format the client time and store it in the 'formattedTime' variable
-      const formattedTime = clientTime.toLocaleString("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false, // Use 24-hour format
-      });
-
-      // Split the formatted time into date and time parts
-      const [date, time] = formattedTime.split(", ");
-
-      var [m, d, y] = date.split("/");
-      const formattedDate = `${y}-${m}-${d}`;
-
-      // Send the client's local time to the server as a query parameter
-      fetch(
-        `/get-local-time?date=${encodeURIComponent(
-          formattedDate
-        )}&time=${encodeURIComponent(time)}&tz=${encodeURIComponent(gmtString)}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // Display the server's response (server time) in the console
-          console.log("Server Time:", data.server_time);
-        })
-        .catch((error) => console.error("Error:", error));
-    </script>
-  </body>
+      .catch((error) => console.error("Error:", error));
+    function getLcTime() {
+      var t = new Date();
+      var lt = `${t.getFullYear()}.${t.getMonth()}.${t.getDate()}@${t.getHours()}:${t.getMinutes()}`;
+      setTimeout("getLcTime()", 1000);
+      document.getElementById("t").innerHTML = `${lt}`;
+    }
+  </script>
 </html>

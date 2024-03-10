@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}myMY - Transaction Modification{% endblock %}</title>
+    <!-- inherent root file -->
+    {% extends 'root.html' %}
+  </head>
+  {% block body %}
+  <body>
+    <br />
+    <div style="top: 50%" align="center">
+      <img
+        width="100"
+        height="100"
+        src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+        alt="myMY Icon"
+      />
+      <h1><code>myMY</code> by LukeCreated</h1>
+
+      <h2>Modify Transaction Records</h2>
+
+      <section class="mx-2 my-1">
+        Please select the filter to apply to get transaction records.
+        <form action="{{url_for('transaction.transactionGet')}}" method="GET" class="col-7 mx-1">
+          <div class="input-group my-3 mx-3">
+            <select
+              class="form-select border border-2 border-dark"
+              id="type"
+              name="type"
+              required
+            >
+              <option value="" selected></option>
+              <option value="outcome">Outcome</option>
+              <option value="income">Income</option>
+              <option value="exchange">Exchange</option>
+              <option value="owe">Owe</option>
+              <option value="transfer">Transfer</option>
+              <option value="deposit">Deposit</option>
+              <option value="withdrawal">Withdrawal</option>
+              <option value="donate">Donate</option>
+              <option value="invest">Invest</option>
+              <option value="refund">Refund</option></select
+            ><label class="input-group-text btn btn-dark" for="type"
+              >Type</label
+            >
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary">GET</button>
+        </form>
+        <span style="font-weight: bolder">OR</span> <br />
+
+        <a
+          href="{{url_for('transaction.transactionGet', type='all')}}"
+          type="button"
+          class="btn btn-lg btn-success"
+          >GET ALL records</a
+        >
+      </section>
+    </div>
+  </body>
+  {% endblock %}
+</html>

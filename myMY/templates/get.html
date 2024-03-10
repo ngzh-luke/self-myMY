@@ -60,7 +60,8 @@
       {% if filter %}
       <h5 class="sticky-top">
         <span style="background-color: antiquewhite; border-radius: 25%"
-          >&ensp;<u>Filter:</u> s&ensp;</span
+          >&ensp;<u>Filter:</u> {{filter}}&ensp;<br />Found:
+          {{recordsAmount}}</span
         >
       </h5>
       {% endif %} {% for g in get %}

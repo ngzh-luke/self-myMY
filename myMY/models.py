@@ -64,11 +64,12 @@ class SignupCode(db.Model):
     code = db.Column(db.String(9), default=False, unique=True)
     isused = db.Column(db.Boolean, default=False)
 
+
 class Transaction(db.Model):
     """ Database table: transaction
         list of single use signup code
 
-        #Attribute:
+        # Attribute:
             typee -> spend, exchange, receive, owe, \n
             amount -> transaction amount, \n
             currency -> THB, etc., \n
@@ -90,9 +91,6 @@ class Transaction(db.Model):
     location = db.Column(db.String(), nullable=False, default="unspecified")
     notes = db.Column(db.String(), nullable=True)
     dtime = db.Column(db.String(20))
-    country = db.Column(db.String(5)) # THA
+    country = db.Column(db.String(5))  # THA
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     typee = db.Column(db.String(30), nullable=False)
-
-
-    

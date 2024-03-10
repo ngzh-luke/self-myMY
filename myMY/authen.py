@@ -4,8 +4,8 @@ from flask_login import login_user, login_required, logout_user, current_user, l
 from flask_bcrypt import check_password_hash, generate_password_hash
 from .models import User, SignupCode
 from myMY import db
-import time
-import json
+# import time
+# import json
 from datetime import datetime, timezone
 
 iden = Blueprint('auth', __name__)
@@ -77,7 +77,8 @@ def signup():
         password = request.form.get('inputPassword')
         password2 = request.form.get('inputPassword2')
         signupcode = request.form.get('inputSignupCode')
-        code = SignupCode.query.filter_by(code=signupcode, isused=False).first() # get unused code
+        code = SignupCode.query.filter_by(
+            code=signupcode, isused=False).first()  # get unused code
         user = User.query.filter_by(uname=name).first()
         if user != None:
             # if user is exists
@@ -88,7 +89,7 @@ def signup():
             flash("Passwords are not matched!", category='warning')
             return redirect(url_for("redirector.toSignup"))
         elif (code == None) or (code.code != signupcode):
-            # if submitted code is match with code from server
+            # if submitted code is not match with code from server
             flash("Signup code is invalid! Please contact admin", category='warning')
             return redirect(url_for("redirector.toSignup"))
         else:

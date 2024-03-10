@@ -10,7 +10,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 DB_NAME = en_var(
     'DATABASE_URL', "sqlite:///myMY_db.sqlite")
-TIMEOUT = timedelta(hours=3) # set session timeout here
+TIMEOUT = timedelta(hours=3)  # set session timeout here
 try:
     PORT = en_var("port")
 except:
@@ -105,8 +105,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.625, status='Beta Release',
-                         build=20240310, version_note="Navbar bugs fixed")
+systemInfoObject = About(version=0.7, status='Beta Release',
+                         build=20240310, version_note="New implementation on lookup transactions, overall improvements, and transaction modification implementation started")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -125,7 +125,7 @@ def root_View():
 
 @rootView.route("/about/")
 def aboutView():
-    return render_template("about.html", user=current_user, version=systemVersion,versionNotes=systemInfoObject.version_note,build=systemInfoObject.build,status=systemInfoObject.status )
+    return render_template("about.html", user=current_user, version=systemVersion, versionNotes=systemInfoObject.version_note, build=systemInfoObject.build, status=systemInfoObject.status)
 
 
 @rootView.route('/get-local-time', methods=['GET'])
@@ -133,11 +133,12 @@ def getLCT():
     time = request.args.get('time')
     date = request.args.get('date')
     tz = request.args.get("tz")
-    session['LCT'] = str(date) + " at "+ str(time) + str(" {"+tz+"}")
+    session['LCT'] = str(date) + " at " + str(time) + str(" {"+tz+"}")
     server_time = datetime.now()
     session['SVT'] = server_time
 
     return jsonify({'server_time': server_time.isoformat()})
+
 
 @rootView.get('/nav')
 def testNav():
@@ -147,4 +148,4 @@ def testNav():
 # handle not found
 def notFound(e):
     """ not found 404 """
-    return render_template('404.html', path=request.full_path)
+    return render_template('404.html', path=request.full_path, user=current_user)
