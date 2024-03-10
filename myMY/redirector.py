@@ -50,3 +50,8 @@ def toTransactionDel():
 def toTransactionExport():
     session['last'] = request.endpoint
     return redirect(url_for('tx.exportLanding'))
+
+@r.route("/transaction/mod/", methods=['GET'])
+def toTransactionMod():
+    session['last'] = request.endpoint
+    return redirect(url_for("transaction.transactionModLanding"))

@@ -1,5 +1,5 @@
 """ transaction related operations """
-from flask import Blueprint, redirect, url_for, render_template, flash, request, session  # Response, jsonify, session
+from flask import Blueprint, redirect, url_for, render_template, flash, request, session, abort  # Response, jsonify, session
 from flask_login import login_required, current_user
 from .models import Transaction
 from myMY import db
@@ -157,10 +157,10 @@ def transactionDelLanding():  # deletion landing
     return render_template("delete.html", user=current_user)
 
 
-@t.route('/fetch/by-tid', methods=['GET'])
+@t.route('/edit/delete/fetch/by-tid', methods=['GET'])
 @login_required
 def fetchTransactionByID():  # deletion search
-    session['last'] = request.endpoint
+    # session['last'] = request.endpoint # can't have due to algorithm
     try:
         userID = current_user.id
         tid = request.args.get("tid")
@@ -187,7 +187,7 @@ def fetchTransactionByID():  # deletion search
     else:
         # flash(request.endpoint)
         # return render_template('delete.html', user=current_user, transaction=transac)
-        return 'hhh'
+        return abort(404)
 
 
 @t.route("/edit/delete", methods=['GET'])
@@ -245,70 +245,90 @@ def transactionEditLanding():
 @login_required
 def transactionModLanding():  # modification page landing
     session['last'] = request.endpoint  # transaction.transactionModLanding
-    return render_template('modLanding.html', user=current_user)
+    return render_template('mod.html', user=current_user)
 
 
-#     try:
-#         userID = current_user.id
-#         tid = request.args.get("tid")
-#         transac = Transaction.query.filter_by(id=tid, user_id=userID).first()
-#         if (transac == None) or (transac == "None"):
-#             raise AttributeError(obj={'msg': "Transaction does not exist"})
-#     except ValueError as ve:
-#         flash(message=str(
-#             f"Invalid transation ID given. [{ve}]"), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     except AttributeError as ae:
-#         flash(message=str(
-#             f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     except Exception as e:
-#         flash(message="Unable to fetch transaction! <br> ERR:{}".format(
-#             e), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     # return jsonify({'id': transac.id, 'transaction': transac} if transac else {})
-#     if session['last']:
-#         if session['last'] == "transaction.transactionDelLanding":
+@t.get('/edit/modify/fetch/by-tid')
+def modifyTransactionFetch():  # modification search
+    # session['last'] = request.endpoint # can't have due to algorithm
+    try:
+        userID = current_user.id
+        tid = request.args.get("tid")
+        transac = Transaction.query.filter_by(id=tid, user_id=userID).first()
+        if (transac == None) or (transac == "None"):
+            raise AttributeError(obj={'msg': "Transaction does not exist"})
+    except ValueError as ve:
+        flash(message=str(
+            f"Invalid transation ID given. [{ve}]"), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    except AttributeError as ae:
+        flash(message=str(
+            f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    except Exception as e:
+        flash(message="Unable to fetch transaction! <br> ERR:{}".format(
+            e), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    # return jsonify({'id': transac.id, 'transaction': transac} if transac else {})
+    if session['last']:
+        if session['last'] == "transaction.transactionModLanding":
 
-#             return render_template('delete.html', user=current_user, transaction=transac)
-#     else:
-#         # flash(request.endpoint)
-#         # return render_template('delete.html', user=current_user, transaction=transac)
-#         return 'hhh'
+            return render_template('mod.html', user=current_user, transaction=transac)
+    else:
+        return abort(404)
 
 
-# @t.route("/edit/delete", methods=['GET'])
-# @login_required
-# def transactionDel():  # delete transaction
-#     try:
-#         tid = str(request.args.get("tid"))
-#         tid = int(tid)
-#         delCon = request.args.get("delCon")
-#         userID = current_user.id
-#         if (delCon == None) or (delCon == "None"):
-#             raise confirmationError()
-#         else:
-#             result = Transaction.query.filter_by(
-#                 id=tid, user_id=userID).first()
-#             if (result == None) or (result == "None"):
-#                 raise AttributeError(obj={'msg': "Transaction does not exist"})
-#             db.session.delete(result)
-#             db.session.commit()
-#             flash('Transaction deleted!', category='success')
-#     except ValueError as ve:
-#         flash(message=str(
-#             f"Invalid transation ID given. [{ve}]"), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     except confirmationError:
-#         flash(message=str(
-#             "Unable to delete transaction! due to no user confirmation!"), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     except AttributeError as ae:
-#         flash(message=str(
-#             f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     except Exception as e:
-#         flash(message="Unable to delete transaction! <br> ERR:{}".format(
-#             e), category='error')
-#         return redirect(url_for("redirector.toTransactionDel"))
-#     return redirect(url_for("redirector.toTransactionHome"))
+@t.route("/edit/modify", methods=['GET'])
+@login_required
+def transactionMod():  # modify transaction
+    session['last'] = request.endpoint
+    try:
+        tid = str(request.args.get("tid"))  # transaction ID
+        tid = int(tid)
+        modCon = request.args.get("modCon")  # mod confirmation
+        # get edited values from user
+        typee = request.args.get("typee")
+        amount = request.args.get("amount")
+        currency = request.args.get("currency")
+        via = request.args.get("via")
+        party = request.args.get("party")
+        location = request.args.get("location")
+        country = request.args.get("country")
+        dtime = request.args.get("dtime")
+        notes = request.args.get("notes")
+        if (modCon == None) or (modCon == "None"):  # check confirmation
+            raise confirmationError()
+        else:
+            result = Transaction.query.filter_by(
+                id=tid, user_id=current_user.id).first()
+            if (result == None) or (result == "None"):
+                raise AttributeError(obj={'msg': "Transaction does not exist"})
+            # update transaction
+            result.typee = typee
+            result.amount = amount
+            result.currency = currency
+            result.via = via
+            result.party = party
+            result.location = location
+            result.country = country
+            result.dtime = dtime
+            result.notes = notes
+            db.session.commit()
+            flash('Transaction modified!', category='success')
+    except ValueError as ve:
+        flash(message=str(
+            f"Invalid transation ID given. [{ve}]"), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    except confirmationError:
+        flash(message=str(
+            "Unable to modify transaction due to no user confirmation!"), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    except AttributeError as ae:
+        flash(message=str(
+            f"Given transaction ID can't be found! [{ae.obj['msg']}]"), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    except Exception as e:
+        flash(message="Unable to modify transaction! <br> ERR:{}".format(
+            e), category='error')
+        return redirect(url_for("redirector.toTransactionMod"))
+    return redirect(url_for("redirector.toTransactionHome"))

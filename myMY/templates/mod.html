@@ -1,4 +1,4 @@
-{% extends 'root.html' %} {% block title %}myMY - Delete Transaction{% endblock
+{% extends 'root.html' %} {% block title %}myMY - Modify Transaction{% endblock
 %}
 
 <style>
@@ -37,7 +37,7 @@
     <div id="get" class="my-2 mx-1" align="center">
       <h1><code>myMY</code> by LukeCreated</h1>
 
-      <h2>Delete Transaction Records</h2>
+      <h2>Modify Transaction Records</h2>
     </div>
     <div>
       <a
@@ -56,7 +56,7 @@
     <br />
     <div class="container-fluid mb-4">
       <form
-        action="{{url_for('transaction.fetchTransactionByID')}}"
+        action="{{url_for('transaction.modifyTransactionFetch')}}"
         method="GET"
       >
         <div class="container" align="center">
@@ -80,10 +80,10 @@
     <hr class="my-1" />
     {% if transaction %}
     <div class="container-fluid mt-4" id="frm">
-      <form action="{{url_for('transaction.transactionDel')}}" method="GET">
+      <form action="{{url_for('transaction.transactionMod')}}" method="GET">
         <p style="color: red"><u>You can't undo the action!</u></p>
         <div class="container" align="center">
-          <div class="row col-8" id="delConFrom">
+          <div class="row col-8" id="modConFrom">
             <div
               class="input-group my-1 py-2 border border-2"
               style="background-color: yellow"
@@ -91,9 +91,9 @@
               <input
                 class="form-control form-check-input mt-1"
                 type="checkbox"
-                name="delCon"
-                id="delCon"
-              /><span for="delCon" class="input-group btn btn-danger"
+                name="modCon"
+                id="modCon"
+              /><span for="modCon" class="input-group btn btn-danger"
                 >I acknowledged the action can't be undone and wish to
                 proceed!</span
               >
@@ -110,74 +110,128 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <select class="form-select" id="type" name="type" disabled>
+          <select
+            class="form-select border border-2 border-dark"
+            id="typee"
+            name="typee"
+            required
+          >
             <option selected>{{transaction.typee}}</option>
-            <label class="input-group-text" for="type">Type</label>
+
+            <option value="outcome">Outcome</option>
+            <option value="income">Income</option>
+            <option value="exchange">Exchange</option>
+            <option value="owe">Owe</option>
+            <option value="transfer">Transfer</option>
+            <option value="deposit">Deposit</option>
+            <option value="withdrawal">Withdrawal</option>
+            <option value="donate">Donate</option>
+            <option value="invest">Invest</option>
+            <option value="refund">Refund</option>
           </select>
+          <label class="input-group-text" for="type">Type</label>
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Party&Amount</span>
+          <span class="input-group-text btn btn-warning">Party&Amount</span>
           <input
             type="text"
             aria-label="party"
-            class="form-control"
+            class="form-control border border-2 border-warning"
             name="party"
             id="party"
-            placeholder="party"
+            placeholder="{{transaction.party}}"
             value="{{transaction.party}}"
-            disabled
           />
           <input
             type="text"
             aria-label="amount"
-            class="form-control"
+            class="form-control border border-2 border-warning"
             name="amount"
             id="amount"
             pattern="^\d+(\.\d+)?$"
-            placeholder="amount"
+            placeholder="{{transaction.amount}}"
             title="Must be a float value"
             value="{{transaction.amount}}"
-            disabled
           />
         </div>
 
         <div class="input-group mb-3">
-          <select class="form-select" id="currency" name="currency">
-            <option selected disabled>{{transaction.currency}}</option>
+          <select
+            class="form-select border border-2 border-info"
+            id="currency"
+            name="currency"
+          >
+            <option selected>{{transaction.currency}}</option>
+
+            <option value="THB">฿:THB (บาท)</option>
+            <option value="RMB">¥:RMB (หยวน)</option>
+            <option value="TWD">$:TWD (เหรียญ)</option>
+            <option value="USD">$:USD (เหรียญ)</option>
+            <option value="other">Other</option>
           </select>
-          <select class="form-select" id="via" name="via">
-            <option selected disabled>{{transaction.via}}</option>
+          <select
+            class="form-select border border-2 border-info"
+            id="via"
+            name="via"
+          >
+            <option selected>{{transaction.via}}</option>
+
+            <option value="cash">Cash</option>
+            <option value="MB: SCB">MB: SCB</option>
+            <option value="MB: KBank">MB: KBank</option>
+            <option value="MB: ICBC TH">MB: ICBC TH</option>
+            <option value="MB: Alipay">MB: Alipay</option>
+            <option value="MB: WeChat Pay">MB: WeChat Pay</option>
+            <option value="MB: TrueMoney">MB: TrueMoney</option>
+            <option value="CRD: True Master card">CRD: True Master card</option>
+            <option value="CRD: SCB Planet">CRD: SCB Planet</option>
+            <option value="CRD: SCB Debit">CRD: SCB Debit</option>
+            <option value="CRD: ICBC TH Debit">CRD: ICBC TH Debit</option>
+            <option value="ATM: SCB">ATM: SCB</option>
+            <option value="ATM: KBank">ATM: KBank</option>
+            <option value="ATM: ICBC TH">ATM: ICBC TH</option>
+            <option value="ATM: ICBC CH">ATM: ICBC CH</option>
+            <option value="ATM:[other]">ATM: [OTHER]</option>
+            <option value="other">Other</option>
           </select>
-          <span class="input-group-text">Currency&Via</span>
+          <span class="input-group-text btn btn-info">Unit&Via</span>
         </div>
 
         <div class="input-group mb-3">
-          <span class="input-group-text">Place&Region</span>
+          <span class="input-group-text btn btn-primary">Place&Region</span>
           <input
             type="text"
             aria-label="place"
             id="place"
-            class="form-control"
+            class="form-control border border-2 border-primary"
             name="location"
-            placeholder="place"
+            placeholder="{{transaction.location}}"
             value="{{transaction.location}}"
-            disabled
           />
-          <select class="form-select" id="country" name="country">
-            <option selected disabled>{{transaction.country}}</option>
+          <select
+            class="form-select border border-2 border-primary"
+            id="country"
+            name="country"
+          >
+            <option selected >{{transaction.country}}</option>
+            <option value="THA">THA: Thailand</option>
+            <option value="CHN">CHN: People's Republic of China (PRC)</option>
+            <option value="TWN">TWN: Taiwan</option>
+            <option value="USA">USA: United States of America (USA)</option>
+            <option value="___">Other</option>
           </select>
         </div>
 
         <div class="input-group mb-3">
           <input
-            type="text"
+            type="datetime-local"
             id="dtime"
             name="dtime"
-            class="form-control"
+            class="form-control border border-2 border-success"
             value="{{transaction.dtime}}"
-            disabled
-          /><span class="input-group-text">Date&Time</span>
+        
+          /><span class="input-group-text btn btn-success">Date&Time</span>
         </div>
 
         <div class="input-group mb-3">
@@ -187,14 +241,13 @@
             aria-label="party"
             class="form-control"
             name="notes"
-            placeholder="notes (&lt;=100chars)"
-            id="notes"
             value="{{transaction.notes}}"
-            disabled
+            placeholder="{{transaction.notes}} (&lt;=100chars)"
+            id="notes"
           />
         </div>
 
-        <button type="submit" class="btn btn-lg btn-danger">DELETE</button>
+        <button type="submit" class="btn btn-lg btn-warning">MODIFY</button>
       </form>
     </div>
     {% else %}
@@ -215,23 +268,5 @@
   <br />
   <div class="my-3"></div>
 </body>
-<script>
-  function print() {
-    // Get the input element by its ID
-    var datePicker = document.getElementById("dtime");
-
-    // Attach an event listener to listen for changes in the selected date
-    datePicker.addEventListener("change", function () {
-      // Retrieve the selected date value
-      var selectedDate = datePicker.value;
-
-      console.log(
-        "Selected date:",
-        selectedDate,
-        `length= ${selectedDate.length}`
-      );
-    });
-  }
-</script>
 
 {% endblock %}

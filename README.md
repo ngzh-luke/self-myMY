@@ -1,4 +1,4 @@
-# self-myMY
+# myMY by LukeCreated
 
 Personal Project: `myMY` is an app to keep track of spending and incoming.
 
@@ -14,6 +14,6 @@ Personal Project: `myMY` is an app to keep track of spending and incoming.
 
 Current Status: **Beta Release**
 
-Current Version: **0.72**
+Current Version: **0.75**
 
-Updated: **March 10, 2024**
+Updated: **March 11, 2024**
