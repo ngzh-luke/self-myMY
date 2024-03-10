@@ -39,3 +39,4 @@ Created on Dec 20, 2023
 - Beta Release: New implementation on lookup transactions, overall improvements, and re organized edit transaction on March 10, 2024 -> **0.7**
 - Beta Release: Overall improvements, and draft transaction modification on March 10, 2024 -> **0.72**
 - Beta Release: Transaction modification is functional and overall improvements on March 11, 2024 -> **0.75**
+- Beta Release: Add version at the end of the page, and minor improvements on March 11, 2024 -> **0.751**

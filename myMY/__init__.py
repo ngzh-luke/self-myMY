@@ -105,8 +105,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.75, status='Beta Release',
-                         build=20240311, version_note="Transaction modification is functional and overall improvements")
+systemInfoObject = About(version=0.751, status='Beta Release',
+                         build=20240311, version_note="Add version at the end of the page, and minor improvements")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -136,6 +136,7 @@ def getLCT():
     session['LCT'] = str(date) + " at " + str(time) + str(" {"+tz+"}")
     server_time = datetime.now()
     session['SVT'] = server_time
+    session['version'] = 'v. ' + systemVersion
 
     return jsonify({'server_time': server_time.isoformat()})
 

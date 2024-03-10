@@ -51,7 +51,7 @@
 
   <body onload="getLcTime()">
     <!-- nav ui part  -->
-    <!-- nav version 2024.03.11 at 00:28 -->
+    <!-- nav version 2024.03.11 at 02:10 -->
     <!-- bottom nav toggle btn -->
     <div class="fixed-bottom mx-2" id="nav-btn">
       <button
@@ -160,7 +160,7 @@
         <ul
           class="navbar-nav"
           id="menus"
-          style="font-size: medium; color: azure"
+          style="font-size: large; color: azure"
         >
           {% if user.is_authenticated %}
           <li class="nav-item px-1" align="center">
@@ -211,6 +211,10 @@
     <br />
     {% block body %}{% endblock %}
     <hr id="bottom" />
+    {% if session['version'] %}
+    <div align="center">myMY by <code>LukeCreated</code> {{session['version']}}</div>
+    
+    {%endif%}
   </body>
   <script>
     // nav view operation
