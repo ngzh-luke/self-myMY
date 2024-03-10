@@ -1,6 +1,6 @@
 # transactions exporter
 from flask_login import login_required, current_user
-from flask import flash, render_template, request, Blueprint, Response, abort
+from flask import flash, render_template, request, Blueprint, Response, abort, session
 from pandas import DataFrame as df
 from .models import Transaction
 from .idGen import gen1
@@ -53,6 +53,7 @@ def exportAsPdf():
 @tx.route("/csv", methods=['GET'])
 @login_required
 def exportAsCSV():
+    session['last'] = request.endpoint
     TABLE_NAME = "Transactions"
     NOBE = '_sa_instance_state'
     NOBE2 = 'user_id'
@@ -441,7 +442,8 @@ def exportAsCSV():
             return response
         # any other received value
         case _:
-            flash(message="Unable to export due to unsupported transaction type!", category='error')
+            flash(
+                message="Unable to export due to unsupported transaction type!", category='error')
             return render_template('export.html', user=current_user)
     # without arg or any other
     return abort(404)

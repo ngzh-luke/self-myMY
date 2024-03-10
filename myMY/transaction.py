@@ -58,7 +58,7 @@ def mc(records: list | None = None):
 @t.route("/get", methods=['GET'])
 @login_required
 def transactionGet():
-
+    session['last'] = request.endpoint  # transaction.transactionGet
     totalAmount, recordsAmount = 0, 0
     t = getLocalTime()
     filter_type = request.args.get('type')
@@ -107,13 +107,14 @@ def transactionGet():
 @t.get('/new/')
 @login_required
 def transactionHome():
+    session['last'] = request.endpoint  # transaction.transactionHome
     return render_template("transaction.html", user=current_user)
 
 
 @t.route("/new/", methods=['POST'])
 @login_required
 def transactionNew():
-
+    session['last'] = request.endpoint
     if request.method == "POST":
         inputType = request.form.get("typee")
         inputParty = request.form.get("party")
@@ -149,9 +150,9 @@ def transactionNew():
 """ functions below are for transaction deletion """
 
 
-@t.route("/edit/delete-landing", methods=['GET'])
+@t.route("/edit/delete-landing/", methods=['GET'])
 @login_required
-def transactionDelLanding():
+def transactionDelLanding():  # deletion landing
     session['last'] = request.endpoint
     return render_template("delete.html", user=current_user)
 
@@ -159,6 +160,7 @@ def transactionDelLanding():
 @t.route('/fetch/by-tid', methods=['GET'])
 @login_required
 def fetchTransactionByID():  # deletion search
+    session['last'] = request.endpoint
     try:
         userID = current_user.id
         tid = request.args.get("tid")
@@ -191,6 +193,7 @@ def fetchTransactionByID():  # deletion search
 @t.route("/edit/delete", methods=['GET'])
 @login_required
 def transactionDel():  # delete transaction
+    session['last'] = request.endpoint  # transaction.transactionDel
     try:
         tid = str(request.args.get("tid"))
         tid = int(tid)
@@ -225,19 +228,26 @@ def transactionDel():  # delete transaction
     return redirect(url_for("redirector.toTransactionHome"))
 
 
-# """ functions below are for transaction modification """
+""" a function below are for edit transaction """
 
 
-# @t.route("/edit/delete-landing", methods=['GET'])
-# @login_required
-# def transactionDelLanding():
-#     session['last'] = request.endpoint
-#     return render_template("delete.html", user=current_user)
+@t.get("/edit/landing/")
+@login_required
+def transactionEditLanding():
+    session['last'] = request.endpoint  # transaction.transactionEditLanding
+    return render_template("editLanding.html", user=current_user)
 
 
-# @t.route('/fetch/by-tid', methods=['GET'])
-# @login_required
-# def fetchTransactionByID():  # deletion search
+""" functions below are for transaction modification """
+
+
+@t.get('/edit/modify-landing/')
+@login_required
+def transactionModLanding():  # modification page landing
+    session['last'] = request.endpoint  # transaction.transactionModLanding
+    return render_template('modLanding.html', user=current_user)
+
+
 #     try:
 #         userID = current_user.id
 #         tid = request.args.get("tid")

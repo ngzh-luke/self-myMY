@@ -50,6 +50,8 @@
   </style>
 
   <body onload="getLcTime()">
+    <!-- nav ui part  -->
+    <!-- nav version 2024.03.10 at23:05 -->
     <!-- bottom nav toggle btn -->
     <div class="fixed-bottom mx-2" id="nav-btn">
       <button
@@ -179,7 +181,7 @@
           <li class="nav-item px-1" align="center">
             <a
               class="nav-link"
-              href="{{url_for('transaction.transactionDelLanding')}}"
+              href="{{url_for('transaction.transactionEditLanding')}}"
               >Edit Transaction</a
             >
           </li>
@@ -204,6 +206,7 @@
         </ul>
       </div>
     </div>
+    <!-- end of nav ui part -->
 
     <br />
     {% block body %}{% endblock %}

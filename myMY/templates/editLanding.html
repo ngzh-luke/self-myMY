@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}myMY - Transaction Modification{% endblock %}</title>
+    <title>{% block title %}myMY - Edit Transaction{% endblock %}</title>
     <!-- inherent root file -->
     {% extends 'root.html' %}
   </head>
@@ -19,42 +19,27 @@
       />
       <h1><code>myMY</code> by LukeCreated</h1>
 
-      <h2>Modify Transaction Records</h2>
+      <h2>Edit Transaction Records</h2>
 
-      <section class="mx-2 my-1">
-        Please select the filter to apply to get transaction records.
-        <form action="{{url_for('transaction.transactionGet')}}" method="GET" class="col-7 mx-1">
-          <div class="input-group my-3 mx-3">
-            <select
-              class="form-select border border-2 border-dark"
-              id="type"
-              name="type"
-              required
-            >
-              <option value="" selected></option>
-              <option value="outcome">Outcome</option>
-              <option value="income">Income</option>
-              <option value="exchange">Exchange</option>
-              <option value="owe">Owe</option>
-              <option value="transfer">Transfer</option>
-              <option value="deposit">Deposit</option>
-              <option value="withdrawal">Withdrawal</option>
-              <option value="donate">Donate</option>
-              <option value="invest">Invest</option>
-              <option value="refund">Refund</option></select
-            ><label class="input-group-text btn btn-dark" for="type"
-              >Type</label
-            >
-          </div>
-          <button type="submit" class="btn btn-lg btn-primary">GET</button>
-        </form>
-        <span style="font-weight: bolder">OR</span> <br />
+      <section class="mx-2 my-1 py-3">
+        Please select the type of edit.
+        <br />
+        <br />
 
         <a
-          href="{{url_for('transaction.transactionGet', type='all')}}"
           type="button"
-          class="btn btn-lg btn-success"
-          >GET ALL records</a
+          class="btn btn-lg btn-warning py-3"
+          href="{{url_for('transaction.transactionModLanding')}}"
+          >MODIFY</a
+        ><br />
+        <br />
+        <span style="font-weight: bolder">OR</span> <br />
+        <br />
+        <a
+          href="{{url_for('transaction.transactionDelLanding')}}"
+          type="button"
+          class="btn btn-lg btn-danger"
+          >DELETE</a
         >
       </section>
     </div>

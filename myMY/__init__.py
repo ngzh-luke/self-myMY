@@ -105,8 +105,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.7, status='Beta Release',
-                         build=20240310, version_note="New implementation on lookup transactions, overall improvements, and transaction modification implementation started")
+systemInfoObject = About(version=0.72, status='Beta Release',
+                         build=20240310, version_note="Overall improvements, and draft transaction modification")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
@@ -140,9 +140,10 @@ def getLCT():
     return jsonify({'server_time': server_time.isoformat()})
 
 
-@rootView.get('/nav')
-def testNav():
-    return render_template('nav.html')
+# @rootView.get('/nav')
+# def testNav():
+#     # flash(message=request.endpoint) # will flash: rootView.testNav
+#     return render_template('nav.html', user=current_user)
 
 
 # handle not found

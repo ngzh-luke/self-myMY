@@ -41,12 +41,6 @@
     </div>
     <div>
       <a
-        href="{{url_for('redirector.toHome')}}"
-        type="button"
-        class="btn btn-primary"
-        >myMY Home</a
-      >&ensp;
-      <a
         href="{{url_for('transaction.transactionHome')}}"
         type="button"
         class="btn btn-success"
@@ -89,7 +83,7 @@
       <form action="{{url_for('transaction.transactionDel')}}" method="GET">
         <p style="color: red"><u>You can't undo the action!</u></p>
         <div class="container" align="center">
-          <div class="row col-7" id="delConFrom">
+          <div class="row col-8" id="delConFrom">
             <div
               class="input-group my-1 py-2 border border-2"
               style="background-color: yellow"

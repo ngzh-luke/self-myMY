@@ -29,6 +29,7 @@ def logout():
 @iden.route("/request/login", methods=["POST"])
 # log user in
 def login():
+    session['last'] = request.endpoint
     try:
         # if user already logged in
         if User.get_id(current_user):
@@ -68,6 +69,7 @@ def login():
 @iden.route('/request/signup', methods=["POST"])
 # sign up
 def signup():
+    session['last'] = request.endpoint
     if current_user.is_authenticated:
         flash("Please logout to continue!", category='info')
         return redirect(url_for("acc.myAcc"))
