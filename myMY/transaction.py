@@ -60,18 +60,21 @@ def mc(records: list | None = None):
 def transactionGet():
     session['last'] = request.endpoint  # transaction.transactionGet
     totalAmount, recordsAmount = 0, 0
-    t = getLocalTime()
+    argsAmount = len(request.args.keys())
+    argsList = list(request.args.keys())
     filter_type = request.args.get('type')
+
     # filter_date = ''
-    # no arg(all) = -1, arg1 = 0, arg2 = 1, arg3 = 2, arg1+arg2 = 3, arg2+arg3 = 5, arg1+arg2+arg3 = 6
-    operation = -1
-    if filter_type != None:
-        operation = 0
+    
+    operation = -1 # -1 = no args received
+    if filter_type != None and argsAmount == 1:
+        operation = 1 # only arg 'type' received
+    # elif 
     # flash(message='Unable to get records due to invalid filter(s)!', category='error') if filter_type == None else None
     records = None
     TYPES = ['income', 'outcome', 'donate', 'invest', 'transfer',
              'owe', 'exchange', 'deposit', 'withdrawal', 'refund']
-    if ((filter_type in TYPES) and (operation == 0)):  # if valid arg1 is received
+    if ((filter_type in TYPES) and (operation == 1)):  # if only arg 'type' is received and its value is not all
         ft = filter_type
         typeIndex = TYPES.index(filter_type)
         try:
@@ -81,12 +84,12 @@ def transactionGet():
         except Exception as e:
             flash(
                 message=f'Unable to retrieve transaction records: {e}', category='error')
-    elif filter_type == None:  # if no args received then show landing page
+    elif filter_type == None and argsAmount == 0:  # if no args received then show landing page
         ft = None
         return render_template('getLanding.html', user=current_user)
         # flash(message='Unable to get records!', category='error')
-    elif filter_type == 'all':
-        ft = '[all]'
+    elif filter_type == 'all':  # if arg 'type' is received but is all
+        ft = '{ all }'
         try:
             records = Transaction.query.filter_by(
                 user_id=current_user.id).all()
@@ -95,10 +98,12 @@ def transactionGet():
             flash(
                 message=f'Unable to retrieve transaction records: {e}', category='error')
     else:
+        ft = str([i for i in list(request.args.keys())])
+        
         flash(message='Unable to retrieve transaction records due to invalid filter!', category='error')
-        return render_template("get.html", user=current_user)
+        # return render_template("get.html", user=current_user)
 
-    return render_template("get.html", user=current_user, get=records, total=totalAmount, time=t, filter=ft, recordsAmount=f'{recordsAmount} records' if recordsAmount > 1 else f'{recordsAmount} record')
+    return render_template("get.html", user=current_user, get=records, total=totalAmount, time=getLocalTime(), filter=ft, recordsAmount=f'{recordsAmount} records' if recordsAmount > 1 else f'{recordsAmount} record')
 
 
 """ functions below are for add new transaction record """

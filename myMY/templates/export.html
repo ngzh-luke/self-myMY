@@ -10,12 +10,13 @@
   {% block body %}
   <body>
     <div style="top: 50%" align="center">
-      <img
-        width="100"
-        height="100"
-        src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
-        alt="myMY Icon"
-      />
+      <a href="/"
+        ><img
+          width="100"
+          height="100"
+          src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+          alt="myMY Icon"
+      /></a>
       <h1><code>myMY</code> by LukeCreated</h1>
 
       <h2>Export Transaction Records</h2>
@@ -41,56 +42,44 @@
       <div id="all" class="px-1 py-1">
         <ul style="list-style-type: none">
           <li>
-            <a href="/transactions/export/csv?filter=all"
+            <a href="{{url_for('tx.exportAsCSV', type='all')}}"
               ><button class="btn btn-lg btn-primary">All records</button></a
             >
           </li>
         </ul>
-      </div>
     </div>
-    <div id="by-type">
-      <h3 class="mx-3">By transaction type</h3>
-      <ul
-        style="list-style-position: inside; list-style-type: square"
-        align="center"
-      >
-        <li class="pt-2 pb-1">
-          <a href="/transactions/export/csv?filter=income"
-            ><button class="btn btn-success">Income</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=outcome"
-            ><button class="btn btn-danger">Outcome</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=donate"
-            ><button class="btn btn-info">Donate</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=invest"
-            ><button class="btn btn-warning">Invest</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=transfer"
-            ><button class="btn btn-primary">Transfer</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=deposit"
-            ><button class="btn btn-success">Deposit</button></a
-          >
-        </li>
-        <li class="py-1">
-          <a href="/transactions/export/csv?filter=withdrawal"
-            ><button class="btn btn-danger">Withdrawal</button></a
-          >
-        </li>
-      </ul>
-    </div>
+    <span style="font-weight: bolder">OR</span> <br />
+    <form
+          action="{{url_for('tx.exportAsCSV')}}"
+          method="GET"
+          class="col-8 mx-1"
+          id="t-type"
+        >
+          <div class="input-group my-3 mx-3">
+            <select
+              class="form-select border border-2 border-dark"
+              id="type"
+              name="type"
+              required
+            >
+              <option value="" selected></option>
+              <option value="outcome">Outcome</option>
+              <option value="income">Income</option>
+              <option value="exchange">Exchange</option>
+              <option value="owe">Owe</option>
+              <option value="transfer">Transfer</option>
+              <option value="deposit">Deposit</option>
+              <option value="withdrawal">Withdrawal</option>
+              <option value="donate">Donate</option>
+              <option value="invest">Invest</option>
+              <option value="refund">Refund</option></select
+            ><label class="input-group-text btn btn-dark" for="type"
+              >Type</label
+            >
+          </div>
+          <button type="submit" class="btn btn-lg btn-success">EXPORT</button>
+        </form>
   </body>
+  <script></script>
   {% endblock %}
 </html>

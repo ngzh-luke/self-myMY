@@ -8,29 +8,72 @@
     {% extends 'root.html' %}
   </head>
   {% block body %}
-  <body>
+  <body onload="resetView()">
     <br />
     <div style="top: 50%" align="center">
-      <img
-        width="100"
-        height="100"
-        src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
-        alt="myMY Icon"
-      />
+      <a href="/"
+        ><img
+          width="100"
+          height="100"
+          src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+          alt="myMY Icon"
+      /></a>
       <h1><code>myMY</code> by LukeCreated</h1>
 
       <h2>Get Transaction Records</h2>
 
       <section class="mx-2 my-1">
         Please select the filter to apply to get transaction records.
+        <br />
+        <!-- get all -->
+        <a
+          href="{{url_for('transaction.transactionGet', type='all')}}"
+          type="button"
+          class="btn btn-lg btn-success"
+          >GET ALL records</a
+        ><br />
+        <!-- or -->
+        <span style="font-weight: bolder">OR</span> <br />
+        <!-- filter selection -->
+        <form id="filter-selection" class="col-9">
+          <div class="input-group my-3 mx-3">
+            <label class="input-group-text btn btn-dark" for="type"
+              >Filter by</label
+            >
+            <select
+              class="form-select border border-2 border-secondary"
+              id="filter"
+              name="filter"
+              required
+            >
+              <option value="" selected></option>
+              <option value="type">Type</option>
+              <option value="amount">Amount</option>
+              <!-- <option value=""></option>
+              <option value=""></option> -->
+            </select>
+            <button
+              type="reset"
+              onclick="resetView()"
+              class="btn btn-secondary"
+            >
+              RESET
+            </button>
+          </div>
+        </form>
+        <button onclick="filterSelection()" class="btn btn-info" id="apply-btn">
+          APPLY
+        </button>
+        <!-- get by type -->
         <form
           action="{{url_for('transaction.transactionGet')}}"
           method="GET"
           class="col-8 mx-1"
+          id="t-type"
         >
           <div class="input-group my-3 mx-3">
             <select
-              class="form-select border border-2 border-dark"
+              class="form-select border border-2 border-warning"
               id="type"
               name="type"
               required
@@ -46,22 +89,133 @@
               <option value="donate">Donate</option>
               <option value="invest">Invest</option>
               <option value="refund">Refund</option></select
-            ><label class="input-group-text btn btn-dark" for="type"
+            ><label class="input-group-text btn btn-warning" for="type"
               >Type</label
             >
           </div>
           <button type="submit" class="btn btn-lg btn-primary">GET</button>
         </form>
-        <span style="font-weight: bolder">OR</span> <br />
+        <!-- get by amount -->
+        <div id="amount">
+          <!-- amount mode selection -->
+          <form class="col-7 mx-1">
+            <div class="input-group mb-3 mx-3">
+              <select
+                class="form-select border border-2 border-primary"
+                id="mode"
+                name="mode"
+                required
+              >
+                <option value="" selected></option>
+                <option value="range">Range</option>
+                <option value="comparision">Comparision</option>
+              </select>
+              <label class="input-group-text btn btn-primary" for="mode"
+                >Mode</label
+              >
+            </div>
 
-        <a
-          href="{{url_for('transaction.transactionGet', type='all')}}"
-          type="button"
-          class="btn btn-lg btn-success"
-          >GET ALL records</a
-        >
+            <!-- amount range -->
+
+            <div class="input-group my-3 mx-3">
+              <span class="input-group-text btn btn-warning">A</span>
+              <input
+                id="rangeA"
+                name="rangeA"
+                class="form-control border border-2 border-warning"
+                pattern="^\d+(\.\d+)?$"
+                placeholder="a"
+                title="Must be a float value (1.0)"
+                required
+              />
+              <span class="input-group-text btn btn-warning">B</span>
+              <input
+                id="rangeB"
+                name="rangeB"
+                class="form-control border border-2 border-warning"
+                pattern="^\d+(\.\d+)?$"
+                placeholder="a"
+                title="Must be a float value (1.0)"
+                required
+              />
+            </div>
+
+            <!-- amount where -->
+
+            <div class="input-group my-3 mx-3">
+              <select
+                class="form-select border border-2 border-info"
+                id="where"
+                name="where"
+                required
+              >
+                <option value="" selected></option>
+                <option value="MB: SCB">MB: SCB</option>
+                <option value="MB: KBank">MB: KBank</option>
+                <option value="MB: ICBC TH">MB: ICBC TH</option>
+                <option value="MB: Alipay">MB: Alipay</option>
+                <option value="MB: WeChat Pay">MB: WeChat Pay</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="input-group-text btn btn-info">Where</span>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary">GET</button>
+          </form>
+        </div>
+
+        <!-- get by date -->
       </section>
     </div>
   </body>
+  <script>
+    selection = document.getElementById("filter");
+    applyBtn = document.getElementById("apply-btn");
+
+    tType = document.getElementById("t-type");
+    amount = document.getElementById("amount");
+    amount_mode = document.getElementById("mode");
+    amount_rangeA = document.getElementById("rangeA");
+    amount_rangeB = document.getElementById("rangeB");
+    amount_where = document.getElementById("where");
+    function resetView() {
+      // reset view
+      tType.style.display = "none";
+      amount.style.display = "none";
+      applyBtn.style.display = "block";
+      selection.disabled = false;
+    }
+    resetView(); // force to reset view
+    function reverseView(view) {
+      view.style.display == "block"
+        ? (view.style.display = "none")
+        : (view.style.display = "block");
+    }
+    function filterSelection() {
+      console.log(`filter applied: ${selection.value}`);
+      switch (selection.value) {
+        case "type":
+          if (tType.style.display == "none") reverseView(tType);
+          if (amount.style.display == "block") reverseView(amount);
+          reverseView(applyBtn);
+          selection.disabled = true;
+          break;
+        case "amount":
+          if (amount.style.display == "none") reverseView(amount);
+          if (tType.style.display == "block") reverseView(tType);
+          reverseView(applyBtn);
+          selection.disabled = true;
+          break;
+        default:
+          resetView();
+          // alert('Please select the filter to apply')
+          Swal.fire({
+            title: "Required action!",
+            text: "Please select the filter to apply!",
+            icon: "warning",
+          });
+          break;
+      }
+    }
+  </script>
   {% endblock %}
 </html>

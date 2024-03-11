@@ -29,9 +29,12 @@ def createApp():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'{DB_NAME}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['REMEMBER_COOKIE_SECURE'] = True
+    app.config['TIMEZONE'] = 'Asia/Bangkok'
+    app.config['SESSION_COOKIE_SECURE'] = True
+    app.config['SESSION_COOKIE_HTTPONLY'] = True
+    app.config['SESSION_COOKIE_NAME'] = 'myMY'
     # set session timeout (need to use with before_request() below)
     app.config['PERMANENT_SESSION_LIFETIME'] = TIMEOUT
-    app.config['TIMEZONE'] = 'Asia/Bangkok'
     # app.config['SERVER_NAME'] = DOMAIN
 
     f_bcrypt.init_app(app)
@@ -105,8 +108,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.751, status='Beta Release',
-                         build=20240311, version_note="Add version at the end of the page, and minor improvements")
+systemInfoObject = About(version=0.755, status='Beta Release',
+                         build=20240311, version_note="Get by amount is on progress, and overall improvements")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
