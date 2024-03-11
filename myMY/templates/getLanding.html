@@ -29,14 +29,14 @@
         <a
           href="{{url_for('transaction.transactionGet', type='all')}}"
           type="button"
-          class="btn btn-lg btn-success"
+          class="btn btn-lg btn-success my-2"
           >GET ALL records</a
         ><br />
         <!-- or -->
-        <span style="font-weight: bolder">OR</span> <br />
+        <span style="font-weight: bolder" class="my-2">OR</span> <br />
         <!-- filter selection -->
-        <form id="filter-selection" class="col-9">
-          <div class="input-group my-3 mx-3">
+        <form id="filter-selection">
+          <div class="input-group my-3 mx-2 px-2">
             <label class="input-group-text btn btn-dark" for="type"
               >Filter by</label
             >
@@ -47,8 +47,8 @@
               required
             >
               <option value="" selected></option>
-              <option value="type">Type</option>
               <option value="amount">Amount</option>
+              <option value="type">Type</option>
               <!-- <option value=""></option>
               <option value=""></option> -->
             </select>
@@ -65,105 +65,112 @@
           APPLY
         </button>
         <!-- get by type -->
-        <form
-          action="{{url_for('transaction.transactionGet')}}"
-          method="GET"
-          class="col-8 mx-1"
-          id="t-type"
-        >
-          <div class="input-group my-3 mx-3">
-            <select
-              class="form-select border border-2 border-warning"
-              id="type"
-              name="type"
-              required
-            >
-              <option value="" selected></option>
-              <option value="outcome">Outcome</option>
-              <option value="income">Income</option>
-              <option value="exchange">Exchange</option>
-              <option value="owe">Owe</option>
-              <option value="transfer">Transfer</option>
-              <option value="deposit">Deposit</option>
-              <option value="withdrawal">Withdrawal</option>
-              <option value="donate">Donate</option>
-              <option value="invest">Invest</option>
-              <option value="refund">Refund</option></select
-            ><label class="input-group-text btn btn-warning" for="type"
-              >Type</label
-            >
-          </div>
-          <button type="submit" class="btn btn-lg btn-primary">GET</button>
-        </form>
-        <!-- get by amount -->
-        <div id="amount">
-          <!-- amount mode selection -->
-          <form class="col-7 mx-1">
-            <div class="input-group mb-3 mx-3">
+        <div class="col-9 px-2">
+          <form
+            action="{{url_for('transaction.transactionGet')}}"
+            method="GET"
+            class="mx-1"
+            id="t-type"
+          >
+            <div class="input-group my-3 mx-2">
               <select
-                class="form-select border border-2 border-primary"
-                id="mode"
-                name="mode"
+                class="form-select border border-2 border-warning"
+                id="type"
+                name="type"
                 required
               >
                 <option value="" selected></option>
-                <option value="range">Range</option>
+                <option value="outcome">Outcome</option>
+                <option value="income">Income</option>
+                <option value="exchange">Exchange</option>
+                <option value="owe">Owe</option>
+                <option value="transfer">Transfer</option>
+                <option value="deposit">Deposit</option>
+                <option value="withdrawal">Withdrawal</option>
+                <option value="donate">Donate</option>
+                <option value="invest">Invest</option>
+                <option value="refund">Refund</option></select
+              ><label class="input-group-text btn btn-warning" for="type"
+                >Type</label
+              >
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary">GET</button>
+          </form>
+        </div>
+        <!-- get by amount -->
+        <div id="amount" class="col-9 px-2">
+          <!-- amount mode selection -->
+          <form class="mx-1" id="amount-form">
+            <div class="input-group mb-3 mx-2">
+              <select
+                class="form-select border border-2 border-primary"
+                id="amount.mode"
+                name="amount.mode"
+                onchange="amountFormHelper()"
+                required
+              >
+                <option value="" selected></option>
                 <option value="comparision">Comparision</option>
+                <option value="range">Range</option>
               </select>
-              <label class="input-group-text btn btn-primary" for="mode"
+              <label class="input-group-text btn btn-primary" for="amount.mode"
                 >Mode</label
               >
             </div>
 
             <!-- amount range -->
-
-            <div class="input-group my-3 mx-3">
-              <span class="input-group-text btn btn-warning">A</span>
-              <input
-                id="rangeA"
-                name="rangeA"
-                class="form-control border border-2 border-warning"
-                pattern="^\d+(\.\d+)?$"
-                placeholder="a"
-                title="Must be a float value (1.0)"
-                required
-              />
-              <span class="input-group-text btn btn-warning">B</span>
-              <input
-                id="rangeB"
-                name="rangeB"
-                class="form-control border border-2 border-warning"
-                pattern="^\d+(\.\d+)?$"
-                placeholder="a"
-                title="Must be a float value (1.0)"
-                required
-              />
+            <div id="amount.range">
+              <div class="input-group my-3 mx-1">
+                <span class="input-group-text btn btn-warning">A</span>
+                <input
+                  id="amount.a"
+                  name="amount.a"
+                  class="form-control border border-2 border-warning"
+                  pattern="^\d+(\.\d+)?$"
+                  placeholder="e.g. 0.1"
+                  title="Must be a float value (1.0)"
+                  required
+                />
+                <span class="input-group-text btn btn-warning">B</span>
+                <input
+                  id="amount.b"
+                  name="amount.b"
+                  class="form-control border border-2 border-warning"
+                  pattern="^\d+(\.\d+)?$"
+                  placeholder="e.g. 0.1"
+                  title="Must be a float value (1.0)"
+                  required
+                />
+              </div>
             </div>
 
-            <!-- amount where -->
-
-            <div class="input-group my-3 mx-3">
-              <select
-                class="form-select border border-2 border-info"
-                id="where"
-                name="where"
-                required
-              >
-                <option value="" selected></option>
-                <option value="MB: SCB">MB: SCB</option>
-                <option value="MB: KBank">MB: KBank</option>
-                <option value="MB: ICBC TH">MB: ICBC TH</option>
-                <option value="MB: Alipay">MB: Alipay</option>
-                <option value="MB: WeChat Pay">MB: WeChat Pay</option>
-                <option value="other">Other</option>
-              </select>
-              <span class="input-group-text btn btn-info">Where</span>
+            <!-- amount compare -->
+            <div id="amount.compare_condition">
+              <div class="input-group mb-3 mx-2">
+                <select
+                  class="form-select border border-2 border-info"
+                  id="amount.compare"
+                  name="amount.compare"
+                  onchange="amountFormHelper()"
+                  required
+                >
+                  <option value="" selected></option>
+                  <option value="a>b">A is greater than B</option>
+                  <option value="a>=b">A is greater than or equal to B</option>
+                  <option value="a=b">A is equal to B</option>
+                  <option value="a!=b">A is not equal to B</option>
+                </select>
+                <span class="input-group-text btn btn-info" for="amount.compare"
+                  >Compare condition</span
+                >
+              </div>
             </div>
+
             <button type="submit" class="btn btn-lg btn-primary">GET</button>
           </form>
         </div>
 
-        <!-- get by date -->
+        <!-- TODO: get by date -->
       </section>
     </div>
   </body>
@@ -173,15 +180,18 @@
 
     tType = document.getElementById("t-type");
     amount = document.getElementById("amount");
-    amount_mode = document.getElementById("mode");
-    amount_rangeA = document.getElementById("rangeA");
-    amount_rangeB = document.getElementById("rangeB");
-    amount_where = document.getElementById("where");
+    amount_mode = document.getElementById("amount.mode");
+    amount_range = document.getElementById("amount.range");
+    // amount_rangeA = document.getElementById("amount.a");
+    // amount_rangeB = document.getElementById("amount.b");
+    amount_compare = document.getElementById("amount.compare_condition");
     function resetView() {
       // reset view
       tType.style.display = "none";
       amount.style.display = "none";
       applyBtn.style.display = "block";
+      amount_compare.style.display = "none";
+      amount_range.style.display = "none";
       selection.disabled = false;
     }
     resetView(); // force to reset view
@@ -189,6 +199,52 @@
       view.style.display == "block"
         ? (view.style.display = "none")
         : (view.style.display = "block");
+    }
+    function amountFormHelper() {
+      console.log(document.getElementById("amount.compare").value);
+      if (amount.style.display == "none") reverseView(amount);
+      if (tType.style.display == "block") reverseView(tType);
+      selection.disabled = true;
+      switch (amount_mode.value) {
+        case "comparision":
+          console.log("amount.comparision");
+          amount_compare.style.display = "block";
+          amount_range.style.display = "block";
+          if (document.getElementById("amount.compare").required == false) {
+            document.getElementById("amount.compare").required == true;
+          }
+          if (document.getElementById("amount.compare").value == "") {
+            //   Swal.fire({
+            //   title: "Required action!",
+            //   text: "Please select the compare condition!",
+            //   icon: "warning",
+            // });
+          }
+          break;
+        case "range":
+          console.log("amount.range");
+          amount_compare.style.display = "none";
+          amount_range.style.display = "block";
+          if (document.getElementById("amount.compare").required == true) {
+            document.getElementById("amount.compare").required == false;
+            //   Swal.fire({
+            //   title: "Required action!",
+            //   text: "Please select the compare condition!",
+            //   icon: "warning",
+            // });
+          }
+          // amount_compare.value = "";
+          if (document.getElementById("amount.compare").value != "") {
+            document.getElementById("amount.compare").value = "";
+          }
+          break;
+        default:
+          console.log("reset amount");
+          amount_compare.style.display = "none";
+          amount_range.style.display = "none";
+          document.getElementById("amount.compare").value = "";
+          break;
+      }
     }
     function filterSelection() {
       console.log(`filter applied: ${selection.value}`);
@@ -200,10 +256,8 @@
           selection.disabled = true;
           break;
         case "amount":
-          if (amount.style.display == "none") reverseView(amount);
-          if (tType.style.display == "block") reverseView(tType);
           reverseView(applyBtn);
-          selection.disabled = true;
+          amountFormHelper();
           break;
         default:
           resetView();

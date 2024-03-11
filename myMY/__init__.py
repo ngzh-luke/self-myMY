@@ -48,7 +48,7 @@ def createApp():
     from .exporter import tx
     app.register_blueprint(rootView, url_prefix='/')
     app.register_blueprint(t, url_prefix='/transaction')
-    app.register_blueprint(tx, url_prefix='/transactions/export')
+    app.register_blueprint(tx, url_prefix='/export/transaction-records/format/')
     app.register_blueprint(iden, url_prefix='/iden-operation')
     app.register_blueprint(r, url_prefix='/')
     app.register_blueprint(acc, url_prefix='/account')
@@ -108,8 +108,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.755, status='Beta Release',
-                         build=20240311, version_note="Get by amount is on progress, and overall improvements")
+systemInfoObject = About(version=0.76, status='Beta Release',
+                         build=20240311, version_note="Make progress on get by amount, new navbar close btn, and overall improvements")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 

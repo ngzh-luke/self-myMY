@@ -49,16 +49,17 @@
     }
   </style>
 
-  <body onload="getLcTime()">
+  <body onload="onLoad()">
     <!-- nav ui part  -->
     <!-- nav version 2024.03.11 at 02:10 -->
     <!-- bottom nav toggle btn -->
-    <div class="fixed-bottom mx-2" id="nav-btn">
+    <div class="fixed-bottom mx-3" id="nav-toggler">
       <button
         type="button"
-        class="btn btn-lg btn-info my-3"
+        class="btn btn-lg btn-info my-2"
         style="border-radius: 50%"
         onclick="toggleNav()"
+        id="nav-btn"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,55 +74,38 @@
           />
         </svg>
       </button>
-      <span class="btn btn-outline btn-light"><span id="t"></span></span>
+      <!-- time displayer & close btn-->
+      <button
+        class="btn btn-outline btn-light mb-1"
+        style="z-index: 10"
+        id="nav-bar"
+        onclick="toggleNav()"
+        ><span id="close"><svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-x-diamond-fill"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098z"
+          />
+        </svg> Close</span>
+       
+        <span id="t"></span
+      ></button>
     </div>
 
     <!-- bottom nav expanded menus -->
     {% if user.is_authenticated %}
-    <div
-      class="fixed-bottom my-2"
-      id="bottomNav"
-      style="
-        background-color: blueviolet;
-        height: 65%;
-        width: auto;
-        border-radius: 15%;
-        opacity: 0.9;
-        margin-left: 1.2rem;
-        margin-right: 1.2rem;
-        z-index: 15;
-      "
-    >
-      <h2 align="center" class="mt-1" style="color: goldenrod"><u>MENUS</u></h2>
-      <aside>
-        <div align="end" id="close-menus-btn">
-          <button
-            type="button"
-            onclick="toggleNav()"
-            class="btn btn-outline-dark mx-4"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-x-diamond-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098z"
-              />
-            </svg>
-          </button>
-        </div>
-      </aside>
-      {% else %}
+    <div id="nav-expanded-area">
       <div
         class="fixed-bottom my-2"
         id="bottomNav"
         style="
           background-color: blueviolet;
-          height: 35%;
+          height: 65%;
           width: auto;
           border-radius: 15%;
           opacity: 0.9;
@@ -130,80 +114,79 @@
           z-index: 15;
         "
       >
-        <h2 align="center" class="mt-1" style="color: goldenrod">
-          <u>MENUS</u>
-        </h2>
-        <aside>
-          <div align="end" id="close-menus-btn">
-            <button
-              type="button"
-              onclick="toggleNav()"
-              class="btn btn-outline-dark mx-4"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-x-diamond-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M9.05.435c-.58-.58-1.52-.58-2.1 0L4.047 3.339 8 7.293l3.954-3.954L9.049.435zm3.61 3.611L8.708 8l3.954 3.954 2.904-2.905c.58-.58.58-1.519 0-2.098l-2.904-2.905zm-.706 8.614L8 8.708l-3.954 3.954 2.905 2.904c.58.58 1.519.58 2.098 0l2.905-2.904zm-8.614-.706L7.292 8 3.339 4.046.435 6.951c-.58.58-.58 1.519 0 2.098z"
-                />
-              </svg>
-            </button>
-          </div>
-        </aside>
-        {%endif%}
 
-        <ul
-          class="navbar-nav"
-          id="menus"
-          style="font-size: large; color: azure"
+        {% else %}
+        <div
+          class="fixed-bottom my-2"
+          id="bottomNav"
+          style="
+            background-color: blueviolet;
+            height: 35%;
+            width: auto;
+            border-radius: 15%;
+            opacity: 0.9;
+            margin-left: 1.2rem;
+            margin-right: 1.2rem;
+            z-index: 15;
+          "
         >
-          {% if user.is_authenticated %}
-          <li class="nav-item px-1" align="center">
-            <a class="nav-link" href="{{url_for('acc.myAcc')}}">Home</a>
-          </li>
-          <li class="nav-item px-1" align="center">
-            <a
-              class="nav-link"
-              href="{{url_for('transaction.transactionHome')}}"
-              >New Transaction</a
-            >
-          </li>
-          <li class="nav-item px-1" align="center">
-            <a class="nav-link" href="{{url_for('transaction.transactionGet')}}"
-              >Lookup Transactions</a
-            >
-          </li>
-          <li class="nav-item px-1" align="center">
-            <a
-              class="nav-link"
-              href="{{url_for('transaction.transactionEditLanding')}}"
-              >Edit Transaction</a
-            >
-          </li>
-          <li class="nav-item px-1" align="center">
-            <a class="nav-link" href="{{url_for('acc.accManager')}}"
-              >My Account</a
-            >
-          </li>
+          
+          
           {%endif%}
-          <li class="nav-item" align="center">
-            <a class="nav-link" href="/about">About</a>
-          </li>
-          {% if user.is_authenticated %}
-          <li class="nav-item" align="center">
-            <a class="nav-link" href="/logout">Logout</a>
-          </li>
-          {%endif%} {% if not user.is_authenticated %}
-          <li class="nav-item" align="center">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-          {%endif%}
-        </ul>
+          <h2 align="center" class="mt-1" style="color: goldenrod">
+            <u>MENUS</u>
+          </h2>
+
+          <ul
+            class="navbar-nav"
+            id="menus"
+            style="font-size: large; color: azure"
+          >
+            {% if user.is_authenticated %}
+            <li class="nav-item px-1" align="center">
+              <a class="nav-link" href="{{url_for('acc.myAcc')}}">Home</a>
+            </li>
+            <li class="nav-item px-1" align="center">
+              <a
+                class="nav-link"
+                href="{{url_for('transaction.transactionHome')}}"
+                >New Transaction</a
+              >
+            </li>
+            <li class="nav-item px-1" align="center">
+              <a
+                class="nav-link"
+                href="{{url_for('transaction.transactionGet')}}"
+                >Lookup Transactions</a
+              >
+            </li>
+            <li class="nav-item px-1" align="center">
+              <a
+                class="nav-link"
+                href="{{url_for('transaction.transactionEditLanding')}}"
+                >Edit Transaction</a
+              >
+            </li>
+            <li class="nav-item px-1" align="center">
+              <a class="nav-link" href="{{url_for('acc.accManager')}}"
+                >My Account</a
+              >
+            </li>
+            {%endif%}
+            <li class="nav-item" align="center">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item" align="center">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {%endif%} {% if not user.is_authenticated %}
+            <li class="nav-item" align="center">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            {%endif%}
+          </ul>
+        </div>
       </div>
     </div>
     <!-- end of nav ui part -->
@@ -212,31 +195,55 @@
     {% block body %}{% endblock %}
     <hr id="bottom" />
     {% if session['version'] %}
-    <div align="center">myMY by <code>LukeCreated</code> {{session['version']}}</div>
-    <br>
+    <div align="center">
+      myMY by <code>LukeCreated</code> {{session['version']}}
+    </div>
+    <br />
     {%endif%}
   </body>
   <script>
     // nav view operation
-    document.getElementById("nav-btn").style.display = "block"; // reset nav view
-    document.getElementById("bottomNav").style.display = "none"; // reset nav btn view
+    document.getElementById("nav-btn").style.display = "block"; // reset nav btn view
+    document.getElementById("bottomNav").style.display = "none"; // reset nav view
+    document.getElementById('close').style.display = 'none' // reset close nav btn view
     var navState = document.getElementById("bottomNav");
     var btnState = document.getElementById("nav-btn");
+    var navTime = document.getElementById('t')
+    var closeBtn = document.getElementById('close')
+    var navBar = document.getElementById('nav-bar')
+    navBar.disabled = true
+    const c = navBar.className
 
-    function toggleNav() {
+    function toggleNav(disabled = false) {
       if (
         navState.style.display === "none" ||
         navState.style.visibility === "hidden"
       ) {
+        // if nav is closed, open it
         navState.style.display = "block";
         navState.style.visibility = "visible";
         btnState.style.display = "none";
         btnState.style.visibility = "hidden";
+        closeBtn.style.display = "block";
+        closeBtn.style.visibility = "visible";
+        navTime.style.display = "none";
+        navTime.style.visibility = "hidden";
+        // change close btn color to red and enable clickable btn
+        navBar.className = 'btn btn-outline btn-danger mb-1';
+        navBar.disabled = false
       } else {
+        // if nav is opened, close it
         navState.style.display = "none";
         navState.style.visibility = "hidden";
         btnState.style.display = "block";
         btnState.style.visibility = "visible";
+        closeBtn.style.display = "none";
+        closeBtn.style.visibility = "hidden";
+        navTime.style.display = "block";
+        navTime.style.visibility = "visible";
+        // change close btn color back and disable btn
+        navBar.className = 'btn btn-outline btn-light mb-1';
+        navBar.disabled = true
       }
     }
   </script>
@@ -292,9 +299,14 @@
       .catch((error) => console.error("Error:", error));
     function getLcTime() {
       var t = new Date();
-      var lt = `${t.getFullYear()}.${t.getMonth()}.${t.getDate()}@${t.getHours()}:${t.getMinutes()}`;
+      var lt = `${t.getFullYear()}.${t.getMonth()}.${t.getDate()}@${t.getHours()}:${
+        t.getMinutes() < 10 ? "0" + String(t.getMinutes()) : t.getMinutes()
+      }`;
       setTimeout("getLcTime()", 1000);
       document.getElementById("t").innerHTML = `${lt}`;
+    }
+    function onLoad() {
+      getLcTime();
     }
   </script>
 </html>
