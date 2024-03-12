@@ -42,3 +42,4 @@ Created on Dec 20, 2023
 - Beta Release: Add version at the end of the page, and minor improvements on March 11, 2024 -> **0.751**
 - Beta Release: Get by amount is on progress, and overall improvements on March 11, 2024 -> **0.755**
 - Beta Release: Make progress on get by amount, new navbar close btn, and overall improvements on March 11, 2024 -> **0.76**
+- Beta Release: Fixed showing incorrect date and minor improvements on March 12, 2024 -> **0.761**

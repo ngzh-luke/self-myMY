@@ -299,7 +299,7 @@
       .catch((error) => console.error("Error:", error));
     function getLcTime() {
       var t = new Date();
-      var lt = `${t.getFullYear()}.${t.getMonth()}.${t.getDate()}@${t.getHours()}:${
+      var lt = `${t.getFullYear()}.${String(t.getMonth()+1)}.${String(t.getDate())}@${t.getHours()}:${
         t.getMinutes() < 10 ? "0" + String(t.getMinutes()) : t.getMinutes()
       }`;
       setTimeout("getLcTime()", 1000);
