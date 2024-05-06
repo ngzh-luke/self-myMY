@@ -133,9 +133,9 @@
           
           
           {%endif%}
-          <h2 align="center" class="mt-1" style="color: goldenrod">
+          <h3 align="center" class="mt-1" style="color: goldenrod">
             <u>MENUS</u>
-          </h2>
+          </h3>
 
           <ul
             class="navbar-nav"
@@ -203,6 +203,8 @@
   </body>
   <script>
     // nav view operation
+    document.getElementById("nav-btn").style.visibility = "hidden"; // reset nav btn view
+    document.getElementById("bottomNav").style.visibility = "hidden"; // reset nav view
     document.getElementById("nav-btn").style.display = "block"; // reset nav btn view
     document.getElementById("bottomNav").style.display = "none"; // reset nav view
     document.getElementById('close').style.display = 'none' // reset close nav btn view
@@ -213,6 +215,8 @@
     var navBar = document.getElementById('nav-bar')
     navBar.disabled = true
     const c = navBar.className
+    document.getElementById("nav-btn").style.visibility = "visible"; // reset nav btn view
+    document.getElementById("bottomNav").style.visibility = "visible"; // reset nav view
 
     function toggleNav(disabled = false) {
       if (

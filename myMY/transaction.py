@@ -63,17 +63,20 @@ def transactionGet():
     records = None
     TYPES = ['income', 'outcome', 'donate', 'invest', 'transfer',
              'owe', 'exchange', 'deposit', 'withdrawal', 'refund']
+    PLACES = ['THA', 'CHN', 'TWN', 'USA', '___']
     ARGSLIST_OP2 = ['mode', 'type', 'amount.a', 'amount.b', 'compare'] # acceptable amount.comparision filter
     ARGSLIST_OP3 = ['mode', 'type', 'amount.a', 'amount.b'] # acceptable amount.range filter
     argsAmount = len(request.args.keys())
     argsList = list(request.args.keys())
     filter_type = request.args.get('type')
+    filter_place = request.args.get('place')
     # filter_date = ''
     
-    operation = -1 # -1 = no args received, 1 = arg 'type' received (type filter), 2 = amount.comparision filter, 3 amount.range filter
+    operation = -1 # -1 = no args received, 1 = arg 'type' received (type filter), 2 = amount.comparision filter, 3 amount.range filter, 4 = arg 'place' received (place filter)
     if filter_type != None and argsAmount == 1:
         operation = 1 # only arg 'type' received
-    # elif 
+    elif filter_place != None and argsAmount == 1:
+        operation = 4 # only arg 'place' received
     # flash(message='Unable to get records due to invalid filter(s)!', category='error') if filter_type == None else None
     
     if ((filter_type in TYPES) and (operation == 1)):  # if only arg 'type' is received and its value is not all
@@ -82,6 +85,16 @@ def transactionGet():
         try:
             records = Transaction.query.filter_by(
                 user_id=current_user.id, typee=TYPES[typeIndex]).all()
+            totalAmount, recordsAmount = mc(records=records)
+        except Exception as e:
+            flash(
+                message=f'Unable to retrieve transaction records: {e}', category='error')
+    elif ((filter_place in PLACES) and (operation == 4)):  # if only arg 'place' is received and its value is not all
+        ft = filter_place
+        typeIndex = PLACES.index(filter_place)
+        try:
+            records = Transaction.query.filter_by(
+                user_id=current_user.id, country=PLACES[typeIndex]).all()
             totalAmount, recordsAmount = mc(records=records)
         except Exception as e:
             flash(

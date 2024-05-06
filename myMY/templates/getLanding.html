@@ -49,8 +49,8 @@
               <option value="" selected></option>
               <option value="amount">Amount</option>
               <option value="type">Type</option>
-              <!-- <option value=""></option>
-              <option value=""></option> -->
+              <option value="place">Place</option>
+              <!-- <option value=""></option> -->
             </select>
             <button
               type="reset"
@@ -97,6 +97,36 @@
             <button type="submit" class="btn btn-lg btn-primary">GET</button>
           </form>
         </div>
+
+        <!-- get by place -->
+        <div class="col-9 px-2">
+          <form
+            action="{{url_for('transaction.transactionGet')}}"
+            method="GET"
+            class="mx-1"
+            id="p-place"
+          >
+            <div class="input-group my-3 mx-2">
+              <select
+                class="form-select border border-2 border-warning"
+                name="place"
+                required
+              >
+                <option value="THA" selected>THA: Thailand</option>
+                <option value="CHN">
+                  CHN: People's Republic of China (PRC)
+                </option>
+                <option value="TWN">TWN: Taiwan</option>
+                <option value="USA">USA: United States of America (USA)</option>
+                <option value="___">Other</option></select
+              ><label class="input-group-text btn btn-warning" for="place"
+                >Place</label
+              >
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary">GET</button>
+          </form>
+        </div>
+
         <!-- get by amount -->
         <div id="amount" class="col-9 px-2">
           <!-- amount mode selection -->
@@ -180,6 +210,7 @@
 
     tType = document.getElementById("t-type");
     amount = document.getElementById("amount");
+    place = document.getElementById("p-place");
     amount_mode = document.getElementById("amount.mode");
     amount_range = document.getElementById("amount.range");
     // amount_rangeA = document.getElementById("amount.a");
@@ -192,6 +223,7 @@
       applyBtn.style.display = "block";
       amount_compare.style.display = "none";
       amount_range.style.display = "none";
+      place.style.display = "none";
       selection.disabled = false;
     }
     resetView(); // force to reset view
@@ -252,12 +284,22 @@
         case "type":
           if (tType.style.display == "none") reverseView(tType);
           if (amount.style.display == "block") reverseView(amount);
+          if (place.style.display == "block") reverseView(place);
           reverseView(applyBtn);
           selection.disabled = true;
           break;
         case "amount":
+          if (tType.style.display == "block") reverseView(tType);
+          if (amount.style.display == "none") reverseView(amount);
+          if (place.style.display == "block") reverseView(place);
           reverseView(applyBtn);
           amountFormHelper();
+          break;
+        case "place":
+          if (tType.style.display == "block") reverseView(tType);
+          if (amount.style.display == "block") reverseView(amount);
+          if (place.style.display == "none") reverseView(place);
+          reverseView(applyBtn);
           break;
         default:
           resetView();

@@ -77,7 +77,37 @@
               >Type</label
             >
           </div>
-          <button type="submit" class="btn btn-lg btn-success">EXPORT</button>
+          <button type="submit" class="btn btn-lg btn-success">EXPORT TYPE</button>
+        </form>
+        <span style="font-weight: bolder">OR</span> <br />
+    <form
+          action="{{url_for('tx.exportAsCSV')}}"
+          method="GET"
+          class="col-8 mx-1"
+          id="p-place"
+        >
+          <div class="input-group my-3 mx-3"><label class="input-group-text btn btn-warning" for="place"
+            >Place</label
+          >
+            <select
+              class="form-select border border-2 border-warning"
+              id="place"
+              name="place"
+              required
+            >
+              <option value="" selected></option>
+              <option value="THA">THA: Thailand</option>
+                <option value="CHN">
+                  CHN: People's Republic of China (PRC)
+                </option>
+                <option value="TWN">TWN: Taiwan</option>
+                <option value="USA">USA: United States of America (USA)</option>
+                <option value="___">Other</option>
+              
+              </select
+            >
+          </div>
+          <button type="submit" class="btn btn-lg btn-success">EXPORT PLACE</button>
         </form>
   </body>
   <script></script>
