@@ -42,11 +42,11 @@
 
     <div class="my-2">
       <a
-      href="{{url_for('redirector.toHome')}}"
-      type="button"
-      class="btn btn-primary"
-      >myMY Home</a
-    >&ensp;
+        href="{{url_for('redirector.toHome')}}"
+        type="button"
+        class="btn btn-primary"
+        >myMY Home</a
+      >&ensp;
       <a
         href="{{url_for('redirector.toTransactionLookup')}}"
         type="button"
@@ -54,7 +54,6 @@
         >Lookup</a
       >
       <!-- &ensp; -->
-      
     </div>
 
     <div class="container-fluid">
@@ -66,17 +65,23 @@
             name="typee"
             required
           >
-            <option value="outcome" selected>Outcome</option>
+          <optgroup label="Inflow">
             <option value="income">Income</option>
+            <option value="refund">Refund</option>
+          </optgroup>
+
+            <optgroup label="Outflow">
+              <option value="outcome" selected>Outcome</option>
+              <option value="donate">Donate</option>
+              <option value="invest">Invest</option>
+            </optgroup>
             <option value="exchange">Exchange</option>
             <option value="owe">Owe</option>
             <option value="transfer">Transfer</option>
             <option value="deposit">Deposit</option>
             <option value="withdrawal">Withdrawal</option>
-            <option value="donate">Donate</option>
-            <option value="invest">Invest</option>
-            <option value="refund">Refund</option></select
-          ><label class="input-group-text btn btn-dark" for="type">Type</label>
+          </select>
+          <label class="input-group-text btn btn-dark" for="type">Type</label>
         </div>
 
         <div class="input-group mb-3">
@@ -121,21 +126,29 @@
             name="via"
           >
             <option value="cash" selected>Cash</option>
-            <option value="MB: SCB">MB: SCB</option>
-            <option value="MB: KBank">MB: KBank</option>
-            <option value="MB: ICBC TH">MB: ICBC TH</option>
-            <option value="MB: Alipay">MB: Alipay</option>
-            <option value="MB: WeChat Pay">MB: WeChat Pay</option>
-            <option value="MB: TrueMoney">MB: TrueMoney</option>
-            <option value="CRD: True Master card">CRD: True Master card</option>
-            <option value="CRD: SCB Planet">CRD: SCB Planet</option>
-            <option value="CRD: SCB Debit">CRD: SCB Debit</option>
-            <option value="CRD: ICBC TH Debit">CRD: ICBC TH Debit</option>
-            <option value="ATM: SCB">ATM: SCB</option>
-            <option value="ATM: KBank">ATM: KBank</option>
-            <option value="ATM: ICBC TH">ATM: ICBC TH</option>
-            <option value="ATM: ICBC CH">ATM: ICBC CH</option>
-            <option value="ATM:[other]">ATM: [OTHER]</option>
+            <optgroup label="MB (Mobile banking)">
+              <option value="MB: SCB">MB: SCB</option>
+              <option value="MB: KBank">MB: KBank</option>
+              <option value="MB: ICBC TH">MB: ICBC TH</option>
+              <option value="MB: Alipay">MB: Alipay</option>
+              <option value="MB: WeChat Pay">MB: WeChat Pay</option>
+              <option value="MB: TrueMoney">MB: TrueMoney</option>
+            </optgroup>
+            <optgroup label="CRD (Card)">
+              <option value="CRD: True Master card">
+                CRD: True Master card
+              </option>
+              <option value="CRD: SCB Planet">CRD: SCB Planet</option>
+              <option value="CRD: SCB Debit">CRD: SCB Debit</option>
+              <option value="CRD: ICBC TH Debit">CRD: ICBC TH Debit</option>
+            </optgroup>
+            <optgroup label="ATM">
+              <option value="ATM: SCB">ATM: SCB</option>
+              <option value="ATM: KBank">ATM: KBank</option>
+              <option value="ATM: ICBC TH">ATM: ICBC TH</option>
+              <option value="ATM: ICBC CH">ATM: ICBC CH</option>
+              <option value="ATM:[other]">ATM: [OTHER]</option>
+            </optgroup>
             <option value="other">Other</option>
           </select>
           <span class="input-group-text btn btn-info">Unit&Via</span>
@@ -189,7 +202,7 @@
 
         <button type="submit" class="btn btn-lg btn-success">SAVE</button>
       </form>
-      <br>
+      <br />
     </div>
     <!-- <div class="sticky-bottom mx-1 pb-3 mb-1" align="end">
       <a href="#" type="button" class="btn btn-dark">^</a>
