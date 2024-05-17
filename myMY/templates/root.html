@@ -46,7 +46,9 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      scroll-behavior: smooth;
     }
+   
   </style>
 
   <body onload="onLoad()">
@@ -200,6 +202,14 @@
     </div>
     <br />
     {%endif%}
+    <div 
+    style="margin-right: 1vw; margin-left: 1vw; margin-top: 5.5vh; display: flex; position: fixed; padding: 0; align-self: flex-end;"
+    >
+    <a href="#bottom" type="button" class="btn btn-danger">v</a>
+  </div>
+  <div style=" margin-right: 1vw; margin-left: 1vw; margin-top: calc(100% - 60%);  margin-bottom: 0; display: flex; position: fixed; padding: 0; align-self: flex-end;">
+    <a href="#" type="button" class="btn btn-dark">^</a>
+  </div>
   </body>
   <script>
     // nav view operation

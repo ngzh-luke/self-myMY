@@ -16,9 +16,9 @@ Personal Project: `myMY` is a Python based web app powered by Flask to keep trac
 
 Current Status: **Beta Release**
 
-Current Version: **0.775**
+Current Version: **0.776**
 
-Updated: **May 11, 2024**
+Updated: **May 17, 2024**
 
 ## Instructions of running locally
 
