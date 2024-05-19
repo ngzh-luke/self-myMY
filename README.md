@@ -42,7 +42,7 @@ activate virtual environment (Windows) by run command: `venv\Scripts\activate`
 7. install project dependencies by run command:
 `pip install -r requirements.txt`
 
-8. you may update default environment settings in the format like in `.example.env`, the default settings are:
+8. you may create `.env` file the same level as this `README.md` file and fill in to update default environment settings in the format like in `.example.env`, the default settings are:
 
     ```.env
     myMY=myMY_secret -> secret text of the Flask
