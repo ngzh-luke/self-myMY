@@ -46,3 +46,4 @@ Created on Dec 20, 2023
 - Beta Release: Add 'place' filter to lookup and export on May 6, 2024 -> __0.77__
 - Beta Release: Add options grouping on May 11, 2024 -> __0.775__
 - Beta Release: Fixed form option in edit + change jump to point sys on May 17, 2024 -> __0.776__
+- Beta Release: Delete duplicated button on about page on May 19, 2024 -> __0.7761__

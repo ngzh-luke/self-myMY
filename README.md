@@ -16,9 +16,9 @@ Personal Project: `myMY` is a Python based web app powered by Flask to keep trac
 
 Current Status: **Beta Release**
 
-Current Version: **0.776**
+Current Version: **0.7761**
 
-Updated: **May 17, 2024**
+Updated: **May 19, 2024**
 
 ## Instructions of running locally
 
@@ -42,12 +42,20 @@ activate virtual environment (Windows) by run command: `venv\Scripts\activate`
 7. install project dependencies by run command:
 `pip install -r requirements.txt`
 
-8. run command to start the application:
+8. you may update default environment settings in the format like in `.example.env`, the default settings are:
+
+    ```.env
+    myMY=myMY_secret -> secret text of the Flask
+    DATABASE_URL=sqlite:///myMY_db.sqlite -> database path
+    port=5500 -> default running port
+    ```
+
+9. run command to start the application:
 `python runDev.py`
 
-9. check out the running application on browser by navigate to: `127.0.0.1:5500`
+10. check out the running application on browser by navigate to: `127.0.0.1:5500` or `127.0.0.1:[port you specify on .env]`
 
-10. impressed by the cool application!
+11. impressed by the cool application!
 
 ---
 
