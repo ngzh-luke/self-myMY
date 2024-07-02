@@ -47,3 +47,4 @@ Created on Dec 20, 2023
 - Beta Release: Add options grouping on May 11, 2024 -> __0.775__
 - Beta Release: Fixed form option in edit + change jump to point sys on May 17, 2024 -> __0.776__
 - Beta Release: Delete duplicated button on about page on May 19, 2024 -> __0.7761__
+- Beta Release: Add 'Dividends' transaction type option on July 2, 2024 -> __0.777__

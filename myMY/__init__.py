@@ -108,8 +108,8 @@ class About():
         return str(self.version)
 
 
-systemInfoObject = About(version=0.7761, status='Beta Release',
-                         build=20240519, version_note="Delete duplicated button on about page")
+systemInfoObject = About(version=0.777, status='Beta Release',
+                         build=20240702, version_note="Add 'Dividends' transaction type option")
 systemInfo = systemInfoObject.__str__()
 systemVersion = systemInfoObject.getSystemVersion()
 
