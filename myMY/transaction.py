@@ -41,7 +41,7 @@ def mc(records: list | None = None):
     if itemsAmount == None:
         return None
     totalAmount = totalCal()
-    INFLOW = ['income', 'refund']  # list of in flow transations
+    INFLOW = ['income', 'refund', 'dividends', 'interests']  # list of in flow transations
     OUTFLOW = ['outcome', 'donate', 'invest']  # list of out flow transactions
     for i in range(itemsAmount):  # perform calculation
         totalAmount.addIncome(
@@ -62,7 +62,7 @@ def transactionGet():
     totalAmount, recordsAmount = 0, 0
     records = None
     TYPES = ['income', 'outcome', 'donate', 'invest', 'transfer',
-             'owe', 'exchange', 'deposit', 'withdrawal', 'refund']
+             'owe', 'exchange', 'deposit', 'withdrawal', 'refund', 'dividends', 'interests']
     PLACES = ['THA', 'CHN', 'TWN', 'USA', '___']
     ARGSLIST_OP2 = ['mode', 'type', 'amount.a', 'amount.b', 'compare'] # acceptable amount.comparision filter
     ARGSLIST_OP3 = ['mode', 'type', 'amount.a', 'amount.b'] # acceptable amount.range filter

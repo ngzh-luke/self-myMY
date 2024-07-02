@@ -24,7 +24,7 @@ def exportAsCSV():
     COL_NAME = ['ID', 'VIA', 'DATE&TIME', 'TYPE', 'AMOUNT',
                 'CURRENCY', 'PARTY', 'LOCATION', 'COUNTRY/REGION', 'NOTES']
     TYPES = ['income', 'outcome', 'donate', 'invest', 'transfer',
-             'owe', 'exchange', 'deposit', 'withdrawal', 'refund']
+             'owe', 'exchange', 'deposit', 'withdrawal', 'refund', 'dividends', 'interests']
     PLACES = ['THA', 'CHN', 'TWN', 'USA', '___']
     ft = request.args.get("type")
     fp = request.args.get('place')
