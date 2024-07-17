@@ -32,7 +32,7 @@ Updated: **July 18, 2024**
 3. if already cloned, update the local repository by run command:
 `git pull`
 
-4. create virtual environment by run command:
+4. change to the `mark0` directory and then create virtual environment by run command:
 `python -m venv venv`
 
 5. check to see that the virtual is at the virtual environment is created by run command: `which pip`
