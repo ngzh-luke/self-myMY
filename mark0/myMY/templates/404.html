@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}myMY - ERR404: NOT FOUND{% endblock %}</title>
+    <!-- inherent root file -->
+    {% extends 'root.html' %}
+  </head>
+  {% block body %}
+  <body>
+    <br />
+    <div style="top: 50%" align="center">
+      <a href="/"
+      ><img
+        width="100"
+        height="100"
+        src="{{ url_for('static', filename='myMY-logo-v2.png') }}"
+        alt="myMY Icon"
+    /></a>
+      <h1>ERROR 404: NOT FOUND</h1>
+
+<br>
+<u><h4 style="color: red;">Mark 0 serie is set to be deprecated</h4></u><br>
+      <br />Sorry, we didn't found what you are looking for at path:
+      <span style="font-weight: 700">{{path}}</span>
+    </div>
+  </body>
+  {% endblock %}
+</html>

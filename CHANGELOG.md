@@ -6,7 +6,7 @@ Created on Dec 20, 2023
 
 ---
 
-## Changelog
+## Mark 0 Changelog
 
 - Initial Create: Initial created on December 14, 2023 -> __0.00__
 - Initial Development: Development started on December 20, 2023 -> __0.1__
@@ -50,3 +50,8 @@ Created on Dec 20, 2023
 - Beta Release: Add 'Dividends' transaction type option on July 2, 2024 -> __0.777__
 - Beta Release: Add 'Interests' transaction type option on July 2, 2024 -> __0.7771__
 - Beta Release: Add internal processes for newly added options on July 2, 2024 -> __0.7773__
+- Deprecation: Mark 0 serie is set to be deprecated very soon on July 18, 2024 -> __0.7774__
+
+## Mark 1 Changelog
+
+- Initial Development: Initialize Mark 1 development on July 18, 2024 -> __1.0.0__
