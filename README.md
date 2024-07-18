@@ -6,21 +6,20 @@
 
 Developer: **Kittipich "Luke" Aiumbhornsin**
 
-- Development Status: **Active**
+Development Status: **Active**
 
-- License Information: **LICENSE** [go to file](LICENSE)
+License Information: **LICENSE** [go to file](LICENSE)
 
-- Development History: **CHANGELOG.md** [go to file](CHANGELOG.md)
+Development History: **CHANGELOG.md** [go to file](CHANGELOG.md)
 
-- Development Roadmap: **roadmap.md** [go to file](/mark1/roadmap.md)
+Development Roadmap: **roadmap.md** [go to file](/mark1/roadmap.md)
 
 Current App Series: **Mark 1**
 
 ## Platform enabled
 
-- IOS
+- iOS
 - Android
-- macOS
 - Web
 
 ## Disclaimer

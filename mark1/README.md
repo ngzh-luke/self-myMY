@@ -6,13 +6,13 @@ Flutter app by LukeCreated to keep records of transaction made, suggestions are 
 
 Developer: **Kittipich "Luke" Aiumbhornsin**
 
-- Development Status: **Active**
+Development Status: **Active**
 
-- License Information: **LICENSE** [go to file](../LICENSE)
+License Information: **LICENSE** [go to file](../LICENSE)
 
-- Development History: **CHANGELOG.md** [go to file](../CHANGELOG.md)
+Development History: **CHANGELOG.md** [go to file](../CHANGELOG.md)
 
-- Development Roadmap: **roadmap.md** [go to file](roadmap.md)
+Development Roadmap: **roadmap.md** [go to file](roadmap.md)
 
 Current Status: **Initial Development**
 
