@@ -4,6 +4,9 @@ Developed by __Kittipich "Luke" Aiumbhornsin__
 
 Created on Dec 20, 2023
 
+- [Mark 0 changelog](#mark-0-changelog)
+- [Mark 1 changelog](#mark-1-changelog)
+
 ---
 
 ## Mark 0 Changelog
@@ -56,3 +59,4 @@ Created on Dec 20, 2023
 
 - Initial Development: Initialize Mark 1 development on July 18, 2024 -> __1.0.0__
 - Initial Development: Splash screens & launcher icons added on July 18, 2024 -> __1.0.2__
+- Initial Development: Splash screens adjustment & a pair of theme is added on July 18, 2024 -> __1.0.3__
