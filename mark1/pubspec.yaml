@@ -65,6 +65,7 @@ dependencies:
   fluttertoast: ^8.2.6
   provider: ^6.1.2
   package_info_plus: ^8.0.0
+  flutter_launcher_icons: ^0.13.1
 
 
 dev_dependencies:
@@ -92,7 +93,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+      - assets/myMY-brand/myMY-logo-v3-light.png
+      - assets/myMY-brand/myMY-logo-v3-dark.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

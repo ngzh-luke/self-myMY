@@ -1,5 +1,5 @@
 {
     "python.defaultInterpreterPath": "${workspaceFolder}/v/bin/python",
     "python.formatting.provider": "none",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true
 }

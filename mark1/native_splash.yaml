@@ -1,0 +1,38 @@
+flutter_native_splash:
+  # set splash screen platforms
+  android: true
+  ios: true
+  web: true
+
+  # android_gravity can be one of the following Android Gravity (see
+  # https://developer.android.com/reference/android/view/Gravity): bottom, center,
+  # center_horizontal, center_vertical, clip_horizontal, clip_vertical, end, fill, fill_horizontal,
+  # fill_vertical, left, right, start, or top.
+  android_gravity: center_horizontal
+  #
+  # ios_content_mode can be one of the following iOS UIView.ContentMode (see
+  # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill,
+  # scaleAspectFit, scaleAspectFill, center, top, bottom, left, right, topLeft, topRight,
+  # bottomLeft, or bottomRight.
+  ios_content_mode: center
+  #
+  # web_image_mode can be one of the following modes: center, contain, stretch, and cover.
+  web_image_mode: center
+  fullscreen: true
+
+  # light mode for web+ios+(<=android11)
+  color: "#f2db51"
+  image: "assets/myMY-brand/myMY-logo-v3-light.png"
+  
+  # dark mode for web+ios+(<=android11)
+  color_dark: "#000000"
+  image_dark: "assets/myMY-brand/myMY-logo-v3-dark.png"
+
+  # light&dark mode for >=android12
+  android_12:
+    # icon_background_color: "#ffffff"
+    color: "#f2db51"
+    image: "assets/myMY-brand/myMY-logo-v3-light-android.png"
+    # icon_background_color_dark: "#000000"
+    color_dark: "#000000"
+    image_dark: "assets/myMY-brand/myMY-logo-v3-dark-android.png"
