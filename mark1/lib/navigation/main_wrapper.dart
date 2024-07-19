@@ -40,8 +40,12 @@ class _MainWrapperState extends State<MainWrapper> {
           onPressed: () {
             context.push(context.namedLocation('NewTransaction'));
           },
-          backgroundColor: Theme.of(context).colorScheme.tertiary,
-          child: const Icon(Icons.add)), // Icons.playlist_add_outlined
+          backgroundColor:
+              Theme.of(context).colorScheme.errorContainer.darken(20),
+          child: Icon(
+            Icons.add,
+            color: Theme.of(context).colorScheme.onErrorContainer,
+          )), // Icons.playlist_add_outlined
       bottomNavigationBar: SlidingClippedNavBar(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         onButtonPressed: (index) {

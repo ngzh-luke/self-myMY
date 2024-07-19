@@ -4,5 +4,6 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "tooltip_addNewTransaction": "Add new transaction record"
+  "tooltip_addNewTransaction": "Add new transaction record",
+  "systemDefault": "System Default"
 }

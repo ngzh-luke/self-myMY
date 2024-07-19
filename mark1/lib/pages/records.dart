@@ -10,6 +10,6 @@ class Records extends StatefulWidget {
 class _RecordsState extends State<Records> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Records");
+    return const Text("Transaction Records");
   }
 }

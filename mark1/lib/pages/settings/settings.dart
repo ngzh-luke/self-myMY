@@ -1,5 +1,8 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
+import 'package:mymy_m1/pages/main_view_template.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
 
@@ -8,8 +11,9 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+    return mainView(
+      context,
+      appBarTitle: 'Settings',
       body: Consumer2<ThemeProvider, LanguageProvider>(
         builder: (context, themeProvider, languageProvider, child) {
           return ListView(
@@ -26,7 +30,7 @@ class Settings extends StatelessWidget {
                   items: ThemeMode.values.map((ThemeMode mode) {
                     return DropdownMenuItem(
                       value: mode,
-                      child: Text(mode.toString().split('.').last),
+                      child: Text(mode.toString().split('.').last.capitalize),
                     );
                   }).toList(),
                 ),
@@ -40,8 +44,7 @@ class Settings extends StatelessWidget {
                       themeProvider.setTheme(newThemeName);
                     }
                   },
-                  items: ['sixPM' /* Add more theme names here */]
-                      .map((String name) {
+                  items: themeProvider.availableThemes.map((String name) {
                     return DropdownMenuItem(
                       value: name,
                       child: Text(name),
@@ -50,18 +53,18 @@ class Settings extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: const Text('Language'),
-                trailing: DropdownButton<Locale>(
-                  value: languageProvider.currentLocale,
+                title: Text('Language'),
+                trailing: DropdownButton<Locale?>(
+                  value: languageProvider.currentLocaleOrNull,
                   onChanged: (Locale? newLocale) {
-                    if (newLocale != null) {
-                      languageProvider.setLocale(newLocale);
-                    }
+                    languageProvider.setLocale(newLocale);
                   },
-                  items: languageProvider.supportedLocales.map((Locale locale) {
+                  items: languageProvider.supportedLocalesWithDefault
+                      .map((Locale? locale) {
                     return DropdownMenuItem(
                       value: locale,
-                      child: Text(locale.languageCode),
+                      child: Text(
+                          languageProvider.getLanguageName(locale, context)),
                     );
                   }).toList(),
                 ),

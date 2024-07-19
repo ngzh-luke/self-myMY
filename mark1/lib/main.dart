@@ -8,16 +8,46 @@ import 'package:mymy_m1/configs/languages/language_provider.dart';
 import 'package:mymy_m1/navigation/pages_router.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
+  final languageProvider = LanguageProvider();
+  await languageProvider.loadFromPrefs();
+
+  final themeProvider = ThemeProvider();
+  await themeProvider.loadFromPrefs();
+
+  // Print user preferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  print('\nUser Preferences:');
+  print('Language Code: ${prefs.getString('languageCode')}');
+  print('Is System Default Language: ${prefs.getBool('isSystemDefault')}');
+  print('Theme Mode: ${prefs.getInt('themeMode')}');
+  print('Theme Name: ${prefs.getString('themeName')}');
+
+  // Print what will be applied
+  print('\nApplied Settings:');
+  print(
+      'Language: ${languageProvider.currentLocale.languageCode} (Is System Default: ${languageProvider.isSystemDefault})');
+  print('Theme Mode: ${themeProvider.themeMode}');
+  print('Theme Name: ${themeProvider.currentThemeName}');
+
+  // Get system locale
+  String deviceLocale =
+      WidgetsBinding.instance.platformDispatcher.locales.toString();
+  print('\nDevice Default Locale: $deviceLocale');
+
+  // Delay to allow time for reading the console output
+  await Future.delayed(const Duration(seconds: 2));
+
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider.value(value: themeProvider),
+        ChangeNotifierProvider.value(value: languageProvider),
       ],
       child: const MyApp(),
     ),
@@ -40,7 +70,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initialization() async {
-    print("Localizations: ${AppLocalizations.supportedLocales}");
+    print("\n");
+    print("Available localizations: ${AppLocalizations.supportedLocales}");
     print("loading resources...");
     await Future.delayed(const Duration(seconds: 1));
     print("resources are loaded successfully");

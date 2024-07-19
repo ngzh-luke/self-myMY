@@ -1,5 +1,6 @@
-// template for themes
+// Theme collections
 
+// template for themes
 // SixPM theme
 // https://rydmike.com/flexcolorscheme/themesplayground-latest/
 // // Theme config for FlexColorScheme version 7.3.x. Make sure you use
@@ -69,6 +70,8 @@ import 'package:google_fonts/google_fonts.dart';
 class ThemeCollections {
   ThemeCollections._(); // Private constructor to prevent instantiation
 
+  static const List<String> availableThemes = ['sixPM'];
+
   // Define color schemes for sixPM Light Theme
   static const FlexSchemeColor _sixPMLightColors = FlexSchemeColor(
     primary: Color(0xffe65100),
@@ -93,7 +96,7 @@ class ThemeCollections {
     error: Color(0xffcf6679),
   );
 
-  // Define common theme settings
+  // Define common sixPM theme settings
   static const _surfaceMode = FlexSurfaceMode.levelSurfacesLowScaffold;
   static const _blendLevel = 7;
   static const _subThemesData = FlexSubThemesData(
@@ -108,7 +111,7 @@ class ThemeCollections {
   static const _useMaterial3 = true;
   static const _swapLegacyOnMaterial3 = true;
 
-  // Define font families
+  // Define font families for all themes
   static final _fontFamily = GoogleFonts.chewy().fontFamily;
   static final _fontFamilyFallback = <String>[
     GoogleFonts.krub().fontFamily!,

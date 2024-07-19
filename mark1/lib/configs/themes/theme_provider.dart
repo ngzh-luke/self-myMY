@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
@@ -11,6 +13,7 @@ class ThemeProvider with ChangeNotifier {
     loadFromPrefs();
   }
 
+  List<String> get availableThemes => ThemeCollections.availableThemes;
   ThemeMode get themeMode => _themeMode;
   String get currentThemeName => _currentThemeName;
 
@@ -36,11 +39,22 @@ class ThemeProvider with ChangeNotifier {
     _themeMode =
         ThemeMode.values[_prefs.getInt('themeMode') ?? ThemeMode.system.index];
     _currentThemeName = _prefs.getString('themeName') ?? 'sixPM';
+
+    // Apply user preference before falling back to system default
+    if (_themeMode == ThemeMode.system) {
+      final brightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      _themeMode =
+          brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+    }
+
     notifyListeners();
   }
 
   Future<void> _saveToPrefs() async {
     await _prefs.setInt('themeMode', _themeMode.index);
     await _prefs.setString('themeName', _currentThemeName);
+    print(
+        "\t New Prefs: Theme name: $_currentThemeName | Theme mode: ${ThemeMode.values[_prefs.getInt('themeMode') ?? ThemeMode.system.index].toString().split('.').last} ");
   }
 }
