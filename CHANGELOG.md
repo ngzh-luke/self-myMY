@@ -60,3 +60,4 @@ Created on Dec 20, 2023
 - Initial Development: Initialize Mark 1 development on July 18, 2024 -> __1.0.0__
 - Initial Development: Splash screens & launcher icons added on July 18, 2024 -> __1.0.2__
 - Initial Development: Splash screens adjustment & a pair of theme is added on July 18, 2024 -> __1.0.3__
+- Initial Development: Default theme and fonts are added, intl & l10n are drafted, and basic setting page and navbar are drafted on July 19, 2024 -> __1.0.5__

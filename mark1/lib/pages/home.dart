@@ -40,6 +40,10 @@ class _HomePageState extends State<HomePage> {
               'a number',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Home page"),
+            )
           ],
         ),
       ),
