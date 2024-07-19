@@ -1,7 +1,9 @@
 {
-    "@@locale": "th",
-    "helloWorld": "สวัสดีโลก!",
-    "@helloWorld": {
-      "description": "The conventional newborn programmer greeting"
-    }
-  }
+  "@@locale": "th",
+  "helloWorld": "สวัสดีโลก!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "tooltip_addNewTransaction": "เพิ่มรายการใหม่",
+  "systemDefault": "ค่าเริ่มต้นของระบบ"
+}

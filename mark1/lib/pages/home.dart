@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mymy_m1/pages/main_view_template.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -22,24 +23,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+    return mainView(
+      appBarTitle: 'myMY M1',
+      context,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(AppLocalizations.of(context)!.helloWorld),
             const Text(
-              'You have pushed the button this many times:',
+              'Home Page',
             ),
             Text(
               'a number',
               style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            )
           ],
         ),
       ),

@@ -3,5 +3,7 @@
   "helloWorld": "Hello World! s",
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
-  }
+  },
+  "tooltip_addNewTransaction": "Add new transaction record",
+  "systemDefault": "System Default"
 }
