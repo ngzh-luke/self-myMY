@@ -14,7 +14,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.6
+version: 1.0.6-a
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -32,32 +32,32 @@ dependencies:
   cupertino_icons: ^1.0.6 # Use with the CupertinoIcons class for iOS style icons.
   flutter_localizations: # localization
     sdk: flutter
-  intl: any # internationalization
+  intl: any # internationalization #
   firebase_core: ^3.2.0 # core dependency for Firebase
   firebase_storage: ^12.1.1 # serverless object storage
   cloud_firestore: ^5.1.0 # serverless noSQL database
   firebase_auth: ^5.1.2 # severless authentication
   gap: ^3.0.1 # handy (gap) space between things
-  shared_preferences: ^2.2.3 # insensitive key-value data
-  google_fonts: ^6.2.1 # handy fonts import
+  shared_preferences: ^2.2.3 # insensitive key-value data #
+  google_fonts: ^6.2.1 # handy fonts import #
   icons_plus: ^5.0.0 # icons collections
   animations: ^2.0.11 # fancy pre-built animations
   flutter_animate: ^4.5.0 # beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
   loading_animation_widget: ^1.2.1 # loading indicators animations
-  flex_color_scheme: ^7.3.1 # for theming and app coloring purposes
+  flex_color_scheme: ^7.3.1 # for theming and app coloring purposes #
   pdf: ^3.11.0 # dealing with pdf things
-  flutter_native_splash: ^2.4.1 # config app splash screen
+  flutter_native_splash: ^2.4.1 # config app splash screen #
   url_launcher: ^6.3.0 # open url or an app that coresponding to the given link
   animated_text_kit: ^4.2.2
   flutter_slidable: ^3.1.1 # makes it slidable, handy for modern item interaction menu
   badges: ^3.1.2 # give a customizable notification badge over the item 
   flutter_form_builder: ^9.3.0 # makes building form easily
   flutter_settings_ui: ^3.0.1
-  go_router: ^14.2.1 # routing and app navigation
+  go_router: ^14.2.1 # routing and app navigation #
   fl_chart: ^0.68.0 # create cool visual interactive chart
   firebase_ui_auth: ^1.15.0 # pre-built customizable authentication ui
   geolocator: ^12.0.0 # about location
-  fluttertoast: ^8.2.6 # toast notification
+  # fluttertoast: ^8.2.6 # toast notification
   provider: ^6.1.2 # state management helper
   package_info_plus: ^8.0.0
   flutter_launcher_icons: ^0.13.1 # customize an app launcher icons
@@ -78,7 +78,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
-  change_app_package_name: ^1.3.0
+  change_app_package_name: ^1.3.0 #
   retrofit_generator: '>=7.0.0 <8.0.0'   
   build_runner: '>=2.3.0 <4.0.0'
   json_serializable: ^6.6.2

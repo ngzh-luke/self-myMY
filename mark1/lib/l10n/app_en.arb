@@ -5,5 +5,15 @@
     "description": "The conventional newborn programmer greeting"
   },
   "tooltip_addNewTransaction": "Add new transaction record",
-  "systemDefault": "System Default"
+  "systemDefault": "System Default",
+  "settings": "Settings",
+  "language": "Language",
+  "newChangeApplied": "Latest change has been applied!",
+  "@newChangeApplied": {
+    "description": "Reports user that the new change has been successfully saved and applied in setting page."
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Text describing that the resource is being loaded/fetched."
+  }
 }

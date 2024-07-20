@@ -1,6 +1,6 @@
 # myMY (Mark 1) by LukeCreated
 
-Flutter app by LukeCreated to keep records of transaction made, suggestions are always welcome but please create new issues on the GitHub repository or email me at <bugsreport@lukecreated.com>.
+Flutter app by LukeCreated to keep records of transaction made, suggestions are always welcome but please create new issues on the GitHub repository or email me at <bugsreport@lukecreated.com>, Thank you!
 
 ## About
 
@@ -18,13 +18,13 @@ Current Status: **Initial Development**
 
 App Series: **Mark 1**
 
-Current Version: **1.0.6**
+Current Version: **1.0.6-a**
 
-Updated: **July 20, 2024**
+Updated: **July 21, 2024**
 
 ## Platform enabled
 
-- IOS
+- iOS
 - Android
 - Web
 

@@ -5,5 +5,15 @@
     "description": "The conventional newborn programmer greeting"
   },
   "tooltip_addNewTransaction": "เพิ่มรายการใหม่",
-  "systemDefault": "ค่าเริ่มต้นของระบบ"
+  "systemDefault": "ค่าเริ่มต้นของระบบ",
+  "settings": "การตั้งค่า",
+  "language": "ภาษา",
+  "newChangeApplied": "บันทึกการเปลี่ยนแปลงแล้ว!",
+  "@newChangeApplied": {
+    "description": "Reports user that the new change has been successfully saved and applied in setting page."
+  },
+  "loading": "กำลังโหลด...",
+  "@loading": {
+    "description": "Text describing that the resource is being loaded/fetched."
+  }
 }

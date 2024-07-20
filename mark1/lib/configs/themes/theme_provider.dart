@@ -22,16 +22,21 @@ class ThemeProvider with ChangeNotifier {
   ThemeData get darkTheme =>
       ThemeCollections.getThemeByName(_currentThemeName, isDark: true);
 
-  void setThemeMode(ThemeMode mode) {
+  Future<bool> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
     notifyListeners();
-    _saveToPrefs();
+    await _saveToPrefs();
+    return true;
   }
 
-  void setTheme(String themeName) {
-    _currentThemeName = themeName;
-    notifyListeners();
-    _saveToPrefs();
+  Future<bool> setTheme(String themeName) async {
+    if (availableThemes.contains(themeName)) {
+      _currentThemeName = themeName;
+      notifyListeners();
+      await _saveToPrefs();
+      return true;
+    }
+    return false;
   }
 
   Future<void> loadFromPrefs() async {
