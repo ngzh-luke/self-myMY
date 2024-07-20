@@ -62,3 +62,4 @@ Created on Dec 20, 2023
 - Initial Development: Splash screens adjustment & a pair of theme is added on July 18, 2024 -> __1.0.3__
 - Initial Development: Default theme and fonts are added, intl & l10n are drafted, and basic setting page and navbar are drafted on July 19, 2024 -> __1.0.5__
 - Initial Development: Language switcher is implemented on setting page on July 20, 2024 -> __1.0.6__
+- Initial Development: Simple notification prior the update of the settings works with localization on July 21, 2024 -> __1.0.6-a__

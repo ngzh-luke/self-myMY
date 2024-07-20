@@ -1,6 +1,6 @@
 # myMY by LukeCreated
 
-`myMY` by LukeCreated is an app to keep records of transaction made, suggestions are always welcome but please create new issues on the GitHub repository or email me at <bugsreport@lukecreated.com>.
+`myMY` by LukeCreated is an app to keep records of transaction made, suggestions are always welcome but please create new issues on the GitHub repository or email me at <bugsreport@lukecreated.com>, Thank you!
 
 ## About
 

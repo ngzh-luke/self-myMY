@@ -1,10 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
 import 'package:mymy_m1/pages/main_view_template.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
+import 'package:mymy_m1/services/notifications/notification_service.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -13,7 +16,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return mainView(
       context,
-      appBarTitle: 'Settings',
+      appBarTitle: AppLocalizations.of(context)!.settings,
       body: Consumer2<ThemeProvider, LanguageProvider>(
         builder: (context, themeProvider, languageProvider, child) {
           return ListView(
@@ -22,9 +25,14 @@ class Settings extends StatelessWidget {
                 title: const Text('Theme Mode'),
                 trailing: DropdownButton<ThemeMode>(
                   value: themeProvider.themeMode,
-                  onChanged: (ThemeMode? newThemeMode) {
+                  onChanged: (ThemeMode? newThemeMode) async {
                     if (newThemeMode != null) {
-                      themeProvider.setThemeMode(newThemeMode);
+                      await themeProvider.setThemeMode(newThemeMode);
+                      Provider.of<CustomNotificationService>(context,
+                              listen: false)
+                          .notify(
+                              AppLocalizations.of(context)!.newChangeApplied,
+                              CustomNotificationType.success);
                     }
                   },
                   items: ThemeMode.values.map((ThemeMode mode) {
@@ -39,9 +47,14 @@ class Settings extends StatelessWidget {
                 title: const Text('Theme'),
                 trailing: DropdownButton<String>(
                   value: themeProvider.currentThemeName,
-                  onChanged: (String? newThemeName) {
+                  onChanged: (String? newThemeName) async {
                     if (newThemeName != null) {
-                      themeProvider.setTheme(newThemeName);
+                      await themeProvider.setTheme(newThemeName);
+                      Provider.of<CustomNotificationService>(context,
+                              listen: false)
+                          .notify(
+                              AppLocalizations.of(context)!.newChangeApplied,
+                              CustomNotificationType.success);
                     }
                   },
                   items: themeProvider.availableThemes.map((String name) {
@@ -53,11 +66,16 @@ class Settings extends StatelessWidget {
                 ),
               ),
               ListTile(
-                title: Text('Language'),
+                title: Text(AppLocalizations.of(context)!.language),
                 trailing: DropdownButton<Locale?>(
                   value: languageProvider.currentLocaleOrNull,
                   onChanged: (Locale? newLocale) {
                     languageProvider.setLocale(newLocale);
+
+                    Provider.of<CustomNotificationService>(context,
+                            listen: false)
+                        .notify(AppLocalizations.of(context)!.newChangeApplied,
+                            CustomNotificationType.success);
                   },
                   items: languageProvider.supportedLocalesWithDefault
                       .map((Locale? locale) {

@@ -2,5 +2,15 @@
   "@@locale": "zh",
   "helloWorld": "你好，世界!",
   "tooltip_addNewTransaction": "记一笔账",
-  "systemDefault": "系统默认"
+  "systemDefault": "系统默认",
+  "settings": "设置",
+  "language": "语言",
+  "newChangeApplied": "成功更改！",
+  "@newChangeApplied": {
+    "description": "Reports user that the new change has been successfully saved and applied in setting page."
+  },
+  "loading": "加载中...",
+  "@loading": {
+    "description": "Text describing that the resource is being loaded/fetched."
+  }
 }
