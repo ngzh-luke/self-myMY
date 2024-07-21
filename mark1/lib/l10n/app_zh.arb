@@ -3,18 +3,31 @@
   "helloWorld": "你好，世界!",
   "tooltip_addNewTransaction": "记一笔账",
   "systemDefault": "系统默认",
-  "settings": "设置",
-  "language": "语言",
-  "newChangeApplied": "成功更改！",
-  "@newChangeApplied": {
+  "heading_settings": "设置",
+  "heading_language": "语言",
+  "noti_newChangeApplied": "更改成功！",
+  "@noti_newChangeApplied": {
     "description": "Reports user that the new change has been successfully saved and applied in setting page."
   },
-  "loading": "加载中...",
-  "@loading": {
+  "status_loading": "加载中...",
+  "@status_loading": {
     "description": "Text describing that the resource is being loaded/fetched."
   },
-  "analytics": "统计",
-  "@analytics": {
+  "heading_analytics": "统计",
+  "@heading_analytics": {
     "description": "According to WeChat, but when put on Translate it gives 'statistics'"
+  },
+  "noti_errorOccurred": "抱歉！发生错误，请重试！",
+  "heading_records": "明细",
+  "@heading_records": {
+    "description": "Literally means clear and detailed but this used in describing the topic identifier"
+  },
+  "heading_theme": "皮肤设置",
+  "@heading_theme": {
+    "description": "Literally means skin but in this context is theme"
+  },
+  "heading_home": "首页",
+  "@heading_home": {
+    "description": "Literally means front page but also refers to home page as well"
   }
 }

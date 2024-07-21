@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mymy_m1/pages/analytics.dart';
 import 'package:mymy_m1/pages/home.dart';
 import 'package:animations/animations.dart';
+import 'package:mymy_m1/pages/new_transaction/new_transaction.dart';
+import 'package:mymy_m1/pages/records.dart';
 import 'package:mymy_m1/pages/settings/settings.dart';
 import 'package:mymy_m1/navigation/main_wrapper.dart';
 
@@ -80,7 +83,7 @@ final _router = GoRouter(
                   path: '/records',
                   name: 'Records',
                   builder: (BuildContext context, GoRouterState state) =>
-                      const Text("This is records page"))
+                      const Records())
             ]),
 
         /// Brach Analytics
@@ -91,7 +94,7 @@ final _router = GoRouter(
                   path: '/analytics',
                   name: 'Analytics',
                   builder: (BuildContext context, GoRouterState state) =>
-                      const Text("This is analytics page"))
+                      const Analytics())
             ]),
 
         /// Brach Setting
@@ -134,7 +137,7 @@ final _router = GoRouter(
                   name: 'NewTransaction',
                   path: '/new',
                   builder: (BuildContext context, GoRouterState state) =>
-                      const Text("You have request new transaction page"))
+                      const NewTransaction())
             ]),
       ],
     ),

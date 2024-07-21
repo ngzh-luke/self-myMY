@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:mymy_m1/pages/main_view_template.dart';
+import 'package:mymy_m1/helpers/templates/main_view_template.dart';
+import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
@@ -30,13 +31,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context)!.helloWorld),
-            const Text(
-              'Home Page',
+            CustomText(text: AppLocalizations.of(context)!.helloWorld),
+            const CustomText(
+              text: 'Home Page',
             ),
-            Text(
-              'a number',
+            CustomText(
               style: Theme.of(context).textTheme.headlineMedium,
+              text: 'a number',
             )
           ],
         ),

@@ -10,6 +10,7 @@ import 'package:mymy_m1/configs/themes/theme_collections.dart';
 import 'package:mymy_m1/navigation/pages_router.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_listener.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
+import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,6 +23,11 @@ void main() async {
 
   final themeProvider = ThemeProvider();
   await themeProvider.loadFromPrefs();
+
+  final settingsService = SettingsService(
+    themeProvider: themeProvider,
+    languageProvider: languageProvider,
+  );
 
   // Print user preferences
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -61,6 +67,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: themeProvider),
         ChangeNotifierProvider.value(value: languageProvider),
+        ChangeNotifierProvider.value(value: settingsService),
         ChangeNotifierProvider(create: (_) => CustomNotificationService()),
       ],
       child: const MyApp(),
@@ -119,8 +126,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ThemeProvider, LanguageProvider>(
-      builder: (context, themeProvider, languageProvider, child) {
+    return Consumer<SettingsService>(
+      builder: (context, settings, child) {
         return _isLoading
             ? const Center(
                 child: CircularProgressIndicator(),
@@ -133,12 +140,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   GlobalWidgetsLocalizations.delegate,
                   GlobalCupertinoLocalizations.delegate,
                 ],
-                supportedLocales: languageProvider.supportedLocales,
-                locale: languageProvider.currentLocale,
+                supportedLocales: settings.supportedLocales,
+                locale: settings.currentLocale,
                 title: "myMY M1 by LukeCreated",
-                theme: themeProvider.lightTheme,
-                darkTheme: themeProvider.darkTheme,
-                themeMode: themeProvider.themeMode,
+                theme: settings.lightTheme,
+                darkTheme: settings.darkTheme,
+                themeMode: settings.themeMode,
                 builder: (context, child) {
                   return ScaffoldMessenger(
                     child: CustomNotificationListener(

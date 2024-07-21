@@ -1,0 +1,15 @@
+{
+  "th": [
+    "noti_errorOccurred",
+    "heading_records",
+    "heading_analytics",
+    "theme",
+    "themeMode"
+  ],
+
+  "zh": [
+    "heading_systemDefault",
+    "theme",
+    "themeMode"
+  ]
+}
