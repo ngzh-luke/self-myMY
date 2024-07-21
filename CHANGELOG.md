@@ -4,6 +4,8 @@ Developed by __Kittipich "Luke" Aiumbhornsin__
 
 Created on Dec 20, 2023
 
+Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
+
 - [Mark 0 changelog](#mark-0-changelog)
 - [Mark 1 changelog](#mark-1-changelog)
 
@@ -64,3 +66,4 @@ Created on Dec 20, 2023
 - Initial Development: Language switcher is implemented on setting page on July 20, 2024 -> __1.0.6__
 - Initial Development: Simple notification prior the update of the settings works with localization on July 21, 2024 -> __1.0.6-a__
 - Initial Development: All navbar menu placed, and add more localization on July 21, 2024 -> __1.0.6-b__
+- Initial Development: New theme 'inTheForest' added, added more localization, reorganize the Settings page implementation with new custom Text widget, and small design improvement on July 22, 2024 -> __1.0.7__

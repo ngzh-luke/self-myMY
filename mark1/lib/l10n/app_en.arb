@@ -5,17 +5,21 @@
     "description": "The conventional newborn programmer greeting"
   },
   "tooltip_addNewTransaction": "Add new transaction record",
-  "systemDefault": "System Default",
-  "settings": "Settings",
-  "language": "Language",
-  "newChangeApplied": "Latest change has been applied!",
-  "@newChangeApplied": {
+  "heading_systemDefault": "System Default",
+  "heading_settings": "Settings",
+  "heading_language": "Language",
+  "noti_errorOccurred": "Sorry! Something went wrong, please try again!",
+  "noti_newChangeApplied": "Latest change has been applied!",
+  "@noti_newChangeApplied": {
     "description": "Reports user that the new change has been successfully saved and applied in setting page."
   },
-  "loading": "Loading...",
-  "@loading": {
+  "status_loading": "Loading...",
+  "@status_loading": {
     "description": "Text describing that the resource is being loaded/fetched."
   },
-  "records": "Records",
-  "analytics": "Analytics"
+  "heading_records": "Records",
+  "heading_analytics": "Analytics",
+  "theme": "Theme",
+  "themeMode": "Theme Mode",
+  "heading_home": "Home"
 }

@@ -48,7 +48,7 @@ class LanguageProvider with ChangeNotifier {
 
   String getLanguageName(Locale? locale, BuildContext context) {
     if (locale == null) {
-      String defaultText = AppLocalizations.of(context)!.systemDefault;
+      String defaultText = AppLocalizations.of(context)!.heading_systemDefault;
       String defaultLangText =
           getLanguageNameByLocaleString(aLocale: systemDefaultLocale);
       return "$defaultText ($defaultLangText)";

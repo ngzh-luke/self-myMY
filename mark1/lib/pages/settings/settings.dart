@@ -1,127 +1,133 @@
 // ignore_for_file: use_build_context_synchronously
-
+// settings.dart
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:mymy_m1/configs/languages/language_provider.dart';
-import 'package:mymy_m1/pages/main_view_template.dart';
+import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:provider/provider.dart';
-import 'package:mymy_m1/configs/themes/theme_provider.dart';
+import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
+import 'package:mymy_m1/helpers/templates/main_view_template.dart';
 
-class Settings extends StatefulWidget {
+class Settings extends StatelessWidget {
   const Settings({super.key});
 
-  @override
-  State<Settings> createState() => _SettingsState();
-}
-
-class _SettingsState extends State<Settings> {
-  bool _isChangingThemeMode = false;
-  bool _isChangingTheme = false;
-  bool _isChangingLang = false;
   @override
   Widget build(BuildContext context) {
     return mainView(
       context,
-      appBarTitle: AppLocalizations.of(context)!.settings,
-      body: Consumer2<ThemeProvider, LanguageProvider>(
-        builder: (context, themeProvider, languageProvider, child) {
+      appBarTitle: AppLocalizations.of(context)!.heading_settings,
+      body: Consumer<SettingsService>(
+        builder: (context, settings, child) {
           return ListView(
             children: [
-              ListTile(
-                title: const Text('Theme Mode'),
-                trailing: _isChangingThemeMode
-                    ? const CircularProgressIndicator()
-                    : DropdownButton<ThemeMode>(
-                        value: themeProvider.themeMode,
-                        onChanged: (ThemeMode? newThemeMode) async {
-                          setState(() => _isChangingThemeMode = true);
-                          if (newThemeMode != null) {
-                            await themeProvider.setThemeMode(newThemeMode);
-                            Provider.of<CustomNotificationService>(context,
-                                    listen: false)
-                                .notify(
-                                    AppLocalizations.of(context)!
-                                        .newChangeApplied,
-                                    CustomNotificationType.success);
-
-                            setState(() => _isChangingThemeMode = false);
-                          }
-                        },
-                        items: ThemeMode.values.map((ThemeMode mode) {
-                          return DropdownMenuItem(
-                            value: mode,
-                            child: Text(
-                                mode.toString().split('.').last.capitalize),
-                          );
-                        }).toList(),
-                      ),
+              SettingDropdown<ThemeMode>(
+                title: AppLocalizations.of(context)!.themeMode,
+                value: settings.themeMode,
+                items: ThemeMode.values,
+                onChanged: (newValue) => _updateSetting(
+                  context,
+                  () => settings.setThemeMode(newValue),
+                ),
+                itemBuilder: (mode) => CustomText(
+                    text: mode.toString().split('.').last.capitalize),
               ),
-              ListTile(
-                title: const Text('Theme'),
-                trailing: _isChangingTheme
-                    ? const CircularProgressIndicator()
-                    : DropdownButton<String>(
-                        value: themeProvider.currentThemeName,
-                        onChanged: (String? newThemeName) async {
-                          setState(() => _isChangingTheme = true);
-                          if (newThemeName != null) {
-                            await themeProvider.setTheme(newThemeName);
-                            Provider.of<CustomNotificationService>(context,
-                                    listen: false)
-                                .notify(
-                                    AppLocalizations.of(context)!
-                                        .newChangeApplied,
-                                    CustomNotificationType.success);
-                            setState(() => _isChangingTheme = false);
-                          }
-                        },
-                        items: themeProvider.availableThemes.map((String name) {
-                          return DropdownMenuItem(
-                            value: name,
-                            child: Text(name),
-                          );
-                        }).toList(),
-                      ),
+              SettingDropdown<String>(
+                title: AppLocalizations.of(context)!.theme,
+                value: settings.currentThemeName,
+                items: settings.availableThemes,
+                onChanged: (newValue) => _updateSetting(
+                  context,
+                  () => settings.setTheme(newValue),
+                ),
+                itemBuilder: (name) => CustomText(text: name),
               ),
-              ListTile(
-                title: Text(AppLocalizations.of(context)!.language),
-                trailing: _isChangingLang
-                    ? const CircularProgressIndicator()
-                    : DropdownButton<Locale?>(
-                        value: languageProvider.currentLocaleOrNull,
-                        onChanged: (Locale? newLocale) async {
-                          setState(() => _isChangingLang = true);
-                          await languageProvider.setLocale(newLocale);
-                          // print(
-                          // "in the apploc: ${AppLocalizations.of(context)?.localeName}");
-                          // print(
-                          //     "current locale in prov: ${context.read<LanguageProvider>().currentLocale}");
-                          Provider.of<CustomNotificationService>(context,
-                                  listen: false)
-                              .notify(
-                                  AppLocalizations.of(context)!
-                                      .newChangeApplied,
-                                  CustomNotificationType.success);
-                          setState(() => _isChangingLang = false);
-                          // print(
-                          //     "in the apploc: ${AppLocalizations.of(context)?.localeName}");
-                        },
-                        items: languageProvider.supportedLocalesWithDefault
-                            .map((Locale? locale) {
-                          return DropdownMenuItem(
-                            value: locale,
-                            child: Text(languageProvider.getLanguageName(
-                                locale, context)),
-                          );
-                        }).toList(),
-                      ),
+              SettingDropdown<Locale?>(
+                title: AppLocalizations.of(context)!.heading_language,
+                value: settings.currentLocaleOrNull,
+                items: settings.supportedLocalesWithDefault,
+                onChanged: (newValue) => _updateSetting(
+                  context,
+                  () => settings.setLocale(newValue),
+                ),
+                itemBuilder: (locale) =>
+                    CustomText(text: settings.getLanguageName(locale, context)),
               ),
             ],
           );
         },
       ),
+    );
+  }
+
+  Future<void> _updateSetting(
+      BuildContext context, Future<bool> Function() updateFunction) async {
+    try {
+      bool success = await updateFunction();
+      if (success) {
+        Provider.of<CustomNotificationService>(context, listen: false).notify(
+          AppLocalizations.of(context)!.noti_newChangeApplied,
+          CustomNotificationType.success,
+        );
+      } else {
+        throw Exception('Failed to update setting');
+      }
+    } catch (e) {
+      Provider.of<CustomNotificationService>(context, listen: false).notify(
+        AppLocalizations.of(context)!.noti_errorOccurred,
+        CustomNotificationType.error,
+      );
+    }
+  }
+}
+
+class SettingDropdown<T> extends StatefulWidget {
+  final String title;
+  final T value;
+  final List<T> items;
+  final Future<void> Function(T) onChanged;
+  final Widget Function(T) itemBuilder;
+
+  const SettingDropdown({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    required this.itemBuilder,
+  });
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _SettingDropdownState<T> createState() => _SettingDropdownState<T>();
+}
+
+class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
+  bool _isChanging = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: CustomText(text: widget.title),
+      trailing: _isChanging
+          ? const CircularProgressIndicator()
+          : DropdownButton<T>(
+              dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
+              value: widget.value,
+              onChanged: (T? newValue) async {
+                if (newValue != null) {
+                  setState(() => _isChanging = true);
+                  await widget.onChanged(newValue);
+                  setState(() => _isChanging = false);
+                }
+              },
+              items: widget.items.map((T item) {
+                return DropdownMenuItem<T>(
+                  value: item,
+                  child: widget.itemBuilder(item),
+                );
+              }).toList(),
+            ),
     );
   }
 }

@@ -66,18 +66,18 @@ class _MainWrapperState extends State<MainWrapper> {
         barItems: [
           BarItem(
             icon: Icons.home,
-            title: 'Home',
+            title: AppLocalizations.of(context)!.heading_home,
           ),
           BarItem(
-              title: AppLocalizations.of(context)!.records,
+              title: AppLocalizations.of(context)!.heading_records,
               icon: Icons.receipt_rounded),
           BarItem(
             icon: Icons.analytics_outlined,
-            title: AppLocalizations.of(context)!.analytics,
+            title: AppLocalizations.of(context)!.heading_analytics,
           ),
           BarItem(
             icon: Icons.settings,
-            title: AppLocalizations.of(context)!.settings,
+            title: AppLocalizations.of(context)!.heading_settings,
           ),
         ],
       ),
