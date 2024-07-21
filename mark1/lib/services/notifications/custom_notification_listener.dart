@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
 import 'package:provider/provider.dart';
 
 class CustomNotificationListener extends StatelessWidget {

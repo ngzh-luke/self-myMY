@@ -56,17 +56,20 @@ class LanguageProvider with ChangeNotifier {
     return getLanguageNameByLocaleString(aLocale: locale.toString());
   }
 
-  void setLocale(Locale? locale) {
+  Future<bool> setLocale(Locale? locale) async {
     if ((locale == null) ||
         (locale.languageCode == Intl.shortLocale(systemDefaultLocale))) {
       _isSystemDefault = true;
       setSystemLocale();
+      return true;
     } else if (supportedLocales.contains(locale)) {
       _currentLocale = locale;
       _isSystemDefault = false;
       notifyListeners();
-      _saveToPrefs();
+      await _saveToPrefs();
+      return true;
     }
+    return false;
   }
 
   Future<void> loadFromPrefs() async {

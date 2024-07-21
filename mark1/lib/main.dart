@@ -5,12 +5,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
+import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
 import 'package:mymy_m1/navigation/pages_router.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_listener.dart';
-import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
 import 'package:provider/provider.dart';
-import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -78,6 +78,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   final CustomNotificationService _notificationService =
       CustomNotificationService();
+  late bool _isLoading;
 
   @override
   void initState() {
@@ -88,12 +89,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void initialization() async {
+    setState(() => _isLoading = true);
     print("\n<------------------->");
     print(" Available Resources:");
     print("loading resources...");
     print("Available localizations: ${AppLocalizations.supportedLocales}");
     print("Available Themes: ${ThemeCollections.availableThemes}");
     // await Future.delayed(const Duration(seconds: 1));
+    setState(() => _isLoading = false);
     print("resources are loaded successfully\n");
     print("<------------------->\n");
     FlutterNativeSplash.remove();
@@ -118,27 +121,31 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Consumer2<ThemeProvider, LanguageProvider>(
       builder: (context, themeProvider, languageProvider, child) {
-        return MaterialApp.router(
-            routerConfig: router,
-            localizationsDelegates: const [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: languageProvider.supportedLocales,
-            locale: languageProvider.currentLocale,
-            title: "myMY M1 by LukeCreated",
-            theme: themeProvider.lightTheme,
-            darkTheme: themeProvider.darkTheme,
-            themeMode: themeProvider.themeMode,
-            builder: (context, child) {
-              return ScaffoldMessenger(
-                child: CustomNotificationListener(
-                  child: child ?? const SizedBox.shrink(),
-                ),
-              );
-            });
+        return _isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : MaterialApp.router(
+                routerConfig: router,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: languageProvider.supportedLocales,
+                locale: languageProvider.currentLocale,
+                title: "myMY M1 by LukeCreated",
+                theme: themeProvider.lightTheme,
+                darkTheme: themeProvider.darkTheme,
+                themeMode: themeProvider.themeMode,
+                builder: (context, child) {
+                  return ScaffoldMessenger(
+                    child: CustomNotificationListener(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                  );
+                });
       },
     );
   }

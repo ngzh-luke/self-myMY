@@ -13,7 +13,7 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   5   | UI pages are drafted and structured | 1.5.0 | planned |
 |   6   | Theming system works | 1.6.0 | in progress (50%) |
 |   7   | Able to fetch and list data from <https://countriesnow.space> API | 1.7.0 | planned |
-|   8   | Analyze charts added | 1.X.X | consideration |
+|   8   | Add Analytics charts | 1.X.X | planned |
 |   9   | Able to list transaction records in patterns: all, last 5 records | 1.8.0 | planned |
 |   10  | Promise transaction, Payment information, and Account balancing | X.X.X | planned |
 |   11  | Transaction template, Transaction proof (1:1) with small file size | 1.9.0 | planned |

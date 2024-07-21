@@ -33,12 +33,14 @@ class _MainWrapperState extends State<MainWrapper> {
         height: double.infinity,
         child: widget.navigationShell,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
           tooltip: (AppLocalizations.of(context)!.tooltip_addNewTransaction),
           hoverElevation: 10,
           onPressed: () {
-            context.push(context.namedLocation('NewTransaction'));
+            setState(() {
+              context.goNamed('NewTransaction');
+            });
           },
           backgroundColor:
               Theme.of(context).colorScheme.errorContainer.darken(20),
@@ -67,8 +69,15 @@ class _MainWrapperState extends State<MainWrapper> {
             title: 'Home',
           ),
           BarItem(
+              title: AppLocalizations.of(context)!.records,
+              icon: Icons.receipt_rounded),
+          BarItem(
+            icon: Icons.analytics_outlined,
+            title: AppLocalizations.of(context)!.analytics,
+          ),
+          BarItem(
             icon: Icons.settings,
-            title: 'Settings',
+            title: AppLocalizations.of(context)!.settings,
           ),
         ],
       ),
