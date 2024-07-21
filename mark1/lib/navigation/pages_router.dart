@@ -8,8 +8,14 @@ import 'package:mymy_m1/navigation/main_wrapper.dart';
 // Private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
+final _shellNavigatorRecords =
+    GlobalKey<NavigatorState>(debugLabel: 'shellRecords');
 final _shellNavigatorSettings =
     GlobalKey<NavigatorState>(debugLabel: 'shellSettings');
+final _shellNavigatorNewTransaction =
+    GlobalKey<NavigatorState>(debugLabel: 'shellAddTransaction');
+final _shellNavigatorAnalytics =
+    GlobalKey<NavigatorState>(debugLabel: "shellNavigatorAnalytics");
 
 // GoRouter configurations
 final _router = GoRouter(
@@ -66,6 +72,28 @@ final _router = GoRouter(
           ],
         ),
 
+        /// Brach Records
+        StatefulShellBranch(
+            navigatorKey: _shellNavigatorRecords,
+            routes: <RouteBase>[
+              GoRoute(
+                  path: '/records',
+                  name: 'Records',
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const Text("This is records page"))
+            ]),
+
+        /// Brach Analytics
+        StatefulShellBranch(
+            navigatorKey: _shellNavigatorAnalytics,
+            routes: <RouteBase>[
+              GoRoute(
+                  path: '/analytics',
+                  name: 'Analytics',
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const Text("This is analytics page"))
+            ]),
+
         /// Brach Setting
         StatefulShellBranch(
           navigatorKey: _shellNavigatorSettings,
@@ -97,6 +125,17 @@ final _router = GoRouter(
             ),
           ],
         ),
+
+        /// New transaction
+        StatefulShellBranch(
+            navigatorKey: _shellNavigatorNewTransaction,
+            routes: <RouteBase>[
+              GoRoute(
+                  name: 'NewTransaction',
+                  path: '/new',
+                  builder: (BuildContext context, GoRouterState state) =>
+                      const Text("You have request new transaction page"))
+            ]),
       ],
     ),
 

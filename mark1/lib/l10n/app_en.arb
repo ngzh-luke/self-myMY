@@ -15,5 +15,7 @@
   "loading": "Loading...",
   "@loading": {
     "description": "Text describing that the resource is being loaded/fetched."
-  }
+  },
+  "records": "Records",
+  "analytics": "Analytics"
 }

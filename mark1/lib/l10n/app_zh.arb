@@ -12,5 +12,9 @@
   "loading": "加载中...",
   "@loading": {
     "description": "Text describing that the resource is being loaded/fetched."
+  },
+  "analytics": "统计",
+  "@analytics": {
+    "description": "According to WeChat, but when put on Translate it gives 'statistics'"
   }
 }
