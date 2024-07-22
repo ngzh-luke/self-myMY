@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
+import 'package:mymy_m1/firebase_options.dart';
 import 'package:mymy_m1/navigation/pages_router.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_listener.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
@@ -59,8 +61,9 @@ void main() async {
       "Device Default Theme mode: ${WidgetsBinding.instance.platformDispatcher.platformBrightness.toString().split(".").last}");
   print("<------------------->");
 
-  // Delay to allow time for reading the console output
-  await Future.delayed(const Duration(seconds: 1));
+  await Future.delayed(const Duration(
+      seconds: 1)); // Delay to allow time for reading the console output
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     MultiProvider(
@@ -132,27 +135,29 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ? const Center(
                 child: CircularProgressIndicator(),
               )
-            : MaterialApp.router(
-                routerConfig: router,
-                localizationsDelegates: const [
-                  AppLocalizations.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: settings.supportedLocales,
-                locale: settings.currentLocale,
-                title: "myMY M1 by LukeCreated",
-                theme: settings.lightTheme,
-                darkTheme: settings.darkTheme,
-                themeMode: settings.themeMode,
-                builder: (context, child) {
-                  return ScaffoldMessenger(
-                    child: CustomNotificationListener(
-                      child: child ?? const SizedBox.shrink(),
-                    ),
-                  );
-                });
+            : SafeArea(
+                child: MaterialApp.router(
+                    routerConfig: router,
+                    localizationsDelegates: const [
+                      AppLocalizations.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: settings.supportedLocales,
+                    locale: settings.currentLocale,
+                    title: "myMY M1 by LukeCreated",
+                    theme: settings.lightTheme,
+                    darkTheme: settings.darkTheme,
+                    themeMode: settings.themeMode,
+                    builder: (context, child) {
+                      return ScaffoldMessenger(
+                        child: CustomNotificationListener(
+                          child: child ?? const SizedBox.shrink(),
+                        ),
+                      );
+                    }),
+              );
       },
     );
   }

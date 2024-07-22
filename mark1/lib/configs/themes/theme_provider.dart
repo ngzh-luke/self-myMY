@@ -6,7 +6,7 @@ import 'package:mymy_m1/configs/themes/theme_collections.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.system;
-  String _currentThemeName = 'sixPM';
+  String _currentThemeName = 'original';
   late SharedPreferences _prefs;
 
   ThemeProvider() {
@@ -43,7 +43,7 @@ class ThemeProvider with ChangeNotifier {
     _prefs = await SharedPreferences.getInstance();
     _themeMode =
         ThemeMode.values[_prefs.getInt('themeMode') ?? ThemeMode.system.index];
-    _currentThemeName = _prefs.getString('themeName') ?? 'sixPM';
+    _currentThemeName = _prefs.getString('themeName') ?? 'original';
 
     // Apply user preference before falling back to system default
     if (_themeMode == ThemeMode.system) {

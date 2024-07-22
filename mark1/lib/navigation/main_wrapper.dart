@@ -1,3 +1,4 @@
+// adapted from: https://github.com/AmirBayat0/GoRouter-Nested-Navigation/blob/main/go_router_example/lib/views/wrapper/main_wrapper.dart
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -49,7 +50,7 @@ class _MainWrapperState extends State<MainWrapper> {
             color: Theme.of(context).colorScheme.onErrorContainer,
           )), // Icons.playlist_add_outlined
       bottomNavigationBar: SlidingClippedNavBar(
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         onButtonPressed: (index) {
           setState(() {
             selectedIndex = index;
@@ -58,10 +59,8 @@ class _MainWrapperState extends State<MainWrapper> {
         },
         iconSize: 30,
         fontWeight: FontWeight.normal,
-        activeColor:
-            Theme.of(context).colorScheme.onPrimaryContainer.brighten(10),
-        inactiveColor:
-            Theme.of(context).colorScheme.onPrimaryContainer.darken(10),
+        activeColor: Theme.of(context).colorScheme.onSecondary,
+        inactiveColor: Theme.of(context).colorScheme.onSecondary.darken(10),
         selectedIndex: selectedIndex,
         barItems: [
           BarItem(

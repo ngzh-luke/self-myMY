@@ -4,12 +4,16 @@
     "heading_records",
     "heading_analytics",
     "theme",
-    "themeMode"
+    "themeMode",
+    "heading_login",
+    "heading_register"
   ],
 
   "zh": [
     "heading_systemDefault",
     "theme",
-    "themeMode"
+    "themeMode",
+    "heading_login",
+    "heading_register"
   ]
 }

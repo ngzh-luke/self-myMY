@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymy_m1/pages/analytics.dart';
+import 'package:mymy_m1/pages/authentication/login_and_register_screen.dart';
 import 'package:mymy_m1/pages/home.dart';
 import 'package:animations/animations.dart';
 import 'package:mymy_m1/pages/new_transaction/new_transaction.dart';
 import 'package:mymy_m1/pages/records.dart';
 import 'package:mymy_m1/pages/settings/settings.dart';
 import 'package:mymy_m1/navigation/main_wrapper.dart';
+import 'package:mymy_m1/services/start.dart';
 
 // Private navigators
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: "rootNavigator");
 final _shellNavigatorHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
 final _shellNavigatorRecords =
     GlobalKey<NavigatorState>(debugLabel: 'shellRecords');
@@ -22,7 +26,7 @@ final _shellNavigatorAnalytics =
 
 // GoRouter configurations
 final _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/gateway',
   navigatorKey: _rootNavigatorKey,
   routes: <RouteBase>[
     /// MainWrapper
@@ -44,7 +48,7 @@ final _router = GoRouter(
               pageBuilder: (context, state) {
                 return CustomTransitionPage(
                   key: state.pageKey,
-                  child: const HomePage(title: "myMY M1"),
+                  child: const HomePage(title: "myMY"),
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     // Change the opacity of the screen using a Curve based on the the animation's
@@ -105,7 +109,7 @@ final _router = GoRouter(
               path: "/settings",
               name: "Settings",
               builder: (BuildContext context, GoRouterState state) =>
-                  const Settings(),
+                  Settings(),
               routes: [
                 GoRoute(
                   path: "subSettings",
@@ -142,11 +146,42 @@ final _router = GoRouter(
       ],
     ),
 
+    // gateway
+    GoRoute(
+        name: 'Start',
+        path: '/start',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (BuildContext context, GoRouterState state) => Start()),
+
+    //
     // GoRoute(
-    //   name: 'transactionRecords',
-    //   path: 'records',
-    //   parentNavigatorKey: _rootNavigatorKey,
-    // )
+    //     name: '',
+    //     path: '',
+    //     parentNavigatorKey: _rootNavigatorKey,
+    //     builder: (BuildContext context, GoRouterState state) => const Gap(1)),
+
+    // page
+    // GoRoute(
+    //     name: 'page',
+    //     path: '/page',
+    //     parentNavigatorKey: _rootNavigatorKey,
+    //     builder: (BuildContext context, GoRouterState state) => SafeArea(
+    //           child: SizedBox(
+    //             width: double.infinity,
+    //             height: double.infinity,
+    //             child: Padding(
+    //               padding: const EdgeInsets.all(8.0),
+    //               child: Center(
+    //                 child: CustomText(
+    //                     text: "This will be the page",
+    //                     style: TextStyle(
+    //                         backgroundColor: Theme.of(context)
+    //                             .colorScheme
+    //                             .secondaryContainer)),
+    //               ),
+    //             ),
+    //           ),
+    //         ))
   ],
 );
 

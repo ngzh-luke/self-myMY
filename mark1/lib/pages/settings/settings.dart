@@ -4,19 +4,26 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
+import 'package:mymy_m1/services/authentication/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
 import 'package:mymy_m1/helpers/templates/main_view_template.dart';
 
 class Settings extends StatelessWidget {
-  const Settings({super.key});
+  Settings({super.key});
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     return mainView(
       context,
       appBarTitle: AppLocalizations.of(context)!.heading_settings,
+      appbarActions: [
+        IconButton(
+            onPressed: () async => await _auth.signOut(),
+            icon: const Icon(Icons.logout_outlined))
+      ],
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {
           return ListView(
