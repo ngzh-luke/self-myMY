@@ -14,7 +14,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9
+version: 1.1.0
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -33,11 +33,11 @@ dependencies:
   flutter_localizations: # localization
     sdk: flutter
   intl: any # internationalization #
-  firebase_core: ^3.2.0 # core dependency for Firebase
+  firebase_core: ^3.2.0 # core dependency for Firebase #
   firebase_storage: ^12.1.1 # serverless object storage
   cloud_firestore: ^5.1.0 # serverless noSQL database
-  firebase_auth: ^5.1.2 # severless authentication
-  gap: ^3.0.1 # handy (gap) space between things
+  firebase_auth: ^5.1.2 # severless authentication #
+  gap: ^3.0.1 # handy (gap) space between things #
   shared_preferences: ^2.2.3 # insensitive key-value data #
   google_fonts: ^6.2.1 # handy fonts import #
   icons_plus: ^5.0.0 # icons collections
@@ -45,7 +45,7 @@ dependencies:
   flutter_animate: ^4.5.0 # beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
   loading_animation_widget: ^1.2.1 # loading indicators animations
   flex_color_scheme: ^7.3.1 # for theming and app coloring purposes #
-  pdf: ^3.11.0 # dealing with pdf things
+  # pdf: ^3.11.0 # dealing with pdf things
   flutter_native_splash: ^2.4.1 # config app splash screen #
   url_launcher: ^6.3.0 # open url or an app that coresponding to the given link
   animated_text_kit: ^4.2.2
@@ -62,12 +62,13 @@ dependencies:
   flutter_launcher_icons: ^0.13.1 # customize an app launcher icons #
   sliding_clipped_nav_bar: ^3.1.1 # pre-built cool nav bar #
   retrofit: '>=4.0.0 <5.0.0' # api
-  logger: any  # for logging purpose
+  logger: ^2.4.0  # for logging purpose #
   json_annotation: ^4.8.1
   # path: '>1.0.0 <2.3.0-beta' 
   smooth_page_indicator: ^1.2.0+3 # cool page indicator #
   form_builder_validators: ^11.0.0 # form validators #
   elegant_notification: ^2.2.2 # cool inapp notification #
+  get_it: ^7.7.0 # dependency injection #
   
 
 dev_dependencies:

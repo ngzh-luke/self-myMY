@@ -2,8 +2,11 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
+import 'package:mymy_m1/helpers/getit/get_it.dart';
 import 'package:mymy_m1/services/notifications/notification_factory.dart';
 import 'package:mymy_m1/services/notifications/notification_service.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +16,8 @@ import 'package:mymy_m1/helpers/templates/main_view_template.dart';
 
 class Settings extends StatelessWidget {
   Settings({super.key});
-  final AuthService _auth = AuthService();
+
+  final AuthService _auth = getIt<AuthService>();
   final NotificationStyle _notificationStyle = NotificationStyle.snackBar;
 
   NotificationStyle get notificationStyle => _notificationStyle;
@@ -25,7 +29,11 @@ class Settings extends StatelessWidget {
       appBarTitle: AppLocalizations.of(context)!.heading_settings,
       appbarActions: [
         IconButton(
-            onPressed: () async => await _auth.signOut(),
+            onPressed: () async {
+              await _auth.signOut();
+              context.goNamed('Start');
+              // context.goNamed('Home');
+            },
             icon: const Icon(Icons.logout_outlined))
       ],
       body: Consumer<SettingsService>(
@@ -153,7 +161,8 @@ class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
     return ListTile(
       title: CustomText(text: widget.title),
       trailing: _isChanging
-          ? const CircularProgressIndicator()
+          ? LoadingAnimationWidget.twoRotatingArc(
+              color: Theme.of(context).colorScheme.onSurface, size: 20)
           : DropdownButton<T>(
               dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
               value: widget.value,

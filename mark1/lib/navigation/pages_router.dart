@@ -26,7 +26,7 @@ final _shellNavigatorAnalytics =
 
 // GoRouter configurations
 final _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/start',
   navigatorKey: _rootNavigatorKey,
   routes: <RouteBase>[
     /// MainWrapper

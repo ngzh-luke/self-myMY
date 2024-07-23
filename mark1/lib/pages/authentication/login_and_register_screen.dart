@@ -1,19 +1,55 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymy_m1/helpers/logs/log_helper.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
+import 'package:mymy_m1/services/notifications/notification_manager.dart';
+import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class LoginAndRegisterScreen extends StatelessWidget {
+class LoginAndRegisterScreen extends StatefulWidget {
   LoginAndRegisterScreen({super.key});
 
+  @override
+  State<LoginAndRegisterScreen> createState() => _LoginAndRegisterScreenState();
+}
+
+class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
   final rootController = PageController(initialPage: 0);
+
   final registerController = PageController(initialPage: 0);
+
   final AuthService _auth = AuthService();
+
+  final _registerAgreementKey = GlobalKey<FormBuilderState>();
+
   final _registerFormKey = GlobalKey<FormBuilderState>();
+
+  String _errorMessage = '';
+
+  String _getReadableErrorMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        return 'No user found with this email.';
+      case 'wrong-password':
+        return 'Wrong password provided.';
+      case 'email-already-in-use':
+        return 'An account already exists with this email.';
+      case 'weak-password':
+        return 'The password provided is too weak.';
+      case 'invalid-email':
+        return 'The email address is not valid.';
+      case 'too-many-requests':
+        return 'Too many attempts. Please try again later.';
+      default:
+        return 'An error occurred. Please try again.';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +94,32 @@ class LoginAndRegisterScreen extends StatelessWidget {
   }
 
   Widget loginScreen(BuildContext context) {
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+    Future<void> _signIn() async {
+      try {
+        await _auth.signInWithEmailAndPassword(
+          _emailController.text,
+          _passwordController.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          _errorMessage = _getReadableErrorMessage(e);
+          context.read<NotificationManager>().showNotification(
+                context,
+                NotificationData(
+                    title: 'Failed',
+                    message: _errorMessage,
+                    type: CustomNotificationType.error),
+              );
+        });
+      } catch (e) {
+        setState(() {
+          _errorMessage = 'An unexpected error occurred. Please try again.';
+        });
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -162,22 +224,24 @@ class LoginAndRegisterScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
                 child: FormBuilder(
-                  key: _registerFormKey,
+                  key: _registerAgreementKey,
                   autovalidateMode: AutovalidateMode.always,
                   child: Column(
                     children: [
                       FormBuilderCheckbox(
+                        onChanged: (value) {
+                          _registerAgreementKey.currentState?.saveAndValidate();
+                          LogHelper.logger.i(value);
+                        },
+
                         name: 'TermsOfService',
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.isTrue()
-                        ]),
+                        validator: FormBuilderValidators.isTrue(),
 
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 5),
                         subtitle: GestureDetector(
                             onTap: () {
-                              print("tab terms");
+                              LogHelper.logger.i("tab read terms");
                             },
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
@@ -207,9 +271,13 @@ class LoginAndRegisterScreen extends StatelessWidget {
                         name: 'PrivacyPolicy',
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 5),
+                        onChanged: (value) {
+                          _registerAgreementKey.currentState?.saveAndValidate();
+                          LogHelper.logger.i(value);
+                        },
                         subtitle: GestureDetector(
                           onTap: () {
-                            print("tab privacy");
+                            LogHelper.logger.i("tab read privacy");
                           },
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
@@ -223,10 +291,8 @@ class LoginAndRegisterScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.isTrue()
-                        ]),
+                        validator: FormBuilderValidators.isTrue(),
+
                         activeColor:
                             Theme.of(context).colorScheme.primaryFixedDim,
                         // autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -242,10 +308,11 @@ class LoginAndRegisterScreen extends StatelessWidget {
                       const Gap(2),
                       FormBuilderCheckbox(
                         name: 'AgeAgreement',
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.isTrue()
-                        ]),
+                        validator: FormBuilderValidators.isTrue(),
+                        onChanged: (value) {
+                          _registerAgreementKey.currentState?.saveAndValidate();
+                          LogHelper.logger.i(value);
+                        },
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 5),
                         activeColor:
@@ -273,6 +340,34 @@ class LoginAndRegisterScreen extends StatelessWidget {
   }
 
   Widget _regisFormSection(BuildContext context) {
+    TextEditingController _passwordCon = TextEditingController();
+    TextEditingController _passwordCon2 = TextEditingController();
+    TextEditingController _email = TextEditingController();
+
+    Future<void> _register() async {
+      try {
+        await _auth.registerWithEmailAndPassword(
+          _email.text,
+          _passwordCon.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          _errorMessage = _getReadableErrorMessage(e);
+          context.read<NotificationManager>().showNotification(
+                context,
+                NotificationData(
+                    title: 'Failed',
+                    message: _errorMessage,
+                    type: CustomNotificationType.error),
+              );
+        });
+      } catch (e) {
+        setState(() {
+          _errorMessage = 'An unexpected error occurred. Please try again.';
+        });
+      }
+    }
+
     return Container(
       color: Theme.of(context).colorScheme.tertiary,
       child: Padding(
@@ -301,6 +396,71 @@ class LoginAndRegisterScreen extends StatelessWidget {
                     fontSize: 26,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      child: FormBuilder(
+                        key: _registerFormKey,
+                        child: Column(
+                          children: [
+                            FormBuilderTextField(
+                              decoration: InputDecoration(
+                                  labelText: 'Email',
+                                  floatingLabelStyle: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant)),
+                              controller: _email,
+                              name: 'email',
+                              validator: FormBuilderValidators.email(),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                            ),
+                            const Gap(20),
+                            FormBuilderTextField(
+                                decoration: const InputDecoration(
+                                    labelText: 'Password'),
+                                controller: _passwordCon,
+                                name: 'password',
+                                obscureText: true,
+                                obscuringCharacter: "*",
+                                validator: FormBuilderValidators.password(),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction),
+                            const Gap(5),
+                            FormBuilderTextField(
+                              decoration: const InputDecoration(
+                                  labelText: 'Confrim your Password'),
+                              controller: _passwordCon2,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              name: 'confirmPassword',
+                              obscureText: true,
+                              obscuringCharacter: "*",
+                              validator: FormBuilderValidators.required(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Gap(7),
+                MaterialButton(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Text("Submit"),
+                    onPressed: () async {
+                      // handle regist here
+                      _registerAgreementKey.currentState?.saveAndValidate();
+                      _registerFormKey.currentState?.saveAndValidate();
+                      await _register();
+                    })
               ],
             ),
           ),

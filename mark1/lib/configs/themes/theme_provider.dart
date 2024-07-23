@@ -1,6 +1,5 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
+import 'package:mymy_m1/helpers/logs/log_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
 
@@ -59,7 +58,7 @@ class ThemeProvider with ChangeNotifier {
   Future<void> _saveToPrefs() async {
     await _prefs.setInt('themeMode', _themeMode.index);
     await _prefs.setString('themeName', _currentThemeName);
-    print(
+    LogHelper.logger.i(
         "\t New Prefs: Theme name: $_currentThemeName | Theme mode: ${ThemeMode.values[_prefs.getInt('themeMode') ?? ThemeMode.system.index].toString().split('.').last} ");
   }
 }

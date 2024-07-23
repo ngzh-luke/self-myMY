@@ -1,42 +1,65 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:logger/logger.dart';
+import 'package:mymy_m1/services/authentication/rate_limiter.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final Logger _logger = Logger();
+  final RateLimiter _rateLimiter = RateLimiter();
 
-  // Auth state changes stream
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  // Sign in with email and password
   Future<UserCredential?> signInWithEmailAndPassword(
       String email, String password) async {
+    if (!_rateLimiter.canAttempt(email)) {
+      throw FirebaseAuthException(
+        code: 'too-many-requests',
+        message: 'Too many sign-in attempts. Please try again later.',
+      );
+    }
+
     try {
       return await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      _logger.e('Sign in failed', error: e, stackTrace: StackTrace.current);
+      rethrow;
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-      return null;
+      _logger.e('Unexpected error during sign in',
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
     }
   }
 
-  // Register with email and password
   Future<UserCredential?> registerWithEmailAndPassword(
       String email, String password) async {
+    if (!_rateLimiter.canAttempt(email)) {
+      throw FirebaseAuthException(
+        code: 'too-many-requests',
+        message: 'Too many registration attempts. Please try again later.',
+      );
+    }
+
     try {
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      _logger.e('Registration failed',
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
     } catch (e) {
-      if (kDebugMode) {
-        print(e.toString());
-      }
-      return null;
+      _logger.e('Unexpected error during registration',
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
     }
   }
 
-  // Sign out
   Future<void> signOut() async {
-    await _auth.signOut();
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      _logger.e('Sign out failed', error: e, stackTrace: StackTrace.current);
+      rethrow;
+    }
   }
 }

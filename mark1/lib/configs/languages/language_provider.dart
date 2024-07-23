@@ -1,6 +1,5 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
+import 'package:mymy_m1/helpers/logs/log_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -105,7 +104,7 @@ class LanguageProvider with ChangeNotifier {
     await _prefs.setBool('isSystemDefault', _isSystemDefault);
     final String? languageCode = _prefs.getString('languageCode');
     final bool? isSystemDefault = _prefs.getBool('isSystemDefault');
-    print(
+    LogHelper.logger.i(
         "\t New Prefs: Language code: $languageCode | Is system default lang: $isSystemDefault");
   }
 }
