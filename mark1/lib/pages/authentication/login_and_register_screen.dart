@@ -20,33 +20,38 @@ class LoginAndRegisterScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 700,
-                child: PageView(
-                    scrollDirection: Axis.vertical,
-                    controller: rootController,
-                    children: [loginScreen(context), registerScreen(context)]),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 700,
+                  child: PageView(
+                      scrollDirection: Axis.vertical,
+                      controller: rootController,
+                      children: [
+                        loginScreen(context),
+                        registerScreen(context)
+                      ]),
+                ),
               ),
-            ),
-            SmoothPageIndicator(
-              controller: rootController,
-              axisDirection: Axis.vertical,
-              count: 2,
-              effect: SwapEffect(
-                  spacing: 10,
-                  dotHeight: 15,
-                  dotWidth: 22,
-                  radius: 0,
-                  type: SwapType.zRotation,
-                  activeDotColor: Theme.of(context).colorScheme.primary),
-            ),
-          ],
+              SmoothPageIndicator(
+                controller: rootController,
+                axisDirection: Axis.vertical,
+                count: 2,
+                effect: SwapEffect(
+                    spacing: 10,
+                    dotHeight: 15,
+                    dotWidth: 22,
+                    radius: 0,
+                    type: SwapType.zRotation,
+                    activeDotColor: Theme.of(context).colorScheme.primary),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -57,10 +62,11 @@ class LoginAndRegisterScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          CustomText(
-            style: Theme.of(context).textTheme.displayLarge,
-            text: AppLocalizations.of(context)!.heading_login,
-          ),
+          Text(AppLocalizations.of(context)!.heading_login,
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize:
+                      Theme.of(context).textTheme.displayLarge!.fontSize)),
           const Gap(1),
           ElevatedButton(
               // jump to register screen
@@ -138,10 +144,11 @@ class LoginAndRegisterScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            Text(
-              style: Theme.of(context).textTheme.displayLarge,
-              AppLocalizations.of(context)!.heading_register,
-            ),
+            Text(AppLocalizations.of(context)!.heading_register,
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize:
+                        Theme.of(context).textTheme.displayLarge!.fontSize)),
             const Gap(3),
             Text(
               "Agreements",
@@ -152,40 +159,55 @@ class LoginAndRegisterScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: FormBuilder(
-                key: _registerFormKey,
-                child: Column(
-                  children: [
-                    FormBuilderSwitch(
-                      name: 'TermsOfService',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      subtitle: GestureDetector(
-                          onTap: () {
-                            print("tab terms");
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.info_outline),
-                              Gap(3),
-                              Text('Tap here to Read Terms of Service',
-                                  style: TextStyle(
-                                      color: Colors.deepOrangeAccent,
-                                      decoration: TextDecoration.underline)),
-                            ],
-                          )),
-                      activeColor: Colors.tealAccent,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      title: const Text(
-                        'You are agree to our Terms of Service',
-                        style: TextStyle(fontSize: 17),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
+                child: FormBuilder(
+                  key: _registerFormKey,
+                  autovalidateMode: AutovalidateMode.always,
+                  child: Column(
+                    children: [
+                      FormBuilderCheckbox(
+                        name: 'TermsOfService',
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.isTrue()
+                        ]),
+
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
+                        subtitle: GestureDetector(
+                            onTap: () {
+                              print("tab terms");
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.info_outline),
+                                Gap(3),
+                                Text('Tap here to Read Terms of Service',
+                                    style: TextStyle(
+                                        color: Colors.deepOrangeAccent,
+                                        decoration: TextDecoration.underline)),
+                              ],
+                            )),
+                        activeColor:
+                            Theme.of(context).colorScheme.primaryFixedDim,
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
+                        title: Text(
+                          'You are agree to our Terms of Service',
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .fontSize),
+                        ),
                       ),
-                    ),
-                    const Gap(2),
-                    FormBuilderSwitch(
-                      name: 'PrivacyPolicy',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      subtitle: GestureDetector(
+                      const Gap(2),
+                      FormBuilderCheckbox(
+                        name: 'PrivacyPolicy',
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
+                        subtitle: GestureDetector(
                           onTap: () {
                             print("tab privacy");
                           },
@@ -199,26 +221,47 @@ class LoginAndRegisterScreen extends StatelessWidget {
                                       color: Colors.deepOrangeAccent,
                                       decoration: TextDecoration.underline)),
                             ],
-                          )),
-                      activeColor: Colors.tealAccent,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      title: const Text(
-                        'You are agree to our Privacy Policy',
-                        style: TextStyle(fontSize: 17),
+                          ),
+                        ),
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.isTrue()
+                        ]),
+                        activeColor:
+                            Theme.of(context).colorScheme.primaryFixedDim,
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
+                        title: Text(
+                          'You are agree to our Privacy Policy',
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .fontSize),
+                        ),
                       ),
-                    ),
-                    const Gap(2),
-                    FormBuilderSwitch(
-                      name: 'AgeAgreement',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 5),
-                      activeColor: Colors.tealAccent,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      title: const Text(
-                        "You are hereby confirmed that you already obtained parent's approval to use the services and provide any data if you are under the age of 16",
-                        style: TextStyle(fontSize: 17),
+                      const Gap(2),
+                      FormBuilderCheckbox(
+                        name: 'AgeAgreement',
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                          FormBuilderValidators.isTrue()
+                        ]),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
+                        activeColor:
+                            Theme.of(context).colorScheme.primaryFixedDim,
+                        // autovalidateMode: AutovalidateMode.onUserInteraction,
+                        title: Text(
+                          "You are hereby confirmed that you already obtained parent's approval to use the services and provide any data if you are under the age of 16",
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .fontSize),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -243,10 +286,13 @@ class LoginAndRegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  AppLocalizations.of(context)!.heading_register,
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
+                Text(AppLocalizations.of(context)!.heading_register,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .fontSize)),
                 const Gap(3),
                 Text(
                   "Account Creation",

@@ -10,8 +10,7 @@ import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
 import 'package:mymy_m1/firebase_options.dart';
 import 'package:mymy_m1/navigation/pages_router.dart';
-import 'package:mymy_m1/services/notifications/custom_notification_listener.dart';
-import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
+import 'package:mymy_m1/services/notifications/notification_manager.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -68,10 +67,13 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(value: themeProvider),
-        ChangeNotifierProvider.value(value: languageProvider),
+        // ChangeNotifierProvider.value(value: themeProvider),
+        // ChangeNotifierProvider.value(value: languageProvider),
         ChangeNotifierProvider.value(value: settingsService),
-        ChangeNotifierProvider(create: (_) => CustomNotificationService()),
+        ProxyProvider<SettingsService, NotificationManager>(
+          update: (_, settings, __) => NotificationManager(settings),
+          dispose: (_, manager) => manager.dispose(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -86,8 +88,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  final CustomNotificationService _notificationService =
-      CustomNotificationService();
   late bool _isLoading;
 
   @override
@@ -115,14 +115,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _notificationService.dispose();
+    // TODO: add dispose()
     super.dispose();
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.detached) {
-      _notificationService.dispose();
+      // TODO: add dispose()
     }
   }
 
@@ -137,6 +137,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               )
             : SafeArea(
                 child: MaterialApp.router(
+                    debugShowCheckedModeBanner: false,
                     routerConfig: router,
                     localizationsDelegates: const [
                       AppLocalizations.delegate,
@@ -151,11 +152,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                     darkTheme: settings.darkTheme,
                     themeMode: settings.themeMode,
                     builder: (context, child) {
-                      return ScaffoldMessenger(
-                        child: CustomNotificationListener(
-                          child: child ?? const SizedBox.shrink(),
-                        ),
-                      );
+                      return child ?? const SizedBox.shrink();
                     }),
               );
       },

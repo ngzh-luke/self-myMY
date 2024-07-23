@@ -6,7 +6,9 @@
     "theme",
     "themeMode",
     "heading_login",
-    "heading_register"
+    "heading_register",
+    "previewNotification",
+    "notificationStyle"
   ],
 
   "zh": [
@@ -14,6 +16,8 @@
     "theme",
     "themeMode",
     "heading_login",
-    "heading_register"
+    "heading_register",
+    "previewNotification",
+    "notificationStyle"
   ]
 }
