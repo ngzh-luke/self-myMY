@@ -1,22 +1,41 @@
 // ignore_for_file: use_build_context_synchronously
-// settings.dart
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
+import 'package:mymy_m1/services/authentication/auth_service.dart';
+import 'package:mymy_m1/helpers/getit/get_it.dart';
+import 'package:mymy_m1/services/notifications/notification_factory.dart';
+import 'package:mymy_m1/services/notifications/notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
-import 'package:mymy_m1/services/notifications/custom_notification_service.dart';
+import 'package:mymy_m1/services/notifications/notification_manager.dart';
 import 'package:mymy_m1/helpers/templates/main_view_template.dart';
 
 class Settings extends StatelessWidget {
-  const Settings({super.key});
+  Settings({super.key});
+
+  final AuthService _auth = getIt<AuthService>();
+  final NotificationStyle _notificationStyle = NotificationStyle.snackBar;
+
+  NotificationStyle get notificationStyle => _notificationStyle;
 
   @override
   Widget build(BuildContext context) {
     return mainView(
       context,
       appBarTitle: AppLocalizations.of(context)!.heading_settings,
+      appbarActions: [
+        IconButton(
+            onPressed: () async {
+              await _auth.signOut();
+              context.goNamed('Start');
+              // context.goNamed('Home');
+            },
+            icon: const Icon(Icons.logout_outlined))
+      ],
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {
           return ListView(
@@ -53,6 +72,21 @@ class Settings extends StatelessWidget {
                 itemBuilder: (locale) =>
                     CustomText(text: settings.getLanguageName(locale, context)),
               ),
+              SettingDropdown<NotificationStyle>(
+                title: AppLocalizations.of(context)!.notificationStyle,
+                value: settings.notificationStyle,
+                items: NotificationStyle.values,
+                onChanged: (newValue) => _updateSetting(
+                  context,
+                  () => settings.setNotificationStyle(newValue),
+                ),
+                itemBuilder: (style) => CustomText(
+                    text: style.toString().split('.').last.capitalize),
+              ),
+              ElevatedButton(
+                onPressed: () => _showPreviewNotification(context),
+                child: Text(AppLocalizations.of(context)!.previewNotification),
+              ),
             ],
           );
         },
@@ -65,19 +99,36 @@ class Settings extends StatelessWidget {
     try {
       bool success = await updateFunction();
       if (success) {
-        Provider.of<CustomNotificationService>(context, listen: false).notify(
-          AppLocalizations.of(context)!.noti_newChangeApplied,
-          CustomNotificationType.success,
-        );
+        context.read<NotificationManager>().showNotification(
+              context,
+              NotificationData(
+                title: 'Success',
+                message: AppLocalizations.of(context)!.noti_newChangeApplied,
+                type: CustomNotificationType.success,
+              ),
+            );
       } else {
         throw Exception('Failed to update setting');
       }
     } catch (e) {
-      Provider.of<CustomNotificationService>(context, listen: false).notify(
-        AppLocalizations.of(context)!.noti_errorOccurred,
-        CustomNotificationType.error,
-      );
+      context.read<NotificationManager>().showNotification(
+            context,
+            NotificationData(
+                title: 'Error',
+                message: AppLocalizations.of(context)!.noti_errorOccurred,
+                type: CustomNotificationType.error),
+          );
     }
+  }
+
+  void _showPreviewNotification(BuildContext context) {
+    context.read<NotificationManager>().showNotification(
+          context,
+          NotificationData(
+              title: 'Info',
+              message: "Preview of the notification style",
+              type: CustomNotificationType.info),
+        );
   }
 }
 
@@ -110,7 +161,8 @@ class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
     return ListTile(
       title: CustomText(text: widget.title),
       trailing: _isChanging
-          ? const CircularProgressIndicator()
+          ? LoadingAnimationWidget.twoRotatingArc(
+              color: Theme.of(context).colorScheme.onSurface, size: 20)
           : DropdownButton<T>(
               dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
               value: widget.value,

@@ -7,8 +7,8 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   NO. |          FEATURE(S)         | EXPECTED LAUNCHED BY VERSION | STATUS |
 |-------|--------------------------|------------------------------|--------|
 |   1   | Mark 1 initialized and Firebase backend setup | 1.0.0 | ✅ |
-|   2   | Splash screen & Authentication works | 1.2.0 | in progress (50%) |
-|   3   | Setting page & Navbar implemented | 1.3.0 | in progress (40%) |
+|   2   | Splash screen & Authentication works | 1.2.0 | in progress (80%) |
+|   3   | Setting page & Navbar implemented | 1.3.0 | in progress (70%) |
 |   4   | Localization in English and Thai for authentication works, and Chinese simplified drafted | 1.4.0 | in progress |
 |   5   | UI pages are drafted and structured | 1.5.0 | planned |
 |   6   | Theming system works | 1.6.0 | in progress (50%) |
@@ -22,3 +22,7 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   14  | Ability to search (and/or) query the (own) records | X.X.X | consideration |
 |   15  | Ability to export records either both PDF and (CSV,JSON) format or one of them | X.X.X | consideration |
 |   16  | Add support for alternative noSQL (Document) database | X.X.X | consideration |
+|   17  | Add statements: Privacy Policy (Thailand's PDPA focused, with potentially GDPR compliance), Terms of Services, Refund Policy, etc. | X.X.X | planned |
+|   18  | Implement the Feedback system | X.X.X | planned |
+|   19  | Host with your own choice | X.X.X | consideration |
+|   20  | Integrated with AI functionalities | X.X.X | consideration |

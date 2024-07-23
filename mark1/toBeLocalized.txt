@@ -4,12 +4,20 @@
     "heading_records",
     "heading_analytics",
     "theme",
-    "themeMode"
+    "themeMode",
+    "heading_login",
+    "heading_register",
+    "previewNotification",
+    "notificationStyle"
   ],
 
   "zh": [
     "heading_systemDefault",
     "theme",
-    "themeMode"
+    "themeMode",
+    "heading_login",
+    "heading_register",
+    "previewNotification",
+    "notificationStyle"
   ]
 }

@@ -16,7 +16,7 @@ abstract class AbCustomText extends StatelessWidget {
         style: (customStyle ?? const TextStyle()).copyWith(
           color: Theme.of(context).colorScheme.onSecondaryContainer,
         )
-        // backgroundColor: Theme.of(context).colorScheme.),
+        // backgroundColor: Theme.of(context).colorScheme.secondary),
         );
   }
 }

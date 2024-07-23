@@ -21,5 +21,9 @@
   "heading_analytics": "Analytics",
   "theme": "Theme",
   "themeMode": "Theme Mode",
-  "heading_home": "Home"
+  "heading_home": "Home",
+  "heading_login": "Login",
+  "heading_register": "Register",
+  "previewNotification": "preview notification",
+  "notificationStyle": "notification style"
 }

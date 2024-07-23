@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
+import 'package:mymy_m1/services/notifications/notification_factory.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsService with ChangeNotifier {
   final ThemeProvider themeProvider;
   final LanguageProvider languageProvider;
+  late SharedPreferences _prefs;
+  NotificationStyle _notificationStyle = NotificationStyle.snackBar;
 
   SettingsService({
     required this.themeProvider,
     required this.languageProvider,
   }) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _prefs = await SharedPreferences.getInstance();
+    _loadNotificationStyle();
     themeProvider.addListener(notifyListeners);
     languageProvider.addListener(notifyListeners);
   }
@@ -21,8 +31,17 @@ class SettingsService with ChangeNotifier {
   ThemeData get lightTheme => themeProvider.lightTheme;
   ThemeData get darkTheme => themeProvider.darkTheme;
 
-  Future<bool> setThemeMode(ThemeMode mode) => themeProvider.setThemeMode(mode);
-  Future<bool> setTheme(String themeName) => themeProvider.setTheme(themeName);
+  Future<bool> setThemeMode(ThemeMode mode) async {
+    bool result = await themeProvider.setThemeMode(mode);
+    notifyListeners();
+    return result;
+  }
+
+  Future<bool> setTheme(String themeName) async {
+    bool result = await themeProvider.setTheme(themeName);
+    notifyListeners();
+    return result;
+  }
 
   // Language-related methods
   Locale get currentLocale => languageProvider.currentLocale;
@@ -32,9 +51,30 @@ class SettingsService with ChangeNotifier {
   List<Locale?> get supportedLocalesWithDefault =>
       languageProvider.supportedLocalesWithDefault;
 
-  Future<bool> setLocale(Locale? locale) => languageProvider.setLocale(locale);
+  Future<bool> setLocale(Locale? locale) async {
+    bool result = await languageProvider.setLocale(locale);
+    notifyListeners();
+    return result;
+  }
+
   String getLanguageName(Locale? locale, BuildContext context) =>
       languageProvider.getLanguageName(locale, context);
+
+  // Notification style methods
+  NotificationStyle get notificationStyle => _notificationStyle;
+
+  void _loadNotificationStyle() {
+    final styleIndex = _prefs.getInt('notificationStyle') ?? 0;
+    _notificationStyle = NotificationStyle.values[styleIndex];
+    notifyListeners();
+  }
+
+  Future<bool> setNotificationStyle(NotificationStyle style) async {
+    await _prefs.setInt('notificationStyle', style.index);
+    _notificationStyle = style;
+    notifyListeners();
+    return true;
+  }
 
   @override
   void dispose() {

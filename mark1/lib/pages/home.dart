@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return mainView(
-      appBarTitle: 'myMY M1',
+      appBarTitle: widget.title,
       context,
       body: Center(
         child: Column(
