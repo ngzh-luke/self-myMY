@@ -69,4 +69,5 @@ Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
 - Initial Development: New theme 'inTheForest' added, added more localization, reorganize the Settings page implementation with new custom Text widget, and small design improvement on July 22, 2024 -> __1.0.7__
 - Initial Development: LukeCreated Original theme is available now + 'sixPM' theme now is rebranded to 'seaTheSky' theme, authentication is in progress, and small design improvement on July 23, 2024 -> __1.0.8__
 - Initial Development: Authentication is in progress, overflow fixed on browser view, and reimplement notification system + added new inapp notification style on July 23, 2024 -> __1.0.9__
-- Initial Development: Basic Authentication features is almost done on July 24, 2024 -> __1.1.0__
+- Initial Development: Basic Authentication features are almost done on July 24, 2024 -> __1.1.0__
+- Initial Development: Registration flow and UX improvements and minor adjustment on July 24, 2024 -> __1.1.1__

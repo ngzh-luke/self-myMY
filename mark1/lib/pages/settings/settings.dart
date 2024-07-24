@@ -34,7 +34,10 @@ class Settings extends StatelessWidget {
               context.goNamed('Start');
               // context.goNamed('Home');
             },
-            icon: const Icon(Icons.logout_outlined))
+            icon: Icon(
+              Icons.logout_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ))
       ],
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {

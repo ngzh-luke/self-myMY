@@ -26,3 +26,5 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   18  | Implement the Feedback system | X.X.X | planned |
 |   19  | Host with your own choice | X.X.X | consideration |
 |   20  | Integrated with AI functionalities | X.X.X | consideration |
+|   21  | Budgeting functionalities | X.X.X | consideration |
+|   22  | Home widgets support on native mobile apps |  X.X.X | consideration |

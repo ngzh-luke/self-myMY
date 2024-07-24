@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymy_m1/pages/analytics.dart';
-import 'package:mymy_m1/pages/authentication/login_and_register_screen.dart';
 import 'package:mymy_m1/pages/home.dart';
 import 'package:animations/animations.dart';
 import 'package:mymy_m1/pages/new_transaction/new_transaction.dart';

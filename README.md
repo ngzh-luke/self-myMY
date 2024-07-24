@@ -8,7 +8,7 @@ Developer: **Kittipich "Luke" Aiumbhornsin**
 
 Development Status: **Active**
 
-License Information: **LICENSE** [go to file](LICENSE)
+License Information: _Unless stated/used/applied otherwise by the parts/components/libraries_,  rest of the project is licensed under the ->  [**LICENSE**](LICENSE)
 
 Development History: **CHANGELOG.md** [go to file](CHANGELOG.md)
 
@@ -24,4 +24,4 @@ Current App Series: **Mark 1**
 
 ## Disclaimer
 
-The author is ***not affiliated*** with any **source(s)/product(s)** listed in this project.
+The author is _**not affiliated**_ with any **source(s)/product(s)** listed in this project.
