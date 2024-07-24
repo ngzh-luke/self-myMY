@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mymy_m1/helpers/logs/log_helper.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
@@ -13,7 +17,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class LoginAndRegisterScreen extends StatefulWidget {
-  LoginAndRegisterScreen({super.key});
+  const LoginAndRegisterScreen({super.key});
 
   @override
   State<LoginAndRegisterScreen> createState() => _LoginAndRegisterScreenState();
@@ -21,18 +25,42 @@ class LoginAndRegisterScreen extends StatefulWidget {
 
 class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
   final rootController = PageController(initialPage: 0);
-
   final registerController = PageController(initialPage: 0);
 
   final AuthService _auth = AuthService();
 
+  final _loginFormKey = GlobalKey<FormBuilderState>();
   final _registerAgreementKey = GlobalKey<FormBuilderState>();
-
   final _registerFormKey = GlobalKey<FormBuilderState>();
+
+  bool _termsOfServiceChecked = false;
+  bool _privacyPolicyChecked = false;
+  bool _ageAgreementChecked = false;
 
   String _errorMessage = '';
 
+  final TextEditingController _loginEmailController = TextEditingController();
+  final TextEditingController _loginPasswordController =
+      TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
+  var _hideContBtnCount = 0;
+
+  @override
+  void dispose() {
+    _loginEmailController.dispose();
+    _loginPasswordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   String _getReadableErrorMessage(FirebaseAuthException e) {
+    // TODO: localize these
     switch (e.code) {
       case 'user-not-found':
         return 'No user found with this email.';
@@ -47,7 +75,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
       case 'too-many-requests':
         return 'Too many attempts. Please try again later.';
       default:
-        return 'An error occurred. Please try again.';
+        return '${AppLocalizations.of(context)!.noti_errorOccurred} Details: ${e.message}';
     }
   }
 
@@ -70,7 +98,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                       controller: rootController,
                       children: [
                         loginScreen(context),
-                        registerScreen(context)
+                        registerScreens(context)
                       ]),
                 ),
               ),
@@ -94,14 +122,29 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
   }
 
   Widget loginScreen(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
     Future<void> _signIn() async {
       try {
         await _auth.signInWithEmailAndPassword(
-          _emailController.text,
-          _passwordController.text,
+          _loginEmailController.text,
+          _loginPasswordController.text,
         );
+        Center(
+          child: LoadingAnimationWidget.twoRotatingArc(
+              color: Theme.of(context).colorScheme.onSurface, size: 20),
+        );
+        setState(() {
+          Center(
+            child: LoadingAnimationWidget.twoRotatingArc(
+                color: Theme.of(context).colorScheme.onSurface, size: 20),
+          );
+          context.read<NotificationManager>().showNotification(
+                context,
+                NotificationData(
+                    title: 'Success',
+                    message: "Welcome back",
+                    type: CustomNotificationType.success),
+              );
+        });
       } on FirebaseAuthException catch (e) {
         setState(() {
           _errorMessage = _getReadableErrorMessage(e);
@@ -115,37 +158,140 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
         });
       } catch (e) {
         setState(() {
-          _errorMessage = 'An unexpected error occurred. Please try again.';
+          _errorMessage = AppLocalizations.of(context)!.noti_errorOccurred;
         });
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Text(AppLocalizations.of(context)!.heading_login,
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize:
-                      Theme.of(context).textTheme.displayLarge!.fontSize)),
-          const Gap(1),
-          ElevatedButton(
-              // jump to register screen
-              onPressed: () {
-                rootController.nextPage(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeInToLinear);
-              },
-              child: const CustomText(
-                text: "Go to register screen",
-              ))
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(AppLocalizations.of(context)!.heading_login,
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize:
+                          Theme.of(context).textTheme.displayLarge!.fontSize)),
+              _loginFormInputsArea(context),
+              const Gap(7),
+              MaterialButton(
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  color: Theme.of(context).colorScheme.primary,
+                  child: Text("Submit"),
+                  onPressed: () async {
+                    // handle login here
+                    if ((_loginEmailController.text.isEmpty == false) &&
+                        (_loginPasswordController.text.isEmpty == false) &&
+                        (_loginFormKey.currentState?.saveAndValidate() ==
+                            true)) {
+                      await _signIn();
+                    } else {
+                      _loginFormKey.currentState?.saveAndValidate();
+                      context.read<NotificationManager>().showNotification(
+                            context,
+                            NotificationData(
+                                title: 'Error',
+                                message: 'Please fill all fields correctly',
+                                type: CustomNotificationType.error),
+                          );
+                    }
+                  }),
+            ],
+          ),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Don't have account yet?",
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+            ),
+            Gap(3),
+            ElevatedButton(
+                // jump to register screen
+                onPressed: () {
+                  rootController.nextPage(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.easeInToLinear);
+                },
+                child: CustomText(
+                  text: "Register now!",
+                )),
+            Gap(10)
+          ],
+        ),
+      ],
     );
   }
 
-  Widget registerScreen(BuildContext context) {
+  Widget _loginFormInputsArea(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              child: FormBuilder(
+                key: _loginFormKey,
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                      decoration: InputDecoration(
+                          labelText: 'Email',
+                          floatingLabelStyle: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant)),
+                      controller: _loginEmailController,
+                      name: 'email',
+                      validator: FormBuilderValidators.email(),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                    ),
+                    const Gap(20),
+                    FormBuilderTextField(
+                        decoration: InputDecoration(labelText: 'Password'),
+                        controller: _loginPasswordController,
+                        name: 'password',
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        validator: FormBuilderValidators.required(),
+                        autovalidateMode: AutovalidateMode.onUserInteraction),
+                    const Gap(5),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: MaterialButton(
+              color: Theme.of(context).hoverColor,
+              child: Text("Forgot password?"),
+              // TODO: to password retrieval page
+              onPressed: () => context
+                  .read<NotificationManager>()
+                  .showNotification(
+                      context,
+                      NotificationData(
+                          title: 'Info',
+                          message: "Simulate to forget password page",
+                          type: CustomNotificationType.warning))),
+        ),
+      ],
+    );
+  }
+
+  Widget registerScreens(BuildContext context) {
     return Stack(
         clipBehavior: Clip.antiAlias,
         alignment: Alignment.bottomCenter,
@@ -157,8 +303,8 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                 scrollDirection: Axis.horizontal,
                 controller: registerController,
                 children: [
-                  _agreementSection(context),
-                  _regisFormSection(context),
+                  _agreementScreen(context),
+                  _regisFormScreen(context),
                 ]),
           ),
           Positioned(
@@ -172,8 +318,8 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                           duration: const Duration(seconds: 1),
                           curve: Curves.linearToEaseOut);
                     },
-                    child: const CustomText(
-                      text: 'Go to login screen',
+                    child: CustomText(
+                      text: 'Back to login',
                     )),
                 const Gap(8),
                 Padding(
@@ -199,7 +345,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
         ]);
   }
 
-  Container _agreementSection(BuildContext context) {
+  Container _agreementScreen(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.tertiaryContainer,
       child: Padding(
@@ -219,137 +365,217 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                 fontSize: 26,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
-                child: FormBuilder(
-                  key: _registerAgreementKey,
-                  autovalidateMode: AutovalidateMode.always,
-                  child: Column(
-                    children: [
-                      FormBuilderCheckbox(
-                        onChanged: (value) {
-                          _registerAgreementKey.currentState?.saveAndValidate();
-                          LogHelper.logger.i(value);
-                        },
-
-                        name: 'TermsOfService',
-                        validator: FormBuilderValidators.isTrue(),
-
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
-                        subtitle: GestureDetector(
-                            onTap: () {
-                              LogHelper.logger.i("tab read terms");
-                            },
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.info_outline),
-                                Gap(3),
-                                Text('Tap here to Read Terms of Service',
-                                    style: TextStyle(
-                                        color: Colors.deepOrangeAccent,
-                                        decoration: TextDecoration.underline)),
-                              ],
-                            )),
-                        activeColor:
-                            Theme.of(context).colorScheme.primaryFixedDim,
-                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                        title: Text(
-                          'You are agree to our Terms of Service',
-                          style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .fontSize),
-                        ),
-                      ),
-                      const Gap(2),
-                      FormBuilderCheckbox(
-                        name: 'PrivacyPolicy',
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
-                        onChanged: (value) {
-                          _registerAgreementKey.currentState?.saveAndValidate();
-                          LogHelper.logger.i(value);
-                        },
-                        subtitle: GestureDetector(
-                          onTap: () {
-                            LogHelper.logger.i("tab read privacy");
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.info_outline),
-                              Gap(3),
-                              Text('Tap here to Read Privacy Policy',
-                                  style: TextStyle(
-                                      color: Colors.deepOrangeAccent,
-                                      decoration: TextDecoration.underline)),
-                            ],
-                          ),
-                        ),
-                        validator: FormBuilderValidators.isTrue(),
-
-                        activeColor:
-                            Theme.of(context).colorScheme.primaryFixedDim,
-                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                        title: Text(
-                          'You are agree to our Privacy Policy',
-                          style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .fontSize),
-                        ),
-                      ),
-                      const Gap(2),
-                      FormBuilderCheckbox(
-                        name: 'AgeAgreement',
-                        validator: FormBuilderValidators.isTrue(),
-                        onChanged: (value) {
-                          _registerAgreementKey.currentState?.saveAndValidate();
-                          LogHelper.logger.i(value);
-                        },
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 5),
-                        activeColor:
-                            Theme.of(context).colorScheme.primaryFixedDim,
-                        // autovalidateMode: AutovalidateMode.onUserInteraction,
-                        title: Text(
-                          "You are hereby confirmed that you already obtained parent's approval to use the services and provide any data if you are under the age of 16",
-                          style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .fontSize),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            _agreementFormInputsArea(context),
             const Gap.expand(10),
+            Offstage(
+              offstage: _hideContBtnCount == 3 ? false : true,
+              child: MaterialButton(
+                onPressed: () => registerController.nextPage(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.linearToEaseOut),
+                child: Text("Continue"),
+                clipBehavior: Clip.antiAlias,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _regisFormSection(BuildContext context) {
-    TextEditingController _passwordCon = TextEditingController();
-    TextEditingController _passwordCon2 = TextEditingController();
-    TextEditingController _email = TextEditingController();
+  Padding _agreementFormInputsArea(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
+            child: FormBuilder(
+              key: _registerAgreementKey,
+              autovalidateMode: AutovalidateMode.always,
+              child: Column(
+                children: [
+                  FormBuilderCheckbox(
+                    onChanged: (value) {
+                      setState(() {
+                        _termsOfServiceChecked = value ?? false;
+                        _termsOfServiceChecked == true
+                            ? _hideContBtnCount++
+                            : _hideContBtnCount;
+                        _termsOfServiceChecked == false
+                            ? _hideContBtnCount--
+                            : _hideContBtnCount;
+                      });
+                      _registerAgreementKey.currentState?.saveAndValidate();
+                      LogHelper.logger.i(value);
+                    },
 
+                    name: 'TermsOfService',
+                    initialValue: _termsOfServiceChecked,
+                    validator: FormBuilderValidators.equal(
+                      true,
+                      errorText: 'You must accept the Terms of Service',
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    subtitle: GestureDetector(
+                        onTap: () {
+                          LogHelper.logger.i("tab read terms");
+                          context.read<NotificationManager>().showNotification(
+                                context,
+                                NotificationData(
+                                    title: 'Info',
+                                    message:
+                                        'Simulate the display of the statement',
+                                    type: CustomNotificationType.info),
+                              );
+                        },
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.info_outline),
+                            Gap(3),
+                            Text('Tap here to Read Terms of Service',
+                                style: TextStyle(
+                                    color: Colors.deepOrangeAccent,
+                                    decoration: TextDecoration.underline)),
+                          ],
+                        )),
+                    activeColor: Theme.of(context).colorScheme.primaryFixedDim,
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
+                    title: Text(
+                      'You are agree to our Terms of Service',
+                      style: TextStyle(
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .fontSize),
+                    ),
+                  ),
+                  const Gap(2),
+                  FormBuilderCheckbox(
+                    name: 'PrivacyPolicy',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    initialValue: _privacyPolicyChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        _privacyPolicyChecked = value ?? false;
+                        _privacyPolicyChecked == true
+                            ? _hideContBtnCount++
+                            : _hideContBtnCount;
+                        _privacyPolicyChecked == false
+                            ? _hideContBtnCount--
+                            : _hideContBtnCount;
+                      });
+                      _registerAgreementKey.currentState?.saveAndValidate();
+                      LogHelper.logger.i(value);
+                    },
+                    validator: FormBuilderValidators.equal(
+                      true,
+                      errorText: 'You must accept the Privacy Policy',
+                    ),
+                    subtitle: GestureDetector(
+                      onTap: () {
+                        LogHelper.logger.i("tab read privacy");
+                        context.read<NotificationManager>().showNotification(
+                              context,
+                              NotificationData(
+                                  title: 'Info',
+                                  message:
+                                      'Simulate the display of the statement',
+                                  type: CustomNotificationType.info),
+                            );
+                      },
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.info_outline),
+                          Gap(3),
+                          Text('Tap here to Read Privacy Policy',
+                              style: TextStyle(
+                                  color: Colors.deepOrangeAccent,
+                                  decoration: TextDecoration.underline)),
+                        ],
+                      ),
+                    ),
+
+                    activeColor: Theme.of(context).colorScheme.primaryFixedDim,
+                    // autovalidateMode: AutovalidateMode.onUserInteraction,
+                    title: Text(
+                      'You are agree to our Privacy Policy',
+                      style: TextStyle(
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .fontSize),
+                    ),
+                  ),
+                  const Gap(2),
+                  FormBuilderCheckbox(
+                    name: 'AgeAgreement',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 5),
+                    activeColor: Theme.of(context).colorScheme.primaryFixedDim,
+                    initialValue: _ageAgreementChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        _ageAgreementChecked = value ?? false;
+                        _ageAgreementChecked == true
+                            ? _hideContBtnCount++
+                            : _hideContBtnCount;
+                        _ageAgreementChecked == false
+                            ? _hideContBtnCount--
+                            : _hideContBtnCount;
+                      });
+                      _registerAgreementKey.currentState?.saveAndValidate();
+                      LogHelper.logger.i(value);
+                    },
+                    validator: FormBuilderValidators.equal(
+                      true,
+                      errorText: 'You must confirm your age',
+                    ),
+                    title: Text(
+                      "You are hereby confirmed that you already obtained parent's approval to use the services and provide any data if you are under the age of 16",
+                      style: TextStyle(
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .fontSize),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _regisFormScreen(BuildContext context) {
     Future<void> _register() async {
       try {
         await _auth.registerWithEmailAndPassword(
-          _email.text,
-          _passwordCon.text,
+          _emailController.text,
+          _passwordController.text,
         );
+        Center(
+          child: LoadingAnimationWidget.twoRotatingArc(
+              color: Theme.of(context).colorScheme.onSurface, size: 20),
+        );
+        setState(() {
+          context.read<NotificationManager>().showNotification(
+                context,
+                NotificationData(
+                    title: 'Success',
+                    message: 'Registration successful',
+                    type: CustomNotificationType.success),
+              );
+          Future.delayed(Durations.short1);
+          context.goNamed("Start");
+        });
       } on FirebaseAuthException catch (e) {
         setState(() {
           _errorMessage = _getReadableErrorMessage(e);
@@ -363,7 +589,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
         });
       } catch (e) {
         setState(() {
-          _errorMessage = 'An unexpected error occurred. Please try again.';
+          _errorMessage = AppLocalizations.of(context)!.noti_errorOccurred;
         });
       }
     }
@@ -396,60 +622,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                     fontSize: 26,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      color: Theme.of(context).colorScheme.secondaryContainer,
-                      child: FormBuilder(
-                        key: _registerFormKey,
-                        child: Column(
-                          children: [
-                            FormBuilderTextField(
-                              decoration: InputDecoration(
-                                  labelText: 'Email',
-                                  floatingLabelStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurfaceVariant)),
-                              controller: _email,
-                              name: 'email',
-                              validator: FormBuilderValidators.email(),
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                            ),
-                            const Gap(20),
-                            FormBuilderTextField(
-                                decoration: const InputDecoration(
-                                    labelText: 'Password'),
-                                controller: _passwordCon,
-                                name: 'password',
-                                obscureText: true,
-                                obscuringCharacter: "*",
-                                validator: FormBuilderValidators.password(),
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction),
-                            const Gap(5),
-                            FormBuilderTextField(
-                              decoration: const InputDecoration(
-                                  labelText: 'Confrim your Password'),
-                              controller: _passwordCon2,
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
-                              name: 'confirmPassword',
-                              obscureText: true,
-                              obscuringCharacter: "*",
-                              validator: FormBuilderValidators.required(),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                _regisFormInputsArea(context),
                 const Gap(7),
                 MaterialButton(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -457,10 +630,90 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                     child: Text("Submit"),
                     onPressed: () async {
                       // handle regist here
-                      _registerAgreementKey.currentState?.saveAndValidate();
-                      _registerFormKey.currentState?.saveAndValidate();
-                      await _register();
+                      // TODO: localize these
+                      if ((_termsOfServiceChecked == false) ||
+                          (_privacyPolicyChecked == false) ||
+                          (_ageAgreementChecked == false)) {
+                        context.read<NotificationManager>().showNotification(
+                              context,
+                              NotificationData(
+                                  title: 'Error',
+                                  message:
+                                      "Account can't be created if you not agree to all the terms.",
+                                  type: CustomNotificationType.error),
+                            );
+                        registerController.jumpToPage(0);
+                      } else if ((_registerFormKey.currentState
+                              ?.saveAndValidate() ==
+                          true)) {
+                        await _register();
+                      } else {
+                        context.read<NotificationManager>().showNotification(
+                              context,
+                              NotificationData(
+                                  title: 'Error',
+                                  message: 'Please fill all fields correctly',
+                                  type: CustomNotificationType.error),
+                            );
+                      }
                     })
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding _regisFormInputsArea(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Theme.of(context).colorScheme.secondaryContainer,
+          child: FormBuilder(
+            key: _registerFormKey,
+            child: Column(
+              children: [
+                FormBuilderTextField(
+                  decoration: InputDecoration(
+                      labelText: 'Email',
+                      floatingLabelStyle: TextStyle(
+                          color:
+                              Theme.of(context).colorScheme.onSurfaceVariant)),
+                  controller: _emailController,
+                  name: 'email',
+                  validator: FormBuilderValidators.email(),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                ),
+                const Gap(20),
+                FormBuilderTextField(
+                    decoration: InputDecoration(labelText: 'Password'),
+                    controller: _passwordController,
+                    name: 'password',
+                    obscureText: true,
+                    obscuringCharacter: "*",
+                    validator: FormBuilderValidators.password(),
+                    autovalidateMode: AutovalidateMode.onUserInteraction),
+                const Gap(5),
+                FormBuilderTextField(
+                  decoration:
+                      InputDecoration(labelText: 'Confrim your Password'),
+                  controller: _confirmPasswordController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  name: 'confirmPassword',
+                  obscureText: true,
+                  obscuringCharacter: "*",
+                  validator: (value) {
+                    if (value != _passwordController.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                ),
               ],
             ),
           ),

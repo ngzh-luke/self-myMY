@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:logger/logger.dart';
 import 'package:mymy_m1/configs/languages/language_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_provider.dart';
 import 'package:mymy_m1/configs/themes/theme_collections.dart';
@@ -18,8 +17,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  LogHelper.logger.d("Logger is working!");
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final languageProvider = LanguageProvider();
@@ -67,7 +66,6 @@ void main() async {
 
   await Future.delayed(const Duration(
       seconds: 1)); // Delay to allow time for reading the console output
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     MultiProvider(
@@ -112,7 +110,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     LogHelper.logger
         .d("Available localizations: ${AppLocalizations.supportedLocales}");
     LogHelper.logger.i("Available Themes: ${ThemeCollections.availableThemes}");
-    // await Future.delayed(const Duration(seconds: 1));
     setState(() => _isLoading = false);
     LogHelper.logger.t("resources are loaded successfully\n");
     // LogHelper.logger.d("<------------------->\n");

@@ -19,7 +19,7 @@ class ElegantNotificationService implements NotificationService {
             animation: AnimationType.fromTop,
             displayCloseButton: data.showCloseBtn,
             background: data.backgroundColor == null
-                ? Theme.of(context).colorScheme.primaryContainer
+                ? Theme.of(context).colorScheme.errorContainer
                 : Colors.white)
         .show(context);
   }

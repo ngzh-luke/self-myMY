@@ -62,4 +62,18 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      _logger.e('Password reset failed',
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
+    } catch (e) {
+      _logger.e('Unexpected error during password reset',
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
+    }
+  }
 }

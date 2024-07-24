@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CustomText(text: AppLocalizations.of(context)!.helloWorld),
-            const CustomText(
+            CustomText(
               text: 'Home Page',
             ),
             CustomText(

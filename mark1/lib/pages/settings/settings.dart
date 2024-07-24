@@ -30,11 +30,18 @@ class Settings extends StatelessWidget {
       appbarActions: [
         IconButton(
             onPressed: () async {
+              Center(
+                child: LoadingAnimationWidget.twoRotatingArc(
+                    color: Theme.of(context).colorScheme.onSurface, size: 20),
+              );
               await _auth.signOut();
               context.goNamed('Start');
               // context.goNamed('Home');
             },
-            icon: const Icon(Icons.logout_outlined))
+            icon: Icon(
+              Icons.logout_outlined,
+              color: Theme.of(context).colorScheme.primary,
+            ))
       ],
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {
