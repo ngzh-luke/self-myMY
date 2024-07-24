@@ -66,7 +66,7 @@ final _router = GoRouter(
                   name: 'SubHome',
                   pageBuilder: (context, state) => CustomTransitionPage<void>(
                     key: state.pageKey,
-                    child: const Text("sub home"),
+                    child: Text("sub home"),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) =>
                             FadeTransition(opacity: animation, child: child),
@@ -115,7 +115,7 @@ final _router = GoRouter(
                   pageBuilder: (context, state) {
                     return CustomTransitionPage<void>(
                       key: state.pageKey,
-                      child: const Text('sub settings'),
+                      child: Text('sub settings'),
                       transitionsBuilder: (
                         context,
                         animation,

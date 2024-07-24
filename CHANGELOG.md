@@ -71,3 +71,4 @@ Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
 - Initial Development: Authentication is in progress, overflow fixed on browser view, and reimplement notification system + added new inapp notification style on July 23, 2024 -> __1.0.9__
 - Initial Development: Basic Authentication features are almost done on July 24, 2024 -> __1.1.0__
 - Initial Development: Registration flow and UX improvements and minor adjustment on July 24, 2024 -> __1.1.1__
+- Initial Development: Basic authentication seems to works and minor adjustment on July 24, 2024 -> __1.1.2__

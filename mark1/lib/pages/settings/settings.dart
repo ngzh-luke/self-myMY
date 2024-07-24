@@ -30,6 +30,10 @@ class Settings extends StatelessWidget {
       appbarActions: [
         IconButton(
             onPressed: () async {
+              Center(
+                child: LoadingAnimationWidget.twoRotatingArc(
+                    color: Theme.of(context).colorScheme.onSurface, size: 20),
+              );
               await _auth.signOut();
               context.goNamed('Start');
               // context.goNamed('Home');
