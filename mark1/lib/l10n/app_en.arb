@@ -4,7 +4,7 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "tooltip_addNewTransaction": "Add new transaction record",
+  "heading_addNewTransaction": "Add new transaction record",
   "heading_systemDefault": "System Default",
   "heading_settings": "Settings",
   "heading_language": "Language",
@@ -25,5 +25,18 @@
   "heading_login": "Login",
   "heading_register": "Register",
   "previewNotification": "preview notification",
-  "notificationStyle": "notification style"
+  "notificationStyle": "Notification style",
+  "heading_resetPassword": "Reset Password",
+  "reset_password_instruction": "Please submit the email address that asscociated with your account",
+  "heading_back": "Back",
+  "heading_submit": "Submit",
+  "resetPasswordEmailSent": "Reset password email has been sent! Please check the inbox for further instructions",
+  "heading_success": "Success!",
+  "heading_email": "Email",
+  "logoutConfirmationTitle": "Logout Confirmation",
+  "logoutConfirmationMessage": "Are you sure to logout?",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "logout": "Logout",
+  "ok": "OK"
 }

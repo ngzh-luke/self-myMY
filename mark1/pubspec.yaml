@@ -14,7 +14,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.2
+version: 1.1.4
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -43,7 +43,7 @@ dependencies:
   icons_plus: ^5.0.0 # icons collections
   animations: ^2.0.11 # fancy pre-built animations
   flutter_animate: ^4.5.0 # beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
-  loading_animation_widget: ^1.2.1 # loading indicators animations
+  loading_animation_widget: ^1.2.1 # loading indicators animations #
   flex_color_scheme: ^7.3.1 # for theming and app coloring purposes #
   # pdf: ^3.11.0 # dealing with pdf things
   flutter_native_splash: ^2.4.1 # config app splash screen #
@@ -54,9 +54,7 @@ dependencies:
   flutter_form_builder: ^9.3.0 # makes building form easily #
   go_router: ^14.2.1 # routing and app navigation #
   fl_chart: ^0.68.0 # create cool visual interactive chart
-  # firebase_ui_auth: ^1.15.0 # pre-built customizable authentication ui
   geolocator: ^12.0.0 # about location
-  # fluttertoast: ^8.2.6 # toast notification
   provider: ^6.1.2 # state management helper #
   package_info_plus: ^8.0.0
   flutter_launcher_icons: ^0.13.1 # customize an app launcher icons #
@@ -69,7 +67,7 @@ dependencies:
   form_builder_validators: ^11.0.0 # form validators #
   elegant_notification: ^2.2.2 # cool inapp notification #
   get_it: ^7.7.0 # dependency injection #
-  
+  loader_overlay: ^4.0.1 # overlay loading indicator #
 
 dev_dependencies:
   flutter_test:
