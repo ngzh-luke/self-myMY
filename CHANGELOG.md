@@ -72,4 +72,5 @@ Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
 - Initial Development: Basic Authentication features are almost done on July 24, 2024 -> __1.1.0__
 - Initial Development: Registration flow and UX improvements and minor adjustment on July 24, 2024 -> __1.1.1__
 - Initial Development: Basic authentication seems to works and minor adjustment on July 24, 2024 -> __1.1.2__
-- Initial Development: Theme colors improvement, Add new transaction system starting implementation, Essential Authentication works, and added quick settings menu on login screen on July 25, 2024 -> __1.1.3__
+- Initial Development: Theme colors improvement, Add new transaction system implementation started, Essential Authentication works, and added quick settings menu on login screen on July 25, 2024 -> __1.1.3__
+- Initial Development: Added dialog system & bottom sheet system, and apply them on Settings page on July 26, 2024 -> __1.1.4__

@@ -15,7 +15,13 @@
     "heading_submit",
     "resetPasswordEmailSent",
     "heading_success",
-    "heading_email"
+    "heading_email",
+    "logoutConfirmationTitle",
+    "logoutConfirmationMessage",
+    "cancel",
+    "confirm",
+    "logout",
+    "ok"
   ],
 
   "zh": [
@@ -32,6 +38,12 @@
     "heading_submit",
     "resetPasswordEmailSent",
     "heading_success",
-    "heading_email"
+    "heading_email",
+    "logoutConfirmationTitle",
+    "logoutConfirmationMessage",
+    "cancel",
+    "confirm",
+    "logout",
+    "ok"
   ]
 }

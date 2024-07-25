@@ -5,11 +5,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
 import 'package:mymy_m1/helpers/getit/get_it.dart';
+import 'package:mymy_m1/services/bottom_sheet/bottom_sheet_service.dart';
+import 'package:mymy_m1/services/dialogs/dialog_service.dart';
 import 'package:mymy_m1/services/notifications/notification_factory.dart';
 import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:mymy_m1/services/bottom_sheet/bottom_sheet_notifier.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:mymy_m1/services/notifications/notification_manager.dart';
@@ -30,21 +32,12 @@ class Settings extends StatelessWidget {
       appBarTitle: AppLocalizations.of(context)!.heading_settings,
       appbarActions: [
         IconButton(
-            onPressed: () async {
-              Center(
-                child: LoadingAnimationWidget.twoRotatingArc(
-                    color: Theme.of(context).colorScheme.onSurface, size: 20),
-              );
-              context.loaderOverlay.show();
-              await _auth.signOut();
-              context.goNamed('Start');
-              context.loaderOverlay.hide();
-              // context.goNamed('Home');
-            },
-            icon: Icon(
-              Icons.logout_outlined,
-              color: Theme.of(context).colorScheme.primary,
-            ))
+          onPressed: () async => _showLogoutConfirmation(context),
+          icon: Icon(
+            Icons.logout_outlined,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        )
       ],
       body: Consumer<SettingsService>(
         builder: (context, settings, child) {
@@ -58,8 +51,8 @@ class Settings extends StatelessWidget {
                   context,
                   () => settings.setThemeMode(newValue),
                 ),
-                itemBuilder: (mode) => CustomText(
-                    text: mode.toString().split('.').last.capitalize),
+                itemBuilder: (mode) =>
+                    Text(mode.toString().split('.').last.capitalize),
               ),
               SettingDropdown<String>(
                 title: AppLocalizations.of(context)!.theme,
@@ -69,7 +62,7 @@ class Settings extends StatelessWidget {
                   context,
                   () => settings.setTheme(newValue),
                 ),
-                itemBuilder: (name) => CustomText(text: name),
+                itemBuilder: (name) => Text(name),
               ),
               SettingDropdown<Locale?>(
                 title: AppLocalizations.of(context)!.heading_language,
@@ -80,7 +73,7 @@ class Settings extends StatelessWidget {
                   () => settings.setLocale(newValue),
                 ),
                 itemBuilder: (locale) =>
-                    CustomText(text: settings.getLanguageName(locale, context)),
+                    Text(settings.getLanguageName(locale, context)),
               ),
               SettingDropdown<NotificationStyle>(
                 title: AppLocalizations.of(context)!.notificationStyle,
@@ -90,13 +83,14 @@ class Settings extends StatelessWidget {
                   context,
                   () => settings.setNotificationStyle(newValue),
                 ),
-                itemBuilder: (style) => CustomText(
-                    text: style.toString().split('.').last.capitalize),
-              ),
-              ElevatedButton(
-                onPressed: () => _showPreviewNotification(context),
-                child: Text(AppLocalizations.of(context)!.previewNotification),
-              ),
+                itemBuilder: (style) =>
+                    Text(style.toString().split('.').last.capitalize),
+                previewButton: ElevatedButton(
+                  onPressed: () => _showPreviewNotification(context),
+                  child:
+                      Text(AppLocalizations.of(context)!.previewNotification),
+                ),
+              )
             ],
           );
         },
@@ -104,42 +98,58 @@ class Settings extends StatelessWidget {
     );
   }
 
-  Future<void> _updateSetting(
-      BuildContext context, Future<bool> Function() updateFunction) async {
-    try {
-      bool success = await updateFunction();
-      if (success) {
-        context.read<NotificationManager>().showNotification(
-              context,
-              NotificationData(
-                title: 'Success',
-                message: AppLocalizations.of(context)!.noti_newChangeApplied,
-                type: CustomNotificationType.success,
-              ),
-            );
-      } else {
-        throw Exception('Failed to update setting');
-      }
-    } catch (e) {
+  Future<void> _showLogoutConfirmation(BuildContext context) async {
+    final bool? confirmed = await DialogService.showConfirmationDialog(
+      context: context,
+      title: AppLocalizations.of(context)!.logoutConfirmationTitle,
+      message: AppLocalizations.of(context)!.logoutConfirmationMessage,
+      confirmText: AppLocalizations.of(context)!.logout,
+    );
+
+    if (confirmed == true) {
+      context.loaderOverlay.show();
+      await _auth.signOut();
+      context.goNamed('Start');
+      context.loaderOverlay.hide();
+    }
+  }
+}
+
+Future<void> _updateSetting(
+    BuildContext context, Future<bool> Function() updateFunction) async {
+  try {
+    bool success = await updateFunction();
+    if (success) {
       context.read<NotificationManager>().showNotification(
             context,
             NotificationData(
-                title: 'Error',
-                message: AppLocalizations.of(context)!.noti_errorOccurred,
-                type: CustomNotificationType.error),
+              title: 'Success',
+              message: AppLocalizations.of(context)!.noti_newChangeApplied,
+              type: CustomNotificationType.success,
+            ),
           );
+    } else {
+      throw Exception('Failed to update setting');
     }
-  }
-
-  void _showPreviewNotification(BuildContext context) {
+  } catch (e) {
     context.read<NotificationManager>().showNotification(
           context,
           NotificationData(
-              title: 'Info',
-              message: "Preview of the notification style",
-              type: CustomNotificationType.info),
+              title: 'Error',
+              message: AppLocalizations.of(context)!.noti_errorOccurred,
+              type: CustomNotificationType.error),
         );
   }
+}
+
+void _showPreviewNotification(BuildContext context) {
+  context.read<NotificationManager>().showNotification(
+        context,
+        NotificationData(
+            title: 'Info',
+            message: "Preview of the notification style",
+            type: CustomNotificationType.info),
+      );
 }
 
 class SettingDropdown<T> extends StatefulWidget {
@@ -148,8 +158,81 @@ class SettingDropdown<T> extends StatefulWidget {
   final List<T> items;
   final Future<void> Function(T) onChanged;
   final Widget Function(T) itemBuilder;
+  final Widget? previewButton;
 
   const SettingDropdown({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    required this.itemBuilder,
+    this.previewButton,
+  });
+
+  @override
+  _SettingDropdownState<T> createState() => _SettingDropdownState<T>();
+}
+
+class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
+  bool _isChanging = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomSheetNotifier = BottomSheetNotifier.of(context);
+
+    return ListTile(
+      title: Text(widget.title),
+      trailing: _isChanging
+          ? LoadingAnimationWidget.twoRotatingArc(
+              color: Theme.of(context).colorScheme.onSurface, size: 20)
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                widget.itemBuilder(widget.value),
+                const SizedBox(width: 8),
+                const Icon(Icons.arrow_forward_ios, size: 16),
+              ],
+            ),
+      onTap: () {
+        bottomSheetNotifier?.setBottomSheetState(true);
+        BottomSheetService.showCustomBottomSheet(
+          context: context,
+          builder: (_, scrollController) => SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              children: [
+                SettingBottomSheet<T>(
+                  title: widget.title,
+                  value: widget.value,
+                  items: widget.items,
+                  onChanged: (T newValue) async {
+                    setState(() => _isChanging = true);
+                    await widget.onChanged(newValue);
+                    setState(() => _isChanging = false);
+                  },
+                  itemBuilder: widget.itemBuilder,
+                ),
+                if (widget.previewButton != null) widget.previewButton!,
+              ],
+            ),
+          ),
+        ).then((_) {
+          bottomSheetNotifier?.setBottomSheetState(false);
+        });
+      },
+    );
+  }
+}
+
+class SettingBottomSheet<T> extends StatelessWidget {
+  final String title;
+  final T value;
+  final List<T> items;
+  final Future<void> Function(T) onChanged;
+  final Widget Function(T) itemBuilder;
+
+  const SettingBottomSheet({
     super.key,
     required this.title,
     required this.value,
@@ -159,37 +242,40 @@ class SettingDropdown<T> extends StatefulWidget {
   });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _SettingDropdownState<T> createState() => _SettingDropdownState<T>();
-}
-
-class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
-  bool _isChanging = false;
-
-  @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: CustomText(text: widget.title),
-      trailing: _isChanging
-          ? LoadingAnimationWidget.twoRotatingArc(
-              color: Theme.of(context).colorScheme.onSurface, size: 20)
-          : DropdownButton<T>(
-              dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
-              value: widget.value,
-              onChanged: (T? newValue) async {
-                if (newValue != null) {
-                  setState(() => _isChanging = true);
-                  await widget.onChanged(newValue);
-                  setState(() => _isChanging = false);
-                }
-              },
-              items: widget.items.map((T item) {
-                return DropdownMenuItem<T>(
-                  value: item,
-                  child: widget.itemBuilder(item),
-                );
-              }).toList(),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(2),
             ),
+          ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(height: 20),
+          ...items.map((item) => ListTile(
+                title: itemBuilder(item),
+                onTap: () async {
+                  await onChanged(item);
+                  Navigator.pop(context);
+                },
+                trailing: value == item ? const Icon(Icons.check) : null,
+              )),
+        ],
+      ),
     );
   }
 }

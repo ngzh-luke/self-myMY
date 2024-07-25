@@ -8,7 +8,7 @@ import 'package:mymy_m1/pages/new_transaction/new_transaction.dart';
 import 'package:mymy_m1/pages/records.dart';
 import 'package:mymy_m1/pages/settings/settings.dart';
 import 'package:mymy_m1/navigation/main_wrapper.dart';
-import 'package:mymy_m1/services/start.dart';
+import 'package:mymy_m1/navigation/start.dart';
 
 // Private navigators
 final _rootNavigatorKey =

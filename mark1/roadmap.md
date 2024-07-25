@@ -16,6 +16,8 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 
 ❌ = withdrew
 
+⏎ = return to consideration (reconsideration)
+
 ### Table
 
 |   NO. |          FEATURE(S)         | EXPECTED LAUNCHED BY VERSION | STATUS |
@@ -25,7 +27,7 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   3   | Setting page & Navbar implemented | 1.3.0 | 👨🏻‍💻 (75%) |
 |   4   | Localization in English and Thai for authentication works, and Chinese simplified drafted | 1.4.0 | 👨🏻‍💻 |
 |   5   | UI pages are drafted and structured | 1.5.0 | 📃 |
-|   6   | Theming system works | 1.6.0 | 👨🏻‍💻 (50%) |
+|   6   | Theming system works | 1.6.0 | ✅ |
 |   7   | Able to fetch and list data from <https://countriesnow.space> API | 1.7.0 | 📃 |
 |   8   | Add Analytics charts | 1.X.X | 📃 |
 |   9   | Able to list transaction records in patterns: all, last 5 records | 1.8.0 | 📃 |
@@ -43,3 +45,4 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   21  | Budgeting functionalities | X.X.X | 🤔 |
 |   22  | Home widgets support on native mobile apps |  X.X.X | 🤔 |
 |   23  | Able to share the transaction records via QR code or link | X.X.X | 🤔 |
+|   24  | Able to add new party, payment info identifier, and transaction | 1.5.0 | 👨🏻‍💻 |

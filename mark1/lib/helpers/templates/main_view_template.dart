@@ -9,7 +9,7 @@ Scaffold mainView(BuildContext context,
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.secondary,
         backgroundColor: appBarBackgroundColor ??
-            Theme.of(context).colorScheme.onPrimaryFixed,
+            Theme.of(context).colorScheme.primaryContainer,
         title: Text(
           appBarTitle!,
           style: TextStyle(color: Theme.of(context).colorScheme.primary),
