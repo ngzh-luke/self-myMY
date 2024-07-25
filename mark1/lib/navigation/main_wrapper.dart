@@ -36,11 +36,11 @@ class _MainWrapperState extends State<MainWrapper> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-          tooltip: (AppLocalizations.of(context)!.tooltip_addNewTransaction),
+          tooltip: (AppLocalizations.of(context)!.heading_addNewTransaction),
           hoverElevation: 10,
           onPressed: () {
             setState(() {
-              context.goNamed('NewTransaction');
+              context.pushNamed('NewTransaction');
             });
           },
           backgroundColor:

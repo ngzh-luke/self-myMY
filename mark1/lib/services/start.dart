@@ -22,7 +22,7 @@ class Start extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
           if (user == null) {
-            return LoginAndRegisterScreen();
+            return const LoginAndRegisterScreen();
           } else {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               try {

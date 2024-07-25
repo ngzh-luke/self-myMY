@@ -3,9 +3,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:mymy_m1/helpers/getit/get_it.dart';
 import 'package:mymy_m1/helpers/logs/log_helper.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
+import 'package:mymy_m1/pages/settings/quick_settings_menu.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:gap/gap.dart';
@@ -27,7 +30,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
   final rootController = PageController(initialPage: 0);
   final registerController = PageController(initialPage: 0);
 
-  final AuthService _auth = AuthService();
+  final AuthService _auth = getIt<AuthService>();
 
   final _loginFormKey = GlobalKey<FormBuilderState>();
   final _registerAgreementKey = GlobalKey<FormBuilderState>();
@@ -56,6 +59,8 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    rootController.dispose();
+    registerController.dispose();
     super.dispose();
   }
 
@@ -84,38 +89,37 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 700,
-                  child: PageView(
-                      scrollDirection: Axis.vertical,
-                      controller: rootController,
-                      children: [
-                        loginScreen(context),
-                        registerScreens(context)
-                      ]),
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [QuickSettingsMenu()],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 5),
+              child: SizedBox(
+                height: 700,
+                child: PageView(
+                    scrollDirection: Axis.vertical,
+                    controller: rootController,
+                    children: [loginScreen(context), registerScreens(context)]),
               ),
-              SmoothPageIndicator(
-                controller: rootController,
-                axisDirection: Axis.vertical,
-                count: 2,
-                effect: SwapEffect(
-                    spacing: 10,
-                    dotHeight: 15,
-                    dotWidth: 22,
-                    radius: 0,
-                    type: SwapType.zRotation,
-                    activeDotColor: Theme.of(context).colorScheme.primary),
-              ),
-            ],
-          ),
+            ),
+            SmoothPageIndicator(
+              controller: rootController,
+              axisDirection: Axis.vertical,
+              count: 2,
+              effect: SwapEffect(
+                  spacing: 10,
+                  dotHeight: 15,
+                  dotWidth: 22,
+                  radius: 0,
+                  type: SwapType.zRotation,
+                  activeDotColor: Theme.of(context).colorScheme.primary),
+            ),
+          ],
         ),
       ),
     );
@@ -125,7 +129,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
     Future<void> _signIn() async {
       try {
         await _auth.signInWithEmailAndPassword(
-          _loginEmailController.text,
+          _loginEmailController.text.trim(),
           _loginPasswordController.text,
         );
         Center(
@@ -171,35 +175,55 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(AppLocalizations.of(context)!.heading_login,
-                  style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize:
-                          Theme.of(context).textTheme.displayLarge!.fontSize)),
+              Center(
+                child: Text(AppLocalizations.of(context)!.heading_login,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontSize: Theme.of(context)
+                            .textTheme
+                            .displayLarge!
+                            .fontSize)),
+              ),
               _loginFormInputsArea(context),
               const Gap(7),
-              MaterialButton(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  color: Theme.of(context).colorScheme.primary,
-                  child: Text("Submit"),
-                  onPressed: () async {
-                    // handle login here
-                    if ((_loginEmailController.text.isEmpty == false) &&
-                        (_loginPasswordController.text.isEmpty == false) &&
-                        (_loginFormKey.currentState?.saveAndValidate() ==
-                            true)) {
-                      await _signIn();
-                    } else {
-                      _loginFormKey.currentState?.saveAndValidate();
-                      context.read<NotificationManager>().showNotification(
-                            context,
-                            NotificationData(
-                                title: 'Error',
-                                message: 'Please fill all fields correctly',
-                                type: CustomNotificationType.error),
-                          );
-                    }
-                  }),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 15.0, right: 15, top: 5),
+                    child: MaterialButton(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Theme.of(context).colorScheme.primary,
+                        child:
+                            Text(AppLocalizations.of(context)!.heading_submit),
+                        onPressed: () async {
+                          // handle login here
+                          if ((_loginEmailController.text.isEmpty == false) &&
+                              (_loginPasswordController.text.isEmpty ==
+                                  false) &&
+                              (_loginFormKey.currentState?.saveAndValidate() ==
+                                  true)) {
+                            context.loaderOverlay.show();
+                            await _signIn();
+                            context.loaderOverlay.hide();
+                          } else {
+                            _loginFormKey.currentState?.saveAndValidate();
+                            context
+                                .read<NotificationManager>()
+                                .showNotification(
+                                  context,
+                                  NotificationData(
+                                      title: 'Error',
+                                      message:
+                                          'Please fill all fields correctly',
+                                      type: CustomNotificationType.error),
+                                );
+                          }
+                        }),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -208,7 +232,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
           children: [
             Text(
               "Don't have account yet?",
-              style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
             ),
             Gap(3),
             ElevatedButton(
@@ -218,8 +242,9 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                       duration: const Duration(seconds: 1),
                       curve: Curves.easeInToLinear);
                 },
-                child: CustomText(
-                  text: "Register now!",
+                child: Text(
+                  "Register now!",
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
                 )),
             Gap(10)
           ],
@@ -230,7 +255,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
 
   Widget _loginFormInputsArea(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 14, left: 10, right: 10),
@@ -246,7 +271,8 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                   children: [
                     FormBuilderTextField(
                       decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText:
+                              AppLocalizations.of(context)!.heading_email,
                           floatingLabelStyle: TextStyle(
                               color: Theme.of(context)
                                   .colorScheme
@@ -276,16 +302,18 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
           padding: const EdgeInsets.only(left: 10.0),
           child: MaterialButton(
               color: Theme.of(context).hoverColor,
-              child: Text("Forgot password?"),
+              child: Text("Reset password"),
               // TODO: to password retrieval page
-              onPressed: () => context
-                  .read<NotificationManager>()
-                  .showNotification(
-                      context,
-                      NotificationData(
-                          title: 'Info',
-                          message: "Simulate to forget password page",
-                          type: CustomNotificationType.warning))),
+              onPressed: () => context.pushNamed("ResetPasswordPage")
+              // context
+              //     .read<NotificationManager>()
+              //     .showNotification(
+              //         context,
+              //         NotificationData(
+              //             title: 'Info',
+              //             message: "Simulate to forget password page",
+              //             type: CustomNotificationType.warning))
+              ),
         ),
       ],
     );
@@ -313,13 +341,16 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
               children: [
                 ElevatedButton(
                     // jump to login screen
+
                     onPressed: () {
                       rootController.previousPage(
                           duration: const Duration(seconds: 1),
                           curve: Curves.linearToEaseOut);
                     },
-                    child: CustomText(
-                      text: 'Back to login',
+                    child: Text(
+                      'Back to login',
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
                     )),
                 const Gap(8),
                 Padding(
@@ -354,7 +385,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
           children: [
             Text(AppLocalizations.of(context)!.heading_register,
                 style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontSize:
                         Theme.of(context).textTheme.displayLarge!.fontSize)),
             const Gap(3),
@@ -391,7 +422,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
         borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
         child: Container(
           padding: const EdgeInsets.all(10),
-          color: Theme.of(context).colorScheme.secondaryContainer,
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.elliptical(15, 20)),
             child: FormBuilder(
@@ -558,7 +589,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
     Future<void> _register() async {
       try {
         await _auth.registerWithEmailAndPassword(
-          _emailController.text,
+          _emailController.text.trim(),
           _passwordController.text,
         );
         Center(
@@ -574,7 +605,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                     type: CustomNotificationType.success),
               );
           Future.delayed(Durations.short1);
-          context.goNamed("Start");
+          context.pushNamed("Start");
         });
       } on FirebaseAuthException catch (e) {
         setState(() {
@@ -609,7 +640,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
               children: [
                 Text(AppLocalizations.of(context)!.heading_register,
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                         fontSize: Theme.of(context)
                             .textTheme
                             .displayLarge!
@@ -624,39 +655,54 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                 ),
                 _regisFormInputsArea(context),
                 const Gap(7),
-                MaterialButton(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Theme.of(context).colorScheme.primary,
-                    child: Text("Submit"),
-                    onPressed: () async {
-                      // handle regist here
-                      // TODO: localize these
-                      if ((_termsOfServiceChecked == false) ||
-                          (_privacyPolicyChecked == false) ||
-                          (_ageAgreementChecked == false)) {
-                        context.read<NotificationManager>().showNotification(
-                              context,
-                              NotificationData(
-                                  title: 'Error',
-                                  message:
-                                      "Account can't be created if you not agree to all the terms.",
-                                  type: CustomNotificationType.error),
-                            );
-                        registerController.jumpToPage(0);
-                      } else if ((_registerFormKey.currentState
-                              ?.saveAndValidate() ==
-                          true)) {
-                        await _register();
-                      } else {
-                        context.read<NotificationManager>().showNotification(
-                              context,
-                              NotificationData(
-                                  title: 'Error',
-                                  message: 'Please fill all fields correctly',
-                                  type: CustomNotificationType.error),
-                            );
-                      }
-                    })
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0, right: 15),
+                      child: MaterialButton(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Theme.of(context).colorScheme.primary,
+                          child: Text("Submit"),
+                          onPressed: () async {
+                            // handle regist here
+                            // TODO: localize these
+                            if ((_termsOfServiceChecked == false) ||
+                                (_privacyPolicyChecked == false) ||
+                                (_ageAgreementChecked == false)) {
+                              context
+                                  .read<NotificationManager>()
+                                  .showNotification(
+                                    context,
+                                    NotificationData(
+                                        title: 'Error',
+                                        message:
+                                            "Account can't be created if you not agree to all the terms.",
+                                        type: CustomNotificationType.error),
+                                  );
+                              registerController.jumpToPage(0);
+                            } else if ((_registerFormKey.currentState
+                                    ?.saveAndValidate() ==
+                                true)) {
+                              context.loaderOverlay.show();
+                              await _register();
+                              context.loaderOverlay.hide();
+                            } else {
+                              context
+                                  .read<NotificationManager>()
+                                  .showNotification(
+                                    context,
+                                    NotificationData(
+                                        title: 'Error',
+                                        message:
+                                            'Please fill all fields correctly',
+                                        type: CustomNotificationType.error),
+                                  );
+                            }
+                          }),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -680,7 +726,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
               children: [
                 FormBuilderTextField(
                   decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: AppLocalizations.of(context)!.heading_email,
                       floatingLabelStyle: TextStyle(
                           color:
                               Theme.of(context).colorScheme.onSurfaceVariant)),

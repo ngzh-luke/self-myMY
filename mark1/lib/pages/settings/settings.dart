@@ -3,6 +3,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:mymy_m1/helpers/templates/widget_templates.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
@@ -34,8 +35,10 @@ class Settings extends StatelessWidget {
                 child: LoadingAnimationWidget.twoRotatingArc(
                     color: Theme.of(context).colorScheme.onSurface, size: 20),
               );
+              context.loaderOverlay.show();
               await _auth.signOut();
               context.goNamed('Start');
+              context.loaderOverlay.hide();
               // context.goNamed('Home');
             },
             icon: Icon(

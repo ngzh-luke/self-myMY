@@ -15,6 +15,7 @@ import 'package:mymy_m1/services/notifications/notification_manager.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -34,35 +35,34 @@ void main() async {
 
   // Log user preferences
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  // LogHelper.logger.d("\n<------------------->");
-  LogHelper.logger.i(' User Preferences:');
-  LogHelper.logger.i('Language Code: ${prefs.getString('languageCode')}');
-  LogHelper.logger
-      .d('Is System Default Language: ${prefs.getBool('isSystemDefault')}');
-  LogHelper.logger.i(
+  print("\n<------------------->");
+  print(' User Preferences:');
+  print('Language Code: ${prefs.getString('languageCode')}');
+  print('Is System Default Language: ${prefs.getBool('isSystemDefault')}');
+  print(
       'Theme Mode: ${ThemeMode.values[prefs.getInt('themeMode') ?? ThemeMode.system.index].toString().split('.').last}');
-  LogHelper.logger.i('Theme Name: ${prefs.getString('themeName')}');
-  // LogHelper.logger.d("<------------------->");
+  print('Theme Name: ${prefs.getString('themeName')}');
+  print("<------------------->");
 
   // Log what will be applied
-  // LogHelper.logger.d("\n<------------------->");
-  LogHelper.logger.i(' Applied Settings:');
-  LogHelper.logger.i(
+  print("\n<------------------->");
+  print(' Applied Settings:');
+  print(
       'Language: ${languageProvider.currentLocale.languageCode} (Is System Default: ${languageProvider.isSystemDefault})');
   LogHelper.logger
       .d('Theme Mode: ${themeProvider.themeMode.toString().split(".").last}');
-  LogHelper.logger.i('Theme Name: ${themeProvider.currentThemeName}');
-  // LogHelper.logger.d("<------------------->");
+  print('Theme Name: ${themeProvider.currentThemeName}');
+  print("<------------------->");
 
   // Report System default
-  // LogHelper.logger.d("\n<------------------->");
-  LogHelper.logger.i(" Device Default:");
+  print("\n<------------------->");
+  print(" Device Default:");
   String deviceLocale =
       WidgetsBinding.instance.platformDispatcher.locales.toString();
-  LogHelper.logger.i('Device Default Locale: $deviceLocale');
-  LogHelper.logger.i(
+  print('Device Default Locale: $deviceLocale');
+  print(
       "Device Default Theme mode: ${WidgetsBinding.instance.platformDispatcher.platformBrightness.toString().split(".").last}");
-  // LogHelper.logger.d("<------------------->");
+  print("<------------------->");
 
   await Future.delayed(const Duration(
       seconds: 1)); // Delay to allow time for reading the console output
@@ -103,16 +103,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void initialization() async {
     setState(() => _isLoading = true);
-    // LogHelper.logger.d("\n<------------------->");
-    LogHelper.logger.i(" Available Resources:");
-    LogHelper.logger.i("loading resources...");
+    print("\n<------------------->");
+    print(" Available Resources:");
+    print("loading resources...");
     setupDependencies();
-    LogHelper.logger
-        .d("Available localizations: ${AppLocalizations.supportedLocales}");
-    LogHelper.logger.i("Available Themes: ${ThemeCollections.availableThemes}");
+    print("Available localizations: ${AppLocalizations.supportedLocales}");
+    print("Available Themes: ${ThemeCollections.availableThemes}");
     setState(() => _isLoading = false);
-    LogHelper.logger.t("resources are loaded successfully\n");
-    // LogHelper.logger.d("<------------------->\n");
+    print("resources are loaded successfully\n");
+    print("<------------------->\n");
     FlutterNativeSplash.remove();
   }
 
@@ -138,27 +137,37 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         return _isLoading
             ? Center(
                 child: LoadingAnimationWidget.twoRotatingArc(
-                    color: Theme.of(context).colorScheme.onSurface, size: 20),
+                    color: Theme.of(context).colorScheme.secondary, size: 65),
               )
             : SafeArea(
-                child: MaterialApp.router(
-                    debugShowCheckedModeBanner: false,
-                    routerConfig: router,
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    supportedLocales: settings.supportedLocales,
-                    locale: settings.currentLocale,
-                    title: "myMY M1 by LukeCreated",
-                    theme: settings.lightTheme,
-                    darkTheme: settings.darkTheme,
-                    themeMode: settings.themeMode,
-                    builder: (context, child) {
-                      return child ?? const SizedBox.shrink();
-                    }),
+                child: GlobalLoaderOverlay(
+                  useDefaultLoading: false,
+                  overlayWholeScreen: true,
+                  overlayColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                  overlayWidgetBuilder: (progress) => Center(
+                    child: LoadingAnimationWidget.twoRotatingArc(
+                        color: Colors.yellowAccent, size: 65),
+                  ),
+                  child: MaterialApp.router(
+                      debugShowCheckedModeBanner: false,
+                      routerConfig: router,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales: settings.supportedLocales,
+                      locale: settings.currentLocale,
+                      title: "myMY M1 by LukeCreated",
+                      theme: settings.lightTheme,
+                      darkTheme: settings.darkTheme,
+                      themeMode: settings.themeMode,
+                      builder: (context, child) {
+                        return child ?? const SizedBox.shrink();
+                      }),
+                ),
               );
       },
     );

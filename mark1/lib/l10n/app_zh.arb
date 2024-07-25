@@ -29,5 +29,6 @@
   "heading_home": "首页",
   "@heading_home": {
     "description": "Literally means front page but also refers to home page as well"
-  }
+  },
+  "heading_resetPassword": "找回密码"
 }

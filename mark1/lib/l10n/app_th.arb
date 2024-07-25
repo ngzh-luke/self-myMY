@@ -16,5 +16,6 @@
   "@status_loading": {
     "description": "Text describing that the resource is being loaded/fetched."
   },
-  "heading_home": "หน้าหลัก"
+  "heading_home": "หน้าหลัก",
+  "heading_resetPassword": "รีเซ็ตรหัสผ่าน"
 }

@@ -9,9 +9,9 @@
 // // In that case remove them after copying this theme to your app.
 // theme: FlexThemeData.light(
 //   colors: const FlexSchemeColor(
-//     primary: Color(0xff1565c0),
+//    primary: Color(0xff1565c0),
 //    primaryContainer: Color(0xff80d8ff),
-//    secondary: Color(0xffffca28),
+//    secondary: Color(0xff00658c),
 //    secondaryContainer: Color(0xffe4eaff),
 //    tertiary: Color(0xffea80fc),
 //    tertiaryContainer: Color(0xffcbd6ff),
@@ -37,7 +37,7 @@
 // darkTheme: FlexThemeData.dark(
 //   primary: Color(0xff00bcd4),
 //    primaryContainer: Color(0xff3f51b5),
-//    secondary: Color(0xffd6a400),
+//    secondary: Color(0xff87cffb),
 //    secondaryContainer: Color(0xffc9d8f2),
 //    tertiary: Color(0xffc51162),
 //    tertiaryContainer: Color(0xFF4C74CF),
@@ -122,7 +122,7 @@
 //     primaryContainer: Color(0xffb6f2af),
 //     secondary: Color(0xff36855e),
 //     secondaryContainer: Color(0xffc0ffd8),
-//     tertiary: Color(0xff00658c),
+//     tertiary: Color(0xffffca28)
 //     tertiaryContainer: Color(0xffc5e7ff),
 //     appBarColor: Color(0xffc0ffd8),
 //     error: Color(0xffb00020),
@@ -150,7 +150,7 @@
 //     primaryContainer: Color(0xff005313),
 //     secondary: Color(0xffa3f4c5),
 //     secondaryContainer: Color(0xff003822),
-//     tertiary: Color(0xff87cffb),
+//     tertiary: Color(0xffc51162),
 //     tertiaryContainer: Color(0xff004c6a),
 //     appBarColor: Color(0xff003822),
 //     error: Color(0xffcf6679),
@@ -285,7 +285,7 @@ class ThemeCollections {
   static const FlexSchemeColor _originalLightColors = FlexSchemeColor(
     primary: Color(0xff1565c0),
     primaryContainer: Color(0xff80d8ff),
-    secondary: Color(0xffffca28),
+    secondary: Color(0xff00658c),
     secondaryContainer: Color(0xffe4eaff),
     tertiary: Color(0xffea80fc),
     tertiaryContainer: Color(0xffcbd6ff),
@@ -297,7 +297,7 @@ class ThemeCollections {
   static const FlexSchemeColor _originalDarkColors = FlexSchemeColor(
     primary: Color(0xff00bcd4),
     primaryContainer: Color(0xff3f51b5),
-    secondary: Color(0xffd6a400),
+    secondary: Color(0xff87cffb),
     secondaryContainer: Color(0xffc9d8f2),
     tertiary: Color(0xffc51162),
     tertiaryContainer: Color(0xFF4C74CF),
@@ -335,7 +335,7 @@ class ThemeCollections {
     primaryContainer: Color(0xffb6f2af),
     secondary: Color(0xff36855e),
     secondaryContainer: Color(0xffc0ffd8),
-    tertiary: Color(0xff00658c),
+    tertiary: Color(0xffffca28),
     tertiaryContainer: Color(0xffc5e7ff),
     appBarColor: Color(0xffc0ffd8),
     error: Color(0xffb00020),
@@ -347,7 +347,7 @@ class ThemeCollections {
     primaryContainer: Color(0xff005313),
     secondary: Color(0xffa3f4c5),
     secondaryContainer: Color(0xff003822),
-    tertiary: Color(0xff87cffb),
+    tertiary: Color(0xffc51162),
     tertiaryContainer: Color(0xff004c6a),
     appBarColor: Color(0xff003822),
     error: Color(0xffcf6679),

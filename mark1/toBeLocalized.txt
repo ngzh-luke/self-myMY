@@ -1,5 +1,6 @@
 {
   "th": [
+    "heading_addNewTransaction",
     "noti_errorOccurred",
     "heading_records",
     "heading_analytics",
@@ -8,16 +9,29 @@
     "heading_login",
     "heading_register",
     "previewNotification",
-    "notificationStyle"
+    "notificationStyle",
+    "reset_password_instruction",
+    "heading_back",
+    "heading_submit",
+    "resetPasswordEmailSent",
+    "heading_success",
+    "heading_email"
   ],
 
   "zh": [
+    "heading_addNewTransaction",
     "heading_systemDefault",
     "theme",
     "themeMode",
     "heading_login",
     "heading_register",
     "previewNotification",
-    "notificationStyle"
+    "notificationStyle",
+    "reset_password_instruction",
+    "heading_back",
+    "heading_submit",
+    "resetPasswordEmailSent",
+    "heading_success",
+    "heading_email"
   ]
 }
