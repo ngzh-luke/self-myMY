@@ -38,5 +38,6 @@
   "cancel": "Cancel",
   "confirm": "Confirm",
   "logout": "Logout",
-  "ok": "OK"
+  "ok": "OK",
+  "heading_password": "Password"
 }

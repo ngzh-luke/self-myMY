@@ -37,14 +37,14 @@ class QuickSettingsMenu extends StatelessWidget {
             PopupMenuItem<String>(
               value: 'theme',
               child: ListTile(
-                leading: Icon(Icons.color_lens),
+                leading: const Icon(Icons.color_lens),
                 title: Text('Theme: ${settings.currentThemeName}'),
               ),
             ),
             PopupMenuItem<String>(
               value: 'language',
               child: ListTile(
-                leading: Icon(Icons.language),
+                leading: const Icon(Icons.language),
                 title: Text(
                     'Language: ${settings.getLanguageName(settings.currentLocaleOrNull, context)}'),
               ),
