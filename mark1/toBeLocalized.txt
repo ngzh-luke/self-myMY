@@ -21,7 +21,8 @@
     "cancel",
     "confirm",
     "logout",
-    "ok"
+    "ok",
+    "heading_password"
   ],
 
   "zh": [
@@ -44,6 +45,7 @@
     "cancel",
     "confirm",
     "logout",
-    "ok"
+    "ok",
+    "heading_password"
   ]
 }

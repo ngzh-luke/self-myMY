@@ -49,8 +49,7 @@ void main() async {
   print(' Applied Settings:');
   print(
       'Language: ${languageProvider.currentLocale.languageCode} (Is System Default: ${languageProvider.isSystemDefault})');
-  LogHelper.logger
-      .d('Theme Mode: ${themeProvider.themeMode.toString().split(".").last}');
+  print('Theme Mode: ${themeProvider.themeMode.toString().split(".").last}');
   print('Theme Name: ${themeProvider.currentThemeName}');
   print("<------------------->");
 
