@@ -27,7 +27,7 @@ Widget registerScreens(
   required Function(String, bool) onCheckboxChanged,
 }) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 6),
     child: Stack(
         clipBehavior: Clip.antiAlias,
         alignment: Alignment.bottomCenter,
@@ -48,17 +48,19 @@ Widget registerScreens(
                       ageAgreementChecked: ageAgreementChecked,
                       onCheckboxChanged: onCheckboxChanged,
                     ),
-                    _regisFormScreen(
-                      context,
-                      registerController: registerController,
-                      registerFormKey: registerFormKey,
-                      register: () => register(),
-                      termsOfServiceChecked: termsOfServiceChecked,
-                      privacyPolicyChecked: privacyPolicyChecked,
-                      ageAgreementChecked: ageAgreementChecked,
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      confirmPasswordController: confirmPasswordController,
+                    SingleChildScrollView(
+                      child: _regisFormScreen(
+                        context,
+                        registerController: registerController,
+                        registerFormKey: registerFormKey,
+                        register: () => register(),
+                        termsOfServiceChecked: termsOfServiceChecked,
+                        privacyPolicyChecked: privacyPolicyChecked,
+                        ageAgreementChecked: ageAgreementChecked,
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        confirmPasswordController: confirmPasswordController,
+                      ),
                     ),
                   ]),
             ),

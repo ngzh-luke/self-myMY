@@ -75,3 +75,4 @@ Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
 - Initial Development: Theme colors improvement, Add new transaction system implementation started, Essential Authentication works, and added quick settings menu on login screen on July 25, 2024 -> __1.1.3__
 - Initial Development: Added dialog system & bottom sheet system, and apply them on Settings page on July 26, 2024 -> __1.1.4__
 - Initial Development: Fixed overflow on the web, refactored register and login screens on July 26, 2024 -> __1.1.4-a__
+- Initial Development: Fixed overflow on the mobile version when the visual keyboard is shown, and added info (tips) btn on Basic Authen screens on July 26, 2024 -> __1.1.4-b__

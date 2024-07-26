@@ -2,7 +2,6 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mymy_m1/services/bottom_sheet/bottom_sheet_notifier.dart';
-import 'package:mymy_m1/services/bottom_sheet/bottom_sheet_service.dart';
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

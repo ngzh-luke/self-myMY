@@ -23,8 +23,8 @@ class DialogButton {
 }
 
 class DialogService {
-  static Future<T?> showCustomDialog<T>({
-    required BuildContext context,
+  static Future<T?> showCustomDialog<T>(
+    BuildContext context, {
     required DialogType type,
     required String title,
     required String message,
@@ -120,7 +120,7 @@ class DialogService {
     String? cancelText,
   }) {
     return showCustomDialog<bool>(
-      context: context,
+      context,
       type: DialogType.confirmation,
       title: title,
       message: message,
