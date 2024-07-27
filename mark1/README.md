@@ -18,9 +18,9 @@ Current Status: **Initial Development**
 
 App Series: **Mark 1**
 
-Current Version: **1.1.4-b**
+Current Version: **1.1.4-c**
 
-Updated: **July 26, 2024**
+Updated: **July 28, 2024**
 
 ## Platform enabled
 

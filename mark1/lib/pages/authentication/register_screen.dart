@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:gap/gap.dart';
+// import 'package:gap/gap.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:mymy_m1/helpers/logs/log_helper.dart';
+import 'package:mymy_m1/l10n/app_localization_consts.dart';
 import 'package:mymy_m1/services/notifications/notification_manager.dart';
 import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:mymy_m1/shared/ui_consts.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -81,7 +83,7 @@ Widget registerScreens(
                       style:
                           TextStyle(color: Theme.of(context).colorScheme.error),
                     )),
-                const Gap(8),
+                UiConsts.spaceBetweenSections,
                 Padding(
                   padding: const EdgeInsets.only(top: 15, bottom: 8.0),
                   child: SmoothPageIndicator(
@@ -142,7 +144,7 @@ class AgreementScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontSize:
                         Theme.of(context).textTheme.displayLarge!.fontSize)),
-            const Gap(3),
+            UiConsts.spaceBetweenElementsInTheSection,
             Text(
               "Agreements",
               style: TextStyle(
@@ -151,7 +153,7 @@ class AgreementScreen extends StatelessWidget {
               ),
             ),
             _agreementFormInputsArea(context),
-            const Gap.expand(10),
+            UiConsts.spaceBetweenSections,
             Offstage(
               offstage: hideContBtnCount != 3,
               child: MaterialButton(
@@ -192,7 +194,7 @@ class AgreementScreen extends StatelessWidget {
                     (value) => onCheckboxChanged(
                         'termsOfServiceChecked', value ?? false),
                   ),
-                  const Gap(2),
+                  UiConsts.spaceBetweenElementsInTheSection,
                   _buildCheckbox(
                     context,
                     'PrivacyPolicy',
@@ -201,7 +203,7 @@ class AgreementScreen extends StatelessWidget {
                     (value) => onCheckboxChanged(
                         'privacyPolicyChecked', value ?? false),
                   ),
-                  const Gap(2),
+                  UiConsts.spaceBetweenElementsInTheSection,
                   _buildCheckbox(
                     context,
                     'AgeAgreement',
@@ -255,7 +257,7 @@ class AgreementScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.info_outline),
-            Gap(3),
+            UiConsts.spaceBetweenElementsInTheSection,
             Text('Tap here to Read Terms of Service',
                 style: TextStyle(
                     color: Colors.deepOrangeAccent,
@@ -297,7 +299,7 @@ Widget _regisFormScreen(
                       color: Theme.of(context).colorScheme.onPrimaryContainer,
                       fontSize:
                           Theme.of(context).textTheme.displayLarge!.fontSize)),
-              const Gap(3),
+              UiConsts.spaceBetweenElementsInTheSection,
               Text(
                 "Account Creation",
                 style: TextStyle(
@@ -310,7 +312,7 @@ Widget _regisFormScreen(
                   confirmPasswordController: confirmPasswordController,
                   passwordController: passwordController,
                   emailController: emailController),
-              const Gap(7),
+              UiConsts.spaceBetweenElementsInTheSectionLarge,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -394,7 +396,7 @@ Padding _regisFormInputsArea(BuildContext context,
                 validator: FormBuilderValidators.email(),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ),
-              const Gap(20),
+              UiConsts.spaceBetweenSectionsLarge,
               FormBuilderTextField(
                   decoration: InputDecoration(labelText: 'Password'),
                   controller: passwordController,
@@ -403,7 +405,7 @@ Padding _regisFormInputsArea(BuildContext context,
                   obscuringCharacter: "*",
                   validator: FormBuilderValidators.password(),
                   autovalidateMode: AutovalidateMode.onUserInteraction),
-              const Gap(5),
+              UiConsts.spaceBetweenSectionsLarge,
               FormBuilderTextField(
                 decoration: InputDecoration(labelText: 'Confrim your Password'),
                 controller: confirmPasswordController,

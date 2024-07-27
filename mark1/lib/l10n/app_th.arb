@@ -4,7 +4,7 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "tooltip_addNewTransaction": "เพิ่มรายการใหม่",
+  "heading_addNewTransaction": "เพิ่มรายการใหม่",
   "heading_systemDefault": "ค่าเริ่มต้นของระบบ",
   "heading_settings": "การตั้งค่า",
   "heading_language": "ภาษา",
@@ -17,5 +17,6 @@
     "description": "Text describing that the resource is being loaded/fetched."
   },
   "heading_home": "หน้าหลัก",
-  "heading_resetPassword": "รีเซ็ตรหัสผ่าน"
+  "heading_resetPassword": "รีเซ็ตรหัสผ่าน",
+  "heading_goBack": "ย้อนกลับ"
 }

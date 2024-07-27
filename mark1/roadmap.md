@@ -24,7 +24,7 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |-------|--------------------------|------------------------------|--------|
 |   1   | Mark 1 initialized and Firebase backend setup | 1.0.0 | ✅ |
 |   2   | Splash screen & Authentication works | 1.2.0 | ✅ |
-|   3   | Setting page & Navbar implemented | 1.3.0 | 👨🏻‍💻 (75%) |
+|   3   | Setting page & Navbar implemented | 1.3.0 | 👨🏻‍💻 (80%) |
 |   4   | Localization in English and Thai for authentication works, and Chinese simplified drafted | 1.4.0 | 👨🏻‍💻 |
 |   5   | UI pages are drafted and structured | 1.5.0 | 📃 |
 |   6   | Theming system works | 1.6.0 | ✅ |
@@ -46,3 +46,5 @@ You can see the expected feature in the future launches in [Roadmap section](#ro
 |   22  | Home widgets support on native mobile apps |  X.X.X | 🤔 |
 |   23  | Able to share the transaction records via QR code or link | X.X.X | 🤔 |
 |   24  | Able to add new party, payment info identifier, and transaction | 1.5.0 | 👨🏻‍💻 |
+|   25  | Referer system & promo code | X.X.X | 📃 |
+|   26  | In-app update center: news, announcements, etc. | X.X.X | 📃 |

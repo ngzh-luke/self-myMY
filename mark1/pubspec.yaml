@@ -14,7 +14,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.4-b
+version: 1.1.4-c
 
 environment:
   sdk: '>=3.4.3 <4.0.0'
@@ -40,7 +40,7 @@ dependencies:
   gap: ^3.0.1 # handy (gap) space between things #
   shared_preferences: ^2.2.3 # insensitive key-value data #
   google_fonts: ^6.2.1 # handy fonts import #
-  icons_plus: ^5.0.0 # icons collections
+  icons_plus: ^5.0.0 # icons collections #
   animations: ^2.0.11 # fancy pre-built animations
   flutter_animate: ^4.5.0 # beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
   loading_animation_widget: ^1.2.1 # loading indicators animations #
@@ -68,6 +68,10 @@ dependencies:
   elegant_notification: ^2.2.2 # cool inapp notification #
   get_it: ^7.7.0 # dependency injection #
   loader_overlay: ^4.0.1 # overlay loading indicator #
+  google_sign_in: ^6.2.1 # enable signin with Google #
+  google_sign_in_ios: ^5.7.6 # signin with Google on iOS #
+  google_sign_in_web: ^0.12.4+1 # signin with Google on web
+  sign_in_with_apple: ^6.1.1 # signin with Apple
 
 dev_dependencies:
   flutter_test:

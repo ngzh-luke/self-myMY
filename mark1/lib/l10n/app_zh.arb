@@ -1,7 +1,7 @@
 {
   "@@locale": "zh",
   "helloWorld": "你好，世界!",
-  "tooltip_addNewTransaction": "记一笔账",
+  "heading_addNewTransaction": "记一笔账",
   "systemDefault": "系统默认",
   "heading_settings": "设置",
   "heading_language": "语言",
@@ -30,5 +30,6 @@
   "@heading_home": {
     "description": "Literally means front page but also refers to home page as well"
   },
-  "heading_resetPassword": "找回密码"
+  "heading_resetPassword": "找回密码",
+  "heading_goBack": "返回"
 }
