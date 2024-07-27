@@ -2,15 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:mymy_m1/helpers/getit/get_it.dart';
 import 'package:mymy_m1/helpers/templates/main_view_template.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymy_m1/services/authentication/auth_service.dart';
 import 'package:mymy_m1/services/notifications/notification_manager.dart';
 import 'package:mymy_m1/services/notifications/notification_service.dart';
+import 'package:mymy_m1/shared/ui_consts.dart';
 import 'package:provider/provider.dart';
 
 class ResetPasswordPage extends StatefulWidget {
@@ -40,15 +39,15 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               AppLocalizations.of(context)!.reset_password_instruction,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            UiConsts.spaceBetweenSectionsLarge,
             _buildForm(),
-            const SizedBox(height: 24),
+            UiConsts.spaceBetweenSectionsLarge,
             _buildSubmitButton(),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Gap(10),
+                UiConsts.spaceBetweenSections,
                 _buildBackToLoginButton(),
               ],
             ),
@@ -115,10 +114,10 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         await _auth.resetPassword(email.trim());
 
         _showSuccessNotification();
-        // Optionally, navigate to a confirmation page or back to login
-        context.pop();
+        context.goNamed("Start");
       } on FirebaseAuthException catch (e) {
-        _showErrorNotification(e.message ?? 'An error occurred');
+        _showErrorNotification(
+            e.message ?? AppLocalizations.of(context)!.noti_errorOccurred);
       } finally {
         setState(() => _isLoading = false);
       }

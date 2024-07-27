@@ -2,7 +2,24 @@
 
 `myMY` by LukeCreated is an app to keep records of transaction made, suggestions are always welcome but please create new issues on the GitHub repository or email me at <bugsreport@lukecreated.com>, Thank you!
 
-## About
+## Introduction
+
+**myMY** is meant to make managing transactions and spending easy and is built on 4 concepts:
+
+- Ads free
+- Anywhere on any device
+- Planning your financial better
+- You are in charge (manual, for your own good)
+
+## Features
+
+STABLE LIST IS NOT AVAILABLE UNTILL BETA RELEASE
+
+- Record the transaction made
+- Budgeting
+- Transaction analytic
+
+## Technical About
 
 Developer: **Kittipich "Luke" Aiumbhornsin**
 

@@ -39,5 +39,6 @@
   "confirm": "Confirm",
   "logout": "Logout",
   "ok": "OK",
-  "heading_password": "Password"
+  "heading_password": "Password",
+  "heading_goBack": "Back"
 }

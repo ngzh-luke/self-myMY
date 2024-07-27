@@ -4,13 +4,14 @@ class BottomSheetService {
   static Future<T?> showCustomBottomSheet<T>({
     required BuildContext context,
     required Widget Function(BuildContext, ScrollController) builder,
-    double initialChildSize = 0.5,
+    double initialChildSize = 0.55,
     double minChildSize = 0.2,
     double maxChildSize = 0.75,
+    bool scrollable = true,
   }) {
     return showModalBottomSheet<T>(
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: scrollable,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 import 'package:mymy_m1/services/authentication/rate_limiter.dart';
 
@@ -53,6 +54,28 @@ class AuthService {
       rethrow;
     }
   }
+
+  Future<UserCredential?> continueWithGoogle() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+      return await _auth.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      _logger.e("Failed to continue with Google.",
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
+    } catch (e) {
+      _logger.e("Unexpected error during continue with Google.",
+          error: e, stackTrace: StackTrace.current);
+      rethrow;
+    }
+  }
+
+  // Future<UserCredential?> continueWithApple(){
+
+  // }
 
   Future<void> signOut() async {
     try {
