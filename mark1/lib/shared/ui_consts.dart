@@ -43,9 +43,18 @@ class UiConsts {
     ),
   );
 
+  /// double 16
+  static const double smallIconSize = 16;
+
   /// double 24
   static const double standardIconSize = 24;
 
   /// double 35
   static const double largeIconSize = 35;
+
+  /// EdgeInsets.all(16)
+  static const paddingEdgeInsetsAllLarge = EdgeInsets.all(16);
+
+  /// EdgeInsets.all(8)
+  static const paddingEdgeInsetsAll = EdgeInsets.all(8);
 }

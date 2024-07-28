@@ -12,6 +12,7 @@ import 'package:mymy_m1/services/dialogs/dialog_service.dart';
 import 'package:mymy_m1/services/notifications/notification_factory.dart';
 import 'package:mymy_m1/services/notifications/notification_service.dart';
 import 'package:mymy_m1/services/bottom_sheet/bottom_sheet_notifier.dart';
+import 'package:mymy_m1/shared/ui_consts.dart';
 import 'package:provider/provider.dart';
 import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:mymy_m1/services/notifications/notification_manager.dart';
@@ -39,61 +40,107 @@ class Settings extends StatelessWidget {
           ),
         )
       ],
-      body: Consumer<SettingsService>(
-        builder: (context, settings, child) {
-          return ListView(
-            children: [
-              SettingDropdown<ThemeMode>(
-                title: AppLocalizations.of(context)!.themeMode,
-                value: settings.themeMode,
-                items: ThemeMode.values,
-                onChanged: (newValue) => _updateSetting(
-                  context,
-                  () => settings.setThemeMode(newValue),
-                ),
-                itemBuilder: (mode) =>
-                    Text(mode.toString().split('.').last.capitalize),
-              ),
-              SettingDropdown<String>(
-                title: AppLocalizations.of(context)!.theme,
-                value: settings.currentThemeName,
-                items: settings.availableThemes,
-                onChanged: (newValue) => _updateSetting(
-                  context,
-                  () => settings.setTheme(newValue),
-                ),
-                itemBuilder: (name) => Text(name),
-              ),
-              SettingDropdown<Locale?>(
-                title: AppLocalizations.of(context)!.heading_language,
-                value: settings.currentLocaleOrNull,
-                items: settings.supportedLocalesWithDefault,
-                onChanged: (newValue) => _updateSetting(
-                  context,
-                  () => settings.setLocale(newValue),
-                ),
-                itemBuilder: (locale) =>
-                    Text(settings.getLanguageName(locale, context)),
-              ),
-              SettingDropdown<NotificationStyle>(
-                title: AppLocalizations.of(context)!.notificationStyle,
-                value: settings.notificationStyle,
-                items: NotificationStyle.values,
-                onChanged: (newValue) => _updateSetting(
-                  context,
-                  () => settings.setNotificationStyle(newValue),
-                ),
-                itemBuilder: (style) =>
-                    Text(style.toString().split('.').last.capitalize),
-                previewButton: ElevatedButton(
-                  onPressed: () => _showPreviewNotification(context),
-                  child:
-                      Text(AppLocalizations.of(context)!.previewNotification),
-                ),
-              )
-            ],
-          );
-        },
+      body: buildSettingsPageBody(),
+    );
+  }
+
+  Column buildSettingsPageBody() {
+    return Column(
+      children: [
+        Expanded(flex: 2, child: profileSection()),
+        Expanded(flex: 6, child: settingsListSection()),
+        Expanded(
+            flex: 1,
+            child: Container(
+                color: Colors.amber,
+                child: SizedBox.expand(child: Text("Version: ?"))))
+      ],
+    );
+  }
+
+  Column settingsListSection() {
+    return Column(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Consumer<SettingsService>(
+            builder: (context, settings, child) {
+              return ListView(
+                children: [
+                  Align(
+                    child: Padding(
+                      padding: UiConsts.paddingEdgeInsetsAll,
+                      child: Text(
+                        "Appearance",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.error),
+                      ),
+                    ),
+                    alignment: Alignment.topLeft,
+                  ),
+                  SettingDropdown<ThemeMode>(
+                    title: AppLocalizations.of(context)!.themeMode,
+                    value: settings.themeMode,
+                    items: ThemeMode.values,
+                    onChanged: (newValue) => _updateSetting(
+                      context,
+                      () => settings.setThemeMode(newValue),
+                    ),
+                    itemBuilder: (mode) =>
+                        Text(mode.toString().split('.').last.capitalize),
+                  ),
+                  SettingDropdown<String>(
+                    title: AppLocalizations.of(context)!.theme,
+                    value: settings.currentThemeName,
+                    items: settings.availableThemes,
+                    onChanged: (newValue) => _updateSetting(
+                      context,
+                      () => settings.setTheme(newValue),
+                    ),
+                    itemBuilder: (name) => Text(name),
+                  ),
+                  SettingDropdown<Locale?>(
+                    title: AppLocalizations.of(context)!.heading_language,
+                    value: settings.currentLocaleOrNull,
+                    items: settings.supportedLocalesWithDefault,
+                    onChanged: (newValue) => _updateSetting(
+                      context,
+                      () => settings.setLocale(newValue),
+                    ),
+                    itemBuilder: (locale) =>
+                        Text(settings.getLanguageName(locale, context)),
+                  ),
+                  SettingDropdown<NotificationStyle>(
+                    title: AppLocalizations.of(context)!.notificationStyle,
+                    value: settings.notificationStyle,
+                    items: NotificationStyle.values,
+                    onChanged: (newValue) => _updateSetting(
+                      context,
+                      () => settings.setNotificationStyle(newValue),
+                    ),
+                    itemBuilder: (style) =>
+                        Text(style.toString().split('.').last.capitalize),
+                    previewButton: ElevatedButton(
+                      onPressed: () => _showPreviewNotification(context),
+                      child: Text(
+                          AppLocalizations.of(context)!.previewNotification),
+                    ),
+                  )
+                ],
+              );
+            },
+          ),
+        ),
+        Expanded(flex: 2, child: SizedBox.expand(child: Text("About")))
+      ],
+    );
+  }
+
+  Widget profileSection() {
+    return Container(
+      color: Colors.amber,
+      child: const SizedBox.expand(
+        child: Text(" Profile section "),
       ),
     );
   }
@@ -190,8 +237,9 @@ class _SettingDropdownState<T> extends State<SettingDropdown<T>> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 widget.itemBuilder(widget.value),
-                const SizedBox(width: 8),
-                const Icon(Icons.arrow_forward_ios, size: 16),
+                UiConsts.spaceForTextAndElement,
+                const Icon(Icons.arrow_forward_ios,
+                    size: UiConsts.smallIconSize),
               ],
             ),
       onTap: () {
@@ -244,7 +292,7 @@ class SettingBottomSheet<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: UiConsts.paddingEdgeInsetsAllLarge,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
