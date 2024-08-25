@@ -31,5 +31,9 @@
     "description": "Literally means front page but also refers to home page as well"
   },
   "heading_resetPassword": "找回密码",
-  "heading_goBack": "返回"
+  "heading_goBack": "返回",
+  "heading_password": "密码",
+  "confirm": "确定",
+  "ok": "OK",
+  "cancel": "取消"
 }

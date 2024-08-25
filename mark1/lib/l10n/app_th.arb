@@ -18,5 +18,9 @@
   },
   "heading_home": "หน้าหลัก",
   "heading_resetPassword": "รีเซ็ตรหัสผ่าน",
-  "heading_goBack": "ย้อนกลับ"
+  "heading_goBack": "ย้อนกลับ",
+  "heading_password": "รหัสผ่าน",
+  "ok": "ตกลง",
+  "confirm": "ยืนยัน",
+  "cancel": "ยกเลิก"
 }

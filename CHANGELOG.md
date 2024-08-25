@@ -77,3 +77,5 @@ Development Roadmap: **roadmap.md__ [go to file](/mark1/roadmap.md)
 - Initial Development: Fixed overflow on the web, refactored register and login screens on July 26, 2024 -> __1.1.4-a__
 - Initial Development: Fixed overflow on the mobile version when the visual keyboard is shown, and added info (tips) btn on Basic Authen screens on July 26, 2024 -> __1.1.4-b__
 - Initial Development: Added continue with Google on mobile (web is in progress), improved UI consistency across the app, and changed the navbar system as scalability & simplicity concerned on July 28, 2024 -> __1.1.4-c__
+- Initial Development: Draft the settings page layout & improve UI setting consistency on July 28, 2024 -> __1.1.4-d__
+- Initial Development: Added orientation control and other improvements on August 25, 2024 -> __1.1.4-e__

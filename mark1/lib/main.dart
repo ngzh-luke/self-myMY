@@ -1,6 +1,7 @@
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,6 +17,12 @@ import 'package:mymy_m1/services/settings/settings_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+
+bool isBigScreen(BuildContext context) {
+  final double width = MediaQuery.of(context).size.width;
+  // can use a different threshold like 600 for width in logical pixels
+  return width >= 600;
+}
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -97,6 +104,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // TODO: implement initState
     super.initState();
     initialization();
+
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -131,6 +139,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // // Check if the device's screen is big
+    if (!isBigScreen(context)) {
+      // Lock orientation to portrait
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    } else {
+      // Allow both orientations for big screen
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    }
     return Consumer<SettingsService>(
       builder: (context, settings, child) {
         return _isLoading

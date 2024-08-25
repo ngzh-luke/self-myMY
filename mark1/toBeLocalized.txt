@@ -17,11 +17,7 @@
     "heading_email",
     "logoutConfirmationTitle",
     "logoutConfirmationMessage",
-    "cancel",
-    "confirm",
-    "logout",
-    "ok",
-    "heading_password"
+    "logout"
   ],
 
   "zh": [
@@ -40,10 +36,6 @@
     "heading_email",
     "logoutConfirmationTitle",
     "logoutConfirmationMessage",
-    "cancel",
-    "confirm",
-    "logout",
-    "ok",
-    "heading_password"
+    "logout"
   ]
 }
